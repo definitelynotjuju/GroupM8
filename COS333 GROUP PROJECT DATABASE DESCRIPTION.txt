@@ -1,0 +1,109 @@
+USERS TABLE:
+
+	USERNAME/NETID	PASSWORD  GROUPS(ID to the table w/ the list)  COURSES(ID TO TABLE)  INVITATIONS
+
+USER GROUPS TABLE (EXAMPLE): (name of table is ID)
+
+	GROUPIDs
+
+USER COURSES TABLE (EXAMPLE): (name of table is ID) LIMIT SIZE (7?)
+
+	DEPT	COURSEN
+
+EXISTING GROUPS TABLE:
+
+	GROUPIDs  NAME  DEPT COURSEN  OPEN?  MEMBERS  EVENTS  INVITATIONS  (CHAT THING?)  GROUPDESCRIPTION
+
+REQUESTS TABLE:
+
+	TYPE	FROM	TO
+
+EVENTS TABLE:
+
+	DAY	TIME   EVENTDESCRIPTION
+
+MEMBERS TABLE:
+
+	IDS
+
+COURSE TABLE: DEPT COURSEN
+
+	IDS	AVAILABLE
+
+
+CASES:
+	ADDING A USER TO THE SITE: username/netid password
+		Authentication: check for existing, valid password, etc
+		New user: add entry to the users table. initialize w/ NULL in empty fields/columns
+
+	ADDING COURSES: userid dept courseN
+		IF NULL, create a new table. Add entry. Add user to the course tale. Defaults to unavailable.
+		IF existing table, check for replicate. ""
+
+	REMOVING COURSES: userid dept courseN
+		IF NULL, do nothing
+		IF existing table:
+			finds entry - remove user from course table, remove entry from user group table.
+				if in a group for that course, output error message (must leave groups before removing course)
+			can't find entry - error message (You are not in this course)
+
+	CHANGING AVAILABILITY: userid dept courseN availability
+		Search for course.
+		If can not find course, output error message.
+		change availability.
+
+	CREATING A GROUP: userid dept courseN nameOfGroup
+		Generate a unique groupID.
+		Generate a table for members, events, invitations (blank tables).
+		Add user to the members table.
+		Add group to groups table.
+		Initialize as open.
+
+	JOINING A GROUP: userid groupid
+		Find group in table.
+		Add user to the group members table.
+		Add group to users group table.
+
+	LEAVING A GROUP: userid groupid
+		Find group in table.
+		Remove user from the group members table.
+		Remove group from users group table.
+		If group is empty. Delete other tables for that group. Remove group from groups table.
+
+	SEARCHING FOR A GROUP: dept courseN searchquery?
+		Parse through group entries that match the given information and are available.
+		Output: Name of the group, # of members, groupID, groupDescription
+
+	SEARCHING FOR A USER: dept courseN searchquery?
+		Parse for available user in course table.
+		If none, display nothing.
+		If there are users, output: Name of user.
+
+	SENDING A REQUEST: userid groupid
+		1. Initiated by user:
+			Add entry to user's and group's request table respectively. Type 0.
+		2. Initiated by group:
+			Add entry to user's and group's request table respectively. Type 1.
+
+	RESPONSE TO REQUEST: userid groupid response
+		1. Accept the request:
+			Remove entries from user and group's request tables.
+			Go to JOINING A GROUP.
+		2. Rejecting the request:
+			Remove entries from user and group's request tables.
+
+	SCHEDULING EVENTS: groupid day time decription
+		Generate an ID for event. Add entry to the events table for the group.
+
+	REMOVING EVENT: groupid eventid
+		Parse for event from the group's event table. Remove the entry if found.
+
+	CHANGING GROUP DESCRIPTION: groupid description
+		Find group. Edit description.
+
+	CHANGING EVENT DESCRIPTION: groupid eventid descrition
+		Find group. Find event. Edit description.
+
+	GROUP AVAILABILITY: groupID availability
+		Find group.
+		Change availability.
