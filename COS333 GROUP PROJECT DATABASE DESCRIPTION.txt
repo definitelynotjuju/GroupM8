@@ -1,36 +1,144 @@
+/************ Probable new (and easier) implementation (WIP) ***********/
 USERS TABLE:
+	USERID USERNAME/NETID PASSWORD
 
-	USERNAME/NETID	PASSWORD  GROUPS(ID to the table w/ the list)  COURSES(ID TO TABLE)  REQUESTS
+MEMBERS TABLE: (contains all members of every group)
+	GROUPID USERID DEPT COURSEN
 
-USER GROUPS TABLE (EXAMPLE): (name of table is ID)
+COURSES TABLE: (contains a list of all users in every course)
+	USERID DEPT COURSEN AVAILABILITY
 
-	GROUPIDs
+GROUPS TABLE:
+	GROUPID NAME DEPT COURSEN AVAILABILITY DESCRIPTION
 
-USER COURSES TABLE (EXAMPLE): (name of table is ID) LIMIT SIZE (7?)
+EVENTS TABLE: (contains all events from every group)
+	EVENTID GROUPID DAY TIME DESCRIPTION
 
-	DEPT	COURSEN
+MEMBER REQUESTS TABLE: (contains all requests from members)
+	REQUESTID USERID GROUPID
 
-EXISTING GROUPS TABLE:
+GROUP REQUESTS TABLE: (contains all requests from groups)
+	REQUESTID USERID GROUPID
 
-	GROUPIDs  NAME  DEPT COURSEN  OPEN?  MEMBERS  EVENTS  REQUESTS  (CHAT THING?)  GROUPDESCRIPTION
+CASES:
+	ADDING A USER TO THE SITE: username/netid password
+		Authentication: check for existing, valid password, etc
+		create id number based on the count of users
+		New user: add entry to the users table. initialize w/ NULL in empty fields/columns
 
-REQUESTS TABLE:
+	ADDING COURSES: userid dept courseN
+		Checks to see there isn't a matching entry in the course table
+		If new entry, adds information to table
+		else throws error
 
-	TYPE	FROM	TO
+	REMOVING COURSES: userid dept courseN
+		IF no match in courses table, do nothing
+		IF there is a match:
+			Checks that user is not in a group for this course
+			If true then remove matching entry in course table
+			else throw error "cannot remove courses when in a group for this course"
 
-EVENTS TABLE:
+	CHANGING AVAILABILITY: userid dept courseN availability
+		Checks entry in course table.
+		If no entry, throw error
+		Change availability
 
-	DAY	TIME   EVENTDESCRIPTION   NAME
+	CREATING A GROUP: userid dept courseN nameOfGroup
+		Generates a unique groupID.
+		Creates entry in group table (initializes availability to open)
+		Add the founding member to group members table
 
-MEMBERS TABLE:
+	JOINING A GROUP: userid groupid
+		Add user to group members table.
 
-	IDS
+	LEAVING A GROUP: userid groupid
+		Find user entry in members table
+		If found, remove entry from members table
 
-COURSE TABLE: DEPT COURSEN
+	SEARCHING FOR A GROUP: dept courseN searchquery?
+		Search groups table for matching dept and courseN
+		Output group info
 
-	IDS	AVAILABLE
+	SEARCHING FOR A USER: dept courseN searchquery?
+		Parse for available user in course table.
+		If none, display nothing.
+		If there are users, output: Name of user.
+
+	SENDING A REQUEST TO A GROUP: userid groupid
+		Check to see that user does not already have an identical entry in the request table
+		Generates unique requestid
+		Adds information to user request table
+
+	SENDING A REQUEST TO A USER: userid groupid
+		Check to see that group does not already have an identical entry in the request table
+		Generates unique requestid
+		Adds information to group request table
+
+	RESPONSE TO REQUEST FROM A GROUP: userid groupid
+		If accepting request, go to joining a group
+		Remove entry from group request table
+
+	RESPONSE TO REQUEST FROM A USER: userid groupid
+		If accepting request, go to joining a group
+		Remove entry from user request table
+
+	SCHEDULING EVENTS: groupid day time description
+		Generate new eventid
+		Add event to event table
+
+	REMOVING EVENTS: groupid eventid
+		Remove entry from event table
+
+	CHANGING GROUP DESCRIPTION: groupid description
+		edit entry in group table
+
+	CHANGING EVENT DESCRIPTION: eventid description
+		Edit entry in events table
+
+	GROUP AVAILABILITY: groupid availability
+		Edit entry in groups table
 
 
+Use inner join to filter entries in multiple tables.
+
+
+/***************************** END WIP ************************************/
+
+/****** Potentially deprecated implementation below this point ******/
+
+//USERS TABLE:
+//
+//	USERNAME/NETID	PASSWORD  GROUPS(ID to the table w/ the list)  COURSES(ID TO TABLE)  REQUESTS
+
+//USER GROUPS TABLE (EXAMPLE): (name of table is ID)
+//
+//	GROUPIDs
+
+//USER COURSES TABLE (EXAMPLE): (name of table is ID) LIMIT SIZE (7?)
+//
+//	DEPT	COURSEN
+
+//EXISTING GROUPS TABLE:
+//
+//	GROUPIDs  NAME  DEPT COURSEN  OPEN?  MEMBERS  EVENTS  REQUESTS  (CHAT THING?)  GROUPDESCRIPTION
+
+//REQUESTS TABLE:
+//
+//	TYPE	FROM	TO
+
+//EVENTS TABLE:
+//
+//	DAY	TIME   EVENTDESCRIPTION   NAME
+
+//MEMBERS TABLE:
+//
+//	IDS
+
+//COURSE TABLE: DEPT COURSEN
+//
+//	IDS	AVAILABLE
+
+/****** Needs to change with new implementation ****/
 CASES:
 	ADDING A USER TO THE SITE: username/netid password
 		Authentication: check for existing, valid password, etc
@@ -107,3 +215,4 @@ CASES:
 	GROUP AVAILABILITY: groupID availability
 		Find group.
 		Change availability.
+/*************** End old information ***************/
