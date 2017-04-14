@@ -54,7 +54,7 @@ def join_group(userid, groupid):
         cmd = "SELECT CourseN FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
         courseN = str(c.fetchone()[0])
-        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
+        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (groupid + userid) + "')"
         c.execute(cmd)
         conn.commit()
 
