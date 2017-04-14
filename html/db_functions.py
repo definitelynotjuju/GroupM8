@@ -89,6 +89,31 @@ def search_user(groupid, dept, courseN):
                 print "%s %s" % (row[1], row[2])
         conn.commit()
 
+def add_event(groupid, date, time, description):
+    cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + userid + "', '" + date + "', '" + time + "', '" + description + "')"
+    c.execute(cmd)
+    conn.commit()
+
+def remove_event(eventid):
+    cmd = "DELETE FROM Events WHERE EventId = '" + eventid + "'"
+    c.execute(cmd)
+    conn.commit()
+
+def group_desc(groupid, description):
+    cmd = "UPDATE Groups SET Description = '" + description + "' WHERE GroupID = '" + groupid + "'"
+    c.execute(cmd)
+    conn.commit()
+
+def event_desc(groupid, description):
+    cmd = "UPDATE Events SET Description = '" + description + "' WHERE GroupID = '" + groupid + "'"
+    c.execute(cmd)
+    conn.commit()
+
+def change_group_availability(groupid):
+    cmd = "SELECT Availability FROM Groups WHERE GroupId = '" + groupid + "'"
+    if (c.execute(cmd) == 0)
+        print("Group " + groupid + " does not exist.")
+
 cmdL = sys.argv
 function = cmdL[1]
 if function == "create_user":
