@@ -114,9 +114,6 @@ def change_group_availability(groupid):
     if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
     else:
-<<<<<<< HEAD
-
-=======
         availability = str(c.fetchone()[0])
         if availability == "T":
             cmd = "UPDATE GROUPS SET Availability = 'F' WHERE GroupID = '" + groupid + "'"
@@ -124,7 +121,6 @@ def change_group_availability(groupid):
         else:
             cmd = "UPDATE GROUPS SET Availability = 'T' WHERE GroupID = '" + groupid + "'"
         conn.commit()
->>>>>>> origin/master
 
 cmdL = sys.argv
 function = cmdL[1]
