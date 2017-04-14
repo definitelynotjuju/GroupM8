@@ -41,6 +41,7 @@ def create_group(userid, name, dept, courseN, description):
     ID = str(c.fetchone()[0])
     cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + ID + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
     c.execute(cmd)
+    add_course(userid, dept, courseN)
     conn.commit()
 
 def join_group(userid, groupid):
@@ -65,6 +66,9 @@ def leave_group(userid, groupid):
     else:
         cmd = "DELETE FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + userid + "'"
         c.execute(cmd)
+        cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "'"
+        if c.execute(cmd) == 0:
+            cmd = "DELETE FROM Groups WHERE ID = '" + groupid + "'"
         conn.commit()
 
 def search_group(dept, courseN):
