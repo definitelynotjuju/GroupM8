@@ -95,7 +95,7 @@ def send_request(userid, groupid, type):
     conn.commit()
 
 def process_request(requestid, accept):
-    if accept = "T":
+    if accept == "T":
         cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
         request = c.fetchone()
