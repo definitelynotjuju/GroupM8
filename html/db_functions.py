@@ -54,7 +54,7 @@ def join_group(userid, groupid):
         cmd = "SELECT CourseN FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
         courseN = str(c.fetchone()[0])
-        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (groupid + userid) + "')"
+        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
         c.execute(cmd)
         conn.commit()
 
@@ -88,6 +88,9 @@ def search_user(groupid, dept, courseN):
             if c.execute(cmd) == 0:
                 print ("%s %s" % (row[1], row[2]))
         conn.commit()
+
+#def group_send_request(userid, groupid):
+
 
 def add_event(groupid, date, time, description):
     cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + userid + "', '" + date + "', '" + time + "', '" + description + "')"
@@ -155,3 +158,15 @@ if function == "search_group":
     search_group(cmdL[2], cmdL[3])
 if function == "search_user":
     search_user(cmdL[2], cmdL[3], cmdL[4])
+if function == "add_event":
+    add_event(cmdL[2], cmdL[3], cmdL[4], cmdL[5])
+if function == "remove_event":
+    remove_event(cmdL[2])
+if function == "group_desc":
+    group_desc(cmdL[2], cmdL[3])
+if function == "event_desc":
+    event_desc(cmdL[2], cmdL[3])
+if function == "change_group_availability"
+    change_group_availability(cmdL[2])
+if function == "change_course_availability"
+    change_course_availability(cmdL[2], cmdL[3], cmdL[4])
