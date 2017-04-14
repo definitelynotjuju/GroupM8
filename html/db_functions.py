@@ -175,7 +175,7 @@ if function == "search_user":
 if function == "send_request":
     send_request(cmdL[2], cmdL[3], cmdL[4])
 if function == "process_request":
-    send_request(cmdL[2], cmdL[3])
+    process_request(cmdL[2], cmdL[3])
 if function == "add_event":
     add_event(cmdL[2], cmdL[3], cmdL[4], cmdL[5])
 if function == "remove_event":
