@@ -96,13 +96,13 @@ def send_request(userid, groupid, type):
 
 def process_request(requestid, accept):
     if accept:
-        cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid "'"
+        cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
         request = c.fetchone()
         userid = str(request[0])
         groupid = str(request[1])
         join_group(userid, groupid)
-    cmd = "DELETE FROM Requests WHERE ID = '" + requestid "'"
+    cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
     c.execute(cmd)
     conn.commit()
 
