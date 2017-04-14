@@ -153,11 +153,11 @@ def change_group_availability(groupid):
         if availability == "T":
             cmd = "UPDATE Groups SET Availability = 'F' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
-            print("Group is now available")
+            print("Group is now unavailable")
         elif availability == "F":
             cmd = "UPDATE Groups SET Availability = 'T' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
-            print("Group is now unavailable")
+            print("Group is now available")
         else:
             print("Not valid availability")
         conn.commit()
@@ -171,11 +171,11 @@ def change_course_availability(userid, dept, courseN):
         if availability == "T":
             cmd = "UPDATE Courses SET Availability = 'F' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
-            print("User is now available")
+            print("User is now unavailable")
         elif availability == "F":
             cmd = "UPDATE Courses SET Availability = 'T' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
-            print("User is now unavailable")
+            print("User is now available")
         else:
             print("Not valid availability")
         conn.commit()
