@@ -66,6 +66,7 @@ def leave_group(userid, groupid):
     else:
         cmd = "DELETE FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + userid + "'"
         c.execute(cmd)
+        conn.commit()
         cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "'"
         if c.execute(cmd) == 0:
             cmd = "DELETE FROM Groups WHERE ID = '" + groupid + "'"
