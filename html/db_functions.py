@@ -95,7 +95,8 @@ def send_request(userid, groupid, type):
     conn.commit()
 
 #def process_request(requestID, accept):
-#    cmd = "SELECT "
+#    if accept:
+
 
 def add_event(groupid, date, time, description):
     cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + groupid + "', '" + date + "', '" + time + "', '" + description + "')"
@@ -108,7 +109,7 @@ def remove_event(eventid):
     conn.commit()
 
 def group_desc(groupid, description):
-    cmd = "UPDATE Groups SET Description = '" + description + "' WHERE GroupID = '" + groupid + "'"
+    cmd = "UPDATE Groups SET Description = '" + description + "' WHERE ID = '" + groupid + "'"
     c.execute(cmd)
     conn.commit()
 
@@ -118,16 +119,16 @@ def event_desc(eventid, description):
     conn.commit()
 
 def change_group_availability(groupid):
-    cmd = "SELECT Availability FROM Groups WHERE GroupId = '" + groupid + "'"
+    cmd = "SELECT Availability FROM Groups WHERE ID = '" + groupid + "'"
     if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
     else:
         availability = str(c.fetchone()[0])
         if availability == "T":
-            cmd = "UPDATE Groups SET Availability = 'F' WHERE GroupID = '" + groupid + "'"
+            cmd = "UPDATE Groups SET Availability = 'F' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
         else:
-            cmd = "UPDATE Groups SET Availability = 'T' WHERE GroupID = '" + groupid + "'"
+            cmd = "UPDATE Groups SET Availability = 'T' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
         conn.commit()
 
