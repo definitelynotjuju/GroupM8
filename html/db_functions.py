@@ -75,13 +75,13 @@ def leave_group(userid, groupid):
         conn.commit()
 
 def search_group(dept, courseN):
-    cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND Availability = 'T'"
+    cmd = "SELECT ID FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND Availability = 'T'"
     if c.execute(cmd) == 0:
         print("No groups found for this course.")
     else:
         result_set = c.fetchall()
         for row in result_set:
-            print ("ID: %s\n Name: %s\n Description: %s" % (row[0], row[1], row[2]))
+            print_group_info(row[0])
         conn.commit()
 
 def search_user(groupid, dept, courseN):
@@ -183,6 +183,30 @@ def change_course_availability(userid, dept, courseN):
         else:
             print("Not valid availability")
         conn.commit()
+
+def list_user_groups(userid):
+    cmd = "SELECT GroupID FROM Members WHERE UserID = '" + userid + "'"
+    c.execute(cmd)
+    result_set = c.fetchall()
+    for row in result_set:
+        print_group_info(row[0])
+
+def print_group_info(groupid):
+    cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + groupid + "'"
+    if c.execute(cmd) == 0;
+        print("Group does not exist.")
+    else:
+        result = c.fetchone()
+        print ("ID: %s\n Name: %s\n Description: %s" % (groupid, result[0], result[1]))
+
+def list_members(groupid):
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + groupid + "' AND Users.UserID = Members.UserID"
+    if c.execute(cmd) == 0;
+        print("No users in given group")
+    else:
+        result = c.fetchall()
+        for row in result:
+            print ("%s %s %s" % (row[0], row[1], row[2]))
 
 cmdL = sys.argv
 function = cmdL[1]
