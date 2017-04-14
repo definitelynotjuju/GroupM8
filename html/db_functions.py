@@ -121,9 +121,13 @@ def process_request(requestid, accept):
     conn.commit()
 
 def add_event(groupid, date, time, description):
-    cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + groupid + "', '" + date + "', '" + time + "', '" + description + "')"
-    c.execute(cmd)
-    conn.commit()
+    cmd = "SELECT * FROM Groups WHERE ID = '" + groupid + "'"
+    if c.execute(cmd) == 0:
+        print("Invalid Group " + groupid)
+    else:
+        cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + groupid + "', '" + date + "', '" + time + "', '" + description + "')"
+        c.execute(cmd)
+        conn.commit()
 
 def remove_event(eventid):
     cmd = "DELETE FROM Events WHERE ID = '" + eventid + "'"
