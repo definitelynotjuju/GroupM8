@@ -54,7 +54,7 @@ def join_group(userid, groupid):
         cmd = "SELECT CourseN FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
         courseN = str(c.fetchone()[0])
-        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
+        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (groupid + userid) + "')"
         c.execute(cmd)
         conn.commit()
 
@@ -95,7 +95,7 @@ def send_request(userid, groupid, type):
     conn.commit()
 
 def process_request(requestid, accept):
-    if accept:
+    if accept = "T":
         cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
         request = c.fetchone()
