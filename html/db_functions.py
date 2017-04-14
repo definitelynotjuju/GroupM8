@@ -97,7 +97,7 @@ def send_request(userid, groupid, type):
 #def process_request(requestID, accept):
 
 def add_event(groupid, date, time, description):
-    cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + userid + "', '" + date + "', '" + time + "', '" + description + "')"
+    cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + groupid + "', '" + date + "', '" + time + "', '" + description + "')"
     c.execute(cmd)
     conn.commit()
 
@@ -112,7 +112,7 @@ def group_desc(groupid, description):
     conn.commit()
 
 def event_desc(groupid, description):
-    cmd = "UPDATE Events SET Description = '" + description + "' WHERE GroupID = '" + groupid + "'"
+    cmd = "UPDATE Events SET Description = '" + description + "' WHERE EventID = '" + eventid + "'"
     c.execute(cmd)
     conn.commit()
 
