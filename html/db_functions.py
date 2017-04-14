@@ -70,6 +70,7 @@ def leave_group(userid, groupid):
         cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "'"
         if c.execute(cmd) == 0:
             cmd = "DELETE FROM Groups WHERE ID = '" + groupid + "'"
+            c.execute(cmd)
         conn.commit()
 
 def search_group(dept, courseN):
