@@ -86,7 +86,7 @@ def search_user(groupid, dept, courseN):
         for row in result_set:
             cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + row[0] + "'"
             if c.execute(cmd) == 0:
-                print ("%s %s" % (row[1], row[2]))
+                print ("%s %s %s" % (row[0], row[1], row[2]))
         conn.commit()
 
 def send_request(userid, groupid, type):
