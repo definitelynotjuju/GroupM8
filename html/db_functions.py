@@ -99,6 +99,7 @@ def process_request(requestid, accept):
         cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
         request = c.fetchone()
+        print(request)
         userid = str(request[0])
         groupid = str(request[1])
         join_group(userid, groupid)
