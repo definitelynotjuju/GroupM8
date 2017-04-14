@@ -114,7 +114,10 @@ def change_group_availability(groupid):
     if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
     else:
-        
+        availability = str(c.fetchone()[0])
+        if availability == "T":
+
+        else:
 
 cmdL = sys.argv
 function = cmdL[1]
