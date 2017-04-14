@@ -116,10 +116,25 @@ def change_group_availability(groupid):
     else:
         availability = str(c.fetchone()[0])
         if availability == "T":
-            cmd = "UPDATE GROUPS SET Availability = 'F' WHERE GroupID = '" + groupid + "'"
+            cmd = "UPDATE Groups SET Availability = 'F' WHERE GroupID = '" + groupid + "'"
             c.execute(cmd)
         else:
-            cmd = "UPDATE GROUPS SET Availability = 'T' WHERE GroupID = '" + groupid + "'"
+            cmd = "UPDATE Groups SET Availability = 'T' WHERE GroupID = '" + groupid + "'"
+            c.execute(cmd)
+        conn.commit()
+
+def change_course_availability(userid, dept, courseN):
+    cmd = "SELECT Availability FROM Courses WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+    if c.execute(cmd) == 0:
+        print("User " + userid + " is not in " + dept + courseN + ".")
+    else:
+        availability = str(c.fetchone()[0])
+        if availability == "T":
+            cmd = "UPDATE Courses SET Availability = 'F' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+            c.execute(cmd)
+        else:
+            cmd = "UPDATE Courses SET Availability = 'T' WHERE WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+            c.execute(cmd)
         conn.commit()
 
 cmdL = sys.argv
