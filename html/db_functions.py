@@ -111,8 +111,10 @@ def event_desc(groupid, description):
 
 def change_group_availability(groupid):
     cmd = "SELECT Availability FROM Groups WHERE GroupId = '" + groupid + "'"
-    if (c.execute(cmd) == 0)
+    if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
+    else:
+        
 
 cmdL = sys.argv
 function = cmdL[1]
