@@ -89,8 +89,12 @@ def search_user(groupid, dept, courseN):
                 print ("%s %s" % (row[1], row[2]))
         conn.commit()
 
-#def group_send_request(userid, groupid):
+def send_request(userid, groupid, type):
+    cmd = "INSERT IGNORE INTO Requests (UserID,GroupID,Type) Values (('" + userid + "', '" + groupid + "', '" + type + "')"
+    c.execute(cmd)
+    conn.commit()
 
+#def process_request(requestID, accept):
 
 def add_event(groupid, date, time, description):
     cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + userid + "', '" + date + "', '" + time + "', '" + description + "')"
@@ -166,7 +170,7 @@ if function == "group_desc":
     group_desc(cmdL[2], cmdL[3])
 if function == "event_desc":
     event_desc(cmdL[2], cmdL[3])
-if function == "change_group_availability"
+if function == "change_group_availability":
     change_group_availability(cmdL[2])
-if function == "change_course_availability"
+if function == "change_course_availability":
     change_course_availability(cmdL[2], cmdL[3], cmdL[4])
