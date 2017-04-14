@@ -94,9 +94,17 @@ def send_request(userid, groupid, type):
     c.execute(cmd)
     conn.commit()
 
-#def process_request(requestID, accept):
-#    if accept:
-
+def process_request(requestid, accept):
+    if accept:
+        cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid "'"
+        c.execute(cmd)
+        request = c.fetchone()
+        userid = str(request[0])
+        groupid = str(request[1])
+        join_group(userid, groupid)
+    cmd = "DELETE FROM Requests WHERE ID = '" + requestid "'"
+    c.execute(cmd)
+    conn.commit()
 
 def add_event(groupid, date, time, description):
     cmd = "INSERT INTO Events (GroupID,Date,Time,Description) Values ('" + groupid + "', '" + date + "', '" + time + "', '" + description + "')"
@@ -142,7 +150,7 @@ def change_course_availability(userid, dept, courseN):
             cmd = "UPDATE Courses SET Availability = 'F' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
         else:
-            cmd = "UPDATE Courses SET Availability = 'T' WHERE WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+            cmd = "UPDATE Courses SET Availability = 'T' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
         conn.commit()
 
@@ -164,6 +172,10 @@ if function == "search_group":
     search_group(cmdL[2], cmdL[3])
 if function == "search_user":
     search_user(cmdL[2], cmdL[3], cmdL[4])
+if function == "send_request":
+    send_request(cmdL[2], cmdL[3], cmdL[4])
+if function == "process_request"
+    send_request(cmdL[2], cmdL[3])
 if function == "add_event":
     add_event(cmdL[2], cmdL[3], cmdL[4], cmdL[5])
 if function == "remove_event":
