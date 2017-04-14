@@ -29,7 +29,7 @@ def add_course(userid, dept, courseN):
     conn.commit()
 
 def rem_course(userid, dept, courseN):
-    cmd = "DELETE FROM Courses WHERE ID = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND NOT EXISTS (SELECT * FROM Courses WHERE ID = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "')"
+    cmd = "DELETE FROM Courses WHERE UserID = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND NOT EXISTS (SELECT * FROM Members WHERE UserID = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "')"
     c.execute(cmd)
     conn.commit()
 
@@ -40,6 +40,7 @@ def create_group(userid, name, dept, courseN, description):
     c.execute(cmd)
     ID = str(c.fetchone()[0])
     cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN) VALUES ('" + ID + "', '" + userid + "', '" + dept + "', '" + courseN + "')"
+    c.execute(cmd)
     conn.commit()
 
 def join_group(userid, groupid):
@@ -49,10 +50,10 @@ def join_group(userid, groupid):
     else:
         cmd = "SELECT Dept FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
-        dept = str(c.fetchone())
+        dept = str(c.fetchone()[0])
         cmd = "SELECT CourseN FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
-        courseN = str(c.fetchone())
+        courseN = str(c.fetchone()[0])
         cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "')"
         c.execute(cmd)
         conn.commit()
@@ -62,7 +63,8 @@ def leave_group(userid, groupid):
     if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
     else:
-        cmd = "DELETE * FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + userid "'"
+        cmd = "DELETE FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + userid "'"
+        c.execute(cmd)
         conn.commit()
 
 def search_group(dept, courseN):
@@ -72,7 +74,7 @@ def search_group(dept, courseN):
     else:
         result_set = c.fetchall()
         for row in result_set:
-            print "ID: %s\n Name: %s\n Description: %s" % (row["ID"], row["Name"], row["Description"])
+            print "ID: %s\n Name: %s\n Description: %s" % (row[0], row[1], row[2])
         conn.commit()
 
 def search_user(groupid, dept, courseN):
@@ -82,9 +84,9 @@ def search_user(groupid, dept, courseN):
     else:
         result_set = c.fetchall()
         for row in result_set:
-            cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + row["UserID"] + "'"
+            cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + row[0] + "'"
             if c.execute(cmd) == 0:
-                print "%s %s" % (row["FirstName"], row["LastName"])
+                print "%s %s" % (row[1], row[2])
         conn.commit()
 
 cmdL = sys.argv
@@ -101,7 +103,7 @@ if function == "join_group":
     join_group(cmdL[2], cmdL[3])
 if function == "leave_group":
     leave_group(cmdL[2], cmdL[3])
-if function == "search_group"
+if function == "search_group":
     search_group(cmdL[2], cmdL[3])
-if function == "search_user"
+if function == "search_user":
     search_user(cmdL[2], cmdL[3], cmdL[4])
