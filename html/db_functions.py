@@ -99,12 +99,16 @@ def process_request(requestid, accept):
         cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
         request = c.fetchone()
-        print(request)
         userid = str(request[0])
         groupid = str(request[1])
         join_group(userid, groupid)
-    cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
-    c.execute(cmd)
+        cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
+        c.execute(cmd)
+    else if accept == "F":
+        cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
+        c.execute(cmd)
+    else:
+        print("Not valid response to request.")
     conn.commit()
 
 def add_event(groupid, date, time, description):
