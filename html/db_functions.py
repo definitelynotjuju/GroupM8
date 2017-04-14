@@ -116,8 +116,11 @@ def change_group_availability(groupid):
     else:
         availability = str(c.fetchone()[0])
         if availability == "T":
-
+            cmd = "UPDATE GROUPS SET Availability = 'F' WHERE GroupID = '" + groupid + "'"
+            c.execute(cmd)
         else:
+            cmd = "UPDATE GROUPS SET Availability = 'T' WHERE GroupID = '" + groupid + "'"
+        conn.commit()
 
 cmdL = sys.argv
 function = cmdL[1]
