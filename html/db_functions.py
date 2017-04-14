@@ -184,14 +184,14 @@ def change_course_availability(userid, dept, courseN):
             print("Not valid availability")
         conn.commit()
 
-def list_user_groups(userid):
+def list_groups(userid):
     cmd = "SELECT GroupID FROM Members WHERE UserID = '" + userid + "'"
     c.execute(cmd)
     result_set = c.fetchall()
     for row in result_set:
-        print_group_info(row[0])
+        print_group(row[0])
 
-def print_group_info(groupid):
+def print_group(groupid):
     cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + groupid + "'"
     if c.execute(cmd) == 0:
         print("Group does not exist.")
@@ -242,3 +242,9 @@ if function == "change_group_availability":
     change_group_availability(cmdL[2])
 if function == "change_course_availability":
     change_course_availability(cmdL[2], cmdL[3], cmdL[4])
+if function == "list_groups":
+    list_groups(cmdL[2])
+if function == "print_group":
+    print_group(cmdL[2])
+if function == "list_members":
+    list_members(cmdL[2])
