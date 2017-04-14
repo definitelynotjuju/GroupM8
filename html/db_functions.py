@@ -104,7 +104,7 @@ def process_request(requestid, accept):
         join_group(userid, groupid)
         cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
-    else if accept == "F":
+    elif accept == "F":
         cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
     else:
