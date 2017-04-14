@@ -114,7 +114,7 @@ def change_group_availability(groupid):
     if c.execute(cmd) == 0:
         print("Group " + groupid + " does not exist.")
     else:
-        
+
 
 cmdL = sys.argv
 function = cmdL[1]
@@ -123,7 +123,7 @@ if function == "create_user":
 if function == "add_course":
     add_course(cmdL[2], cmdL[3], cmdL[4])
 if function == "rem_course":
-    add_course(cmdL[2], cmdL[3], cmdL[4])
+    rem_course(cmdL[2], cmdL[3], cmdL[4])
 if function == "create_group":
     create_group(cmdL[2], cmdL[3], cmdL[4], cmdL[5], cmdL[6])
 if function == "join_group":
