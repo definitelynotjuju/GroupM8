@@ -24,7 +24,7 @@ def create_user(userid, firstName, lastName, password):
     conn.commit()
 
 def add_course(userid, dept, courseN):
-    cmd = "INSERT IGNORE INTO Courses (UserID, Dept, CourseN, Availability) Values ('" + userid + "', '" + dept + "', '" + courseN + "', 'T')"
+    cmd = "INSERT IGNORE INTO Courses (UserID, Dept, CourseN, Availability,ID) Values ('" + userid + "', '" + dept + "', '" + courseN + "', 'T', '" + (userid + dept + courseN) + "')"
     c.execute(cmd)
     conn.commit()
 
@@ -39,7 +39,7 @@ def create_group(userid, name, dept, courseN, description):
     cmd = "SELECT MAX(ID) FROM Groups"
     c.execute(cmd)
     ID = str(c.fetchone()[0])
-    cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN) VALUES ('" + ID + "', '" + userid + "', '" + dept + "', '" + courseN + "')"
+    cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + ID + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
     c.execute(cmd)
     conn.commit()
 
@@ -54,7 +54,7 @@ def join_group(userid, groupid):
         cmd = "SELECT CourseN FROM Groups WHERE ID = '" + groupid + "'"
         c.execute(cmd)
         courseN = str(c.fetchone()[0])
-        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "')"
+        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + groupid + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
         c.execute(cmd)
         conn.commit()
 
