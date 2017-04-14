@@ -102,23 +102,27 @@ def send_request(userid, groupid, type):
     conn.commit()
 
 def process_request(requestid, accept):
-    if accept == "T":
-        cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
-        c.execute(cmd)
-        request = c.fetchone()
-        userid = str(request[0])
-        groupid = str(request[1])
-        join_group(userid, groupid)
-        cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
-        c.execute(cmd)
-        print("request accepted")
-    elif accept == "F":
-        cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
-        c.execute(cmd)
-        print("request rejected")
+    cmd = "SELECT * FROM Requests WHERE ID = '" + requestid + "'"
+    if c.execute(cmd) == 0:
+        print("Invalid request " + requestid)
     else:
-        print("Not valid response to request.")
-    conn.commit()
+        if accept == "T":
+            cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = '" + requestid + "'"
+            c.execute(cmd)
+            request = c.fetchone()
+            userid = str(request[0])
+            groupid = str(request[1])
+            join_group(userid, groupid)
+            cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
+            c.execute(cmd)
+            print("request accepted")
+        elif accept == "F":
+            cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
+            c.execute(cmd)
+            print("request rejected")
+        else:
+            print("Not valid response to request.")
+        conn.commit()
 
 def add_event(groupid, date, time, description):
     cmd = "SELECT * FROM Groups WHERE ID = '" + groupid + "'"
