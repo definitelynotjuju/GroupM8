@@ -193,7 +193,7 @@ def list_user_groups(userid):
 
 def print_group_info(groupid):
     cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + groupid + "'"
-    if c.execute(cmd) == 0;
+    if c.execute(cmd) == 0:
         print("Group does not exist.")
     else:
         result = c.fetchone()
@@ -201,7 +201,7 @@ def print_group_info(groupid):
 
 def list_members(groupid):
     cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + groupid + "' AND Users.UserID = Members.UserID"
-    if c.execute(cmd) == 0;
+    if c.execute(cmd) == 0:
         print("No users in given group")
     else:
         result = c.fetchall()
