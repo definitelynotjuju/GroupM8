@@ -90,7 +90,7 @@ def search_user(groupid, dept, courseN):
         conn.commit()
 
 def send_request(userid, groupid, type):
-    cmd = "INSERT IGNORE INTO Requests (UserID,GroupID,Type,ID) Values (('" + userid + "', '" + groupid + "', '" + type + "', '" + groupid + userid + "')"
+    cmd = "INSERT IGNORE INTO Requests (UserID,GroupID,Type,ID) Values ('" + userid + "', '" + groupid + "', '" + type + "', '" + groupid + userid + "')"
     c.execute(cmd)
     conn.commit()
 
