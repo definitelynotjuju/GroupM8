@@ -75,7 +75,7 @@ def leave_group(userid, groupid):
         conn.commit()
 
 def search_group(dept, courseN):
-    cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+    cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND Availability = 'T'"
     if c.execute(cmd) == 0:
         print("No groups found for this course.")
     else:
@@ -85,7 +85,7 @@ def search_group(dept, courseN):
         conn.commit()
 
 def search_user(groupid, dept, courseN):
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + dept + "' AND Courses.CourseN = '" + courseN + "' AND Users.UserID = Courses.UserID"
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + dept + "' AND Courses.CourseN = '" + courseN + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
     if c.execute(cmd) == 0:
         print("No users found for given course.")
     else:
