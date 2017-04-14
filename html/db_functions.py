@@ -71,6 +71,7 @@ def leave_group(userid, groupid):
         if c.execute(cmd) == 0:
             cmd = "DELETE FROM Groups WHERE ID = '" + groupid + "'"
             c.execute(cmd)
+            print("Group " + groupid + "is now empty, will be deleted.")
         conn.commit()
 
 def search_group(dept, courseN):
@@ -110,9 +111,11 @@ def process_request(requestid, accept):
         join_group(userid, groupid)
         cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
+        print("request accepted")
     elif accept == "F":
         cmd = "DELETE FROM Requests WHERE ID = '" + requestid + "'"
         c.execute(cmd)
+        print("request rejected")
     else:
         print("Not valid response to request.")
     conn.commit()
@@ -146,9 +149,13 @@ def change_group_availability(groupid):
         if availability == "T":
             cmd = "UPDATE Groups SET Availability = 'F' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
-        else:
+            print("Group is now available")
+        elif availability == "F":
             cmd = "UPDATE Groups SET Availability = 'T' WHERE ID = '" + groupid + "'"
             c.execute(cmd)
+            print("Group is now unavailable")
+        else:
+            print("Not valid availability")
         conn.commit()
 
 def change_course_availability(userid, dept, courseN):
@@ -160,9 +167,13 @@ def change_course_availability(userid, dept, courseN):
         if availability == "T":
             cmd = "UPDATE Courses SET Availability = 'F' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
-        else:
+            print("User is now available")
+        elif availability == "F":
             cmd = "UPDATE Courses SET Availability = 'T' WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
             c.execute(cmd)
+            print("User is now unavailable")
+        else:
+            print("Not valid availability")
         conn.commit()
 
 cmdL = sys.argv
