@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>GroupM8 Group Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .rightcolumn {
+      border-right: 1px solid black;
+    }
+    .bigfont{
+      font-size: 200%;
+    }
+    .botborder {
+      border-bottom: 3px solid black;
+    }
+    .leftpadded {
+      margin-left: 10px;
+    }
+    .username {
+      border-bottom: 2px solid;
+    }
+    .scroll {
+     max-height:300px;
+      overflow-y:auto;  
+    }
+    .col-fixed-320 {
+      margin-left: 10px;
+      width:320px;
+      position:fixed;
+      height:100%;
+      z-index:1;
+    }
+    .col-offset-400 { 
+      padding-left:400px;
+      z-index:0;
+    }
+    .nopadrow {
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+    .form-control {
+      width:auto;
+      display:inline-block;
+    }
+    .form-full {
+      width:100%;
+      display:inline-block;
+    }
+    .fluid-container {
+      padding-left: 30px;
+      padding-right: 40px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .allborders {
+      border: 1px solid black;
+    }
+
+    .something {
+      font-size: 120%;
+    }
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:5px !important; padding-bottom:0 !important;
+    height: 30px;
+}
+.navbar {min-height:30px !important;}
+
+
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">GroupM8</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Back</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="fluid-container">
+    <div class="row">
+      <div class="col-sm-12"  align="center">
+        <p class="bigfont">Group Name Here</p>
+      </div>
+      <div class="col-sm-12 botborder"  align="center">
+        <p>Group Description Here</p>
+      </div>
+      <div class="col-sm-12" align="center">
+        <button type="button" class="btn btn-default form-control">Edit Group Name</button>
+        <button type="button" class="btn btn-default form-control">Edit Group Description</button>
+        <button type="button" class="btn btn-default form-control">Leave Group</button>
+    <br>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading" align="center"><b>Members</b></div>
+          <div class="panel-body">
+            <p>Member1</p>
+            <p>Member2</p>
+            <p>Member3</p>
+            <p>Member4</p>
+            <p>Member5</p>
+          </div>
+        </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading" align="center"><b>Pending Requests to Join</b></div>
+          <div class="panel-body">
+            <form>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p><b>Name:</b></p>
+                </div>
+                <div class="col-sm-3">
+                  <p><b>Approve</b></p>
+                </div>
+                <div class="col-sm-3">
+                  <p><b>Reject</b></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 1</p>
+                </div>
+                <div class="col-sm-3">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 2</p>
+                </div>
+                <div class="col-sm-3">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 3</p>
+                </div>
+                <div class="col-sm-3">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 4</p>
+                </div>
+                <div class="col-sm-3">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="checkbox">
+                    <input type="checkbox">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading" align="center"><b>Pending Invitations to Join</b></div>
+          <div class="panel-body">
+            <form>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 1</p>
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-2">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 2</p>
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-2">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 3</p>
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-2">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Person 4</p>
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-2">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row something" align="center">
+          <span>Accepting outside applications? </span>
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">Yes</label>
+          <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">No</label>
+        </div>
+        <br>
+        <div class="row" align="center">
+          <button type="button" class="btn btn-default form-control"><b> Add New Member </b></button>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading" align="center"><h4>Pinned Events</h4></div>
+             <div class="panel-body scroll">
+              <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 panel panel-default">
+                  <div class="panel-heading" align="center">Study Session 1</div>
+                   <div class="panel-body">
+                    <p>Time: Wednesday 12:45</p>
+                    <p>Event Desciption Here</p>
+                  </div>
+                </div>
+                <div class="col-sm-1"></div>
+              </div>
+                            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 panel panel-default">
+                  <div class="panel-heading" align="center">Study Session 2</div>
+                   <div class="panel-body">
+                    <p>Time: Friday 1:30</p>
+                    <p>Event Desciption Here</p>
+                  </div>
+                </div>
+                <div class="col-sm-1"></div>
+              </div>
+             </div>
+            </div>
+          </div>
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading" align="center"><h4>Create Event</h4></div>
+            <div class="panel-body">
+              <form class="form-horizontal">
+                <div class="row form-group">
+                  <label class="col-sm-1" for="groupname">Event Name:</label>
+                  <div class="col-sm-4"> 
+                    <input type="text" id="groupname" placeholder=" Enter Event Name">
+                  </div>
+                  <label class="col-sm-1" for="groupname">Description:</label>
+                  <div class="col-sm-6"> 
+                    <input type="textfield" id="groupdesc" placeholder=" Enter Event Description">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-sm-3">
+                  <label for="day">Day:</label>
+                  <select class="form-control" id="day">
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                  </select>
+                  </div>
+                  <div class="col-sm-6">
+                  <label for="hour">Time:</label>
+                  <select class="form-control" id="hour">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                  </select>
+                  <select class="form-control" id="minutes">
+                    <option>00</option>
+                    <option>05</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option>35</option>
+                    <option>40</option>
+                    <option>45</option>
+                    <option>50</option>
+                    <option>55</option>
+                  </select>
+                  <select class="form-control" id="ampm">
+                    <option>AM</option>
+                    <option>PM</option>
+                  </select>
+                  </div>
+                  <div class="col-sm-3">
+                  <label for="repeating">Repeating?</label>
+                  <select class="form-control" id="repeating">
+                    <option>Repeating</option>
+                    <option>Not Repeating</option>
+                  </select>
+                </div>
+                </div>
+              </form>
+              <div class="row" align="center">
+                <button type="button" class="btn btn-default"><b> Create Event </b></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading" align="center"><b>Chat Goes Here:</b></div>
+            <div class="panel-body">
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div>
+</body>
+</html>
