@@ -23,8 +23,7 @@ GROUP REQUESTS TABLE: (contains all requests from groups)
 CASES:
 	ADDING A USER TO THE SITE: username/netid password
 		Authentication: check for existing, valid password, etc
-		create id number based on the count of users
-		New user: add entry to the users table. initialize w/ NULL in empty fields/columns
+		New user: add entry to the users table.
 
 	ADDING COURSES: userid dept courseN
 		Checks to see there isn't a matching entry in the course table
