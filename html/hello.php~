@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <title>Project Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      .pagetitle{
+      color: blue;
+      font: 30px Impact;
+      text-align: center;
+      //text-shadow: 10px 10px #000000;
+      }
+      .bulleted{
+      display: list-item;
+      list-style-type: disc;
+      list-style-position: inside;
+      }
+      </style>
+	</head>
+	<body>    
+	<div>
+		<h2 class ="pagetitle">GroupM8</h2>
+		<p><b>Team Leader</b>:
+		<br>Michael Tummarello(mnt2@princeton.edu)
+		<br><br><b>Team Members</b>:
+		<br>Juan Sanchez(js45@princeton.edu)
+		<br>Julian Carney(jcarney@princeton.edu)</p>
+
+		<p><b>Project Manager</b>:
+		<br>Gautam Sharma(gsharma@princeton.edu)</p>
+
+		<p>You can find our design document <a href="https://docs.google.com/document/d/1ZSH4w6UkvoWNhLfJX_Z_wbYpZWXcxQeYlOgE4niHfZE/edit?ts=58cc0d6a">here</a>.</p>
+
+		<h3 align="center">Elevator Speech</h3>
+		<p align="justify">Have you ever found yourself in a course populated by a sea of strangers? Between questions 
+		   of competency and sheer awkwardness, it can be nearly impossible to reach out and find 
+		   study groups. That's where GroupM8 comes in. GroupM8 is a free web application that lets 
+		   students find study groups for their courses with ease through an intuitive minimalist interface. 
+		   Students can search through study groups and request to join them with a click of a button. On 
+		   the other end of that request, any member of a group can approve members. Once in a group,
+		   students can schedule study sessions through a simple event system and chat with other group 
+		   members, all without leaving the group’s customizable homepage. You can leave a group or 
+		   toggle which courses you’re looking for groups in with a single click. Courses can be added or 
+		   dropped from your course list on your personal homepage, where you can also make your own 
+		   group in the time it takes to send a text message. Group members can view all students looking 
+		   for groups in the relevant course, making finding more people for your group a breeze. All you 
+		   need to sign up is your netid and password.
+		</p>
+
+		<h3>Timeline</h3>
+		<p><u>March 19:</u></p>
+			<p class="bulleted">Design document - done</p>
+			<p class="bulleted">GitHub repository - done</p>
+		<p><u>March 25:</u></p>
+			<p class="bulleted">Server running - done</p>
+			<p class="bulleted">Design database - done</p>
+			<p class="bulleted">Test database - done(command-line MySQL statements)</p>
+		<p><u>April 1:</u></p>
+			<p class="bulleted">Be able to create groups, join groups, leave groups, and add members to groups - In progress</p>
+		<p><u>April 7:</u></p>
+			<p class="bulleted">Can search for groups and members</p>
+			<p class="bulleted">Can schedule events</p>
+		<p><u>April 14:</u></p>
+			<p><b>Prototype</b></p>
+				<p class="bulleted">Basic functionality working(create, join, leave, search)</p>
+				<p class="bulleted">Automated testing</p>
+		<p><u>April 21:</u></p>
+			<p><b>Design User Interface</b></p>
+				<p class="bulleted">Events</p>
+				<p class="bulleted">Chat</p>
+				<p class="bulleted">Notifications</p>
+		<p><u>April 28:</u></p>
+			<p><b>Alpha version</b></p>
+				<p class="bulleted">Website running and close to complete</p>
+				<p class="bulleted">Ready for user testing</p>
+		<p><u>May 5:</u></p>
+			<p><b>Beta version</b></p>
+				<p class="bulleted">Polish major components of the website and fix bugs</p>
+		<p><u>May 8-10:</u></p>
+			<p><b>Demo</b></p>
+		<p><u>May 14:</u></p>
+			<p><b>Submission Deadline</b></p>
+	</div>
+	</body>
+</html>
