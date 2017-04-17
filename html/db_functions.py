@@ -81,7 +81,7 @@ def search_group(dept, courseN):
     else:
         result_set = c.fetchall()
         for row in result_set:
-            print_group_info(row[0])
+            print_group(row[0])
         conn.commit()
 
 def search_user(groupid, dept, courseN):
@@ -192,7 +192,7 @@ def list_groups(userid):
         print_group(row[0])
 
 def print_group(groupid):
-    cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + groupid + "'"
+    cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + str(groupid) + "'"
     if c.execute(cmd) == 0:
         print("Group does not exist.")
     else:
