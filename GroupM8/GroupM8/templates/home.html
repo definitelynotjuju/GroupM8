@@ -20,7 +20,7 @@
     }
    .scroll {
      max-height:300px;
-      overflow-y:auto;  
+      overflow-y:auto;
     }
     .username {
       border-bottom: 3px solid;
@@ -142,23 +142,23 @@
         <div class="panel panel-default">
           <div class="panel-heading" align="center"><b>Create a Group</b></div>
           <div class="panel-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" enctype="multipart/form-data" action="/create_group" method="post">
               <div class="row form-group">
                 <label class="col-sm-4" for="groupname">Name:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" id="groupname">
+                <div class="col-sm-8">
+                  <input type="text" id="groupname" name="groupname">
                 </div>
               </div>
               <div class="row form-group">
                 <label class="col-sm-4" for="groupdept">Department:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" class="control-form" id="groupdept">
+                <div class="col-sm-8">
+                  <input type="text" class="control-form" id="groupdept" name="groupdept">
                 </div>
               </div>
               <div class="row form-group">
                 <label class="col-sm-4" for="groupnum">Course Number:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" id="groupnum">
+                <div class="col-sm-8">
+                  <input type="text" id="groupnum" name="groupnum">
                 </div>
               </div>
             </form>
@@ -182,23 +182,23 @@
           <h3 align="center"><b>Search for Group</b></h3>
         </div>
         <div class="row">
-          <form>
+          <form enctype="multipart/form-data" method="post" action="/group_search">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="department">Department</label>
-                <input type="text" class="form-control" id="department">
+                <input type="text" class="form-control" id="department" name="dept">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="coursenum">Course Number</label>
-                <input type="text" class="form-control" id="coursenum">
+                <input type="text" class="form-control" id="coursenum" name="courseN">
               </div>
             </div>
           </form>
         </div>
         <div class="row" align="center">
-          <button type="button" class="btn btn-default"><b>Search</b></button>
+          <button type="submit" class="btn btn-default"><b>Search</b></button>
         </div>
         <br>
         <div class="row">
@@ -237,7 +237,7 @@
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
-              </div> 
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +252,7 @@
               <br>
               <br>
               <br>
-              <br>  
+              <br>
             </div>
           </div>
         </div>
