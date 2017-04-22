@@ -1,0 +1,12 @@
+To login into the database type "mysql -u root -p" then enter the password "333groupm8".
+Then, type "USE groupm8;" to switch to our the database for our project.
+To show what tables we have in our database type "SHOW TABLES;"
+To show all the entries in a table: "SELECT * FROM tablename"
+
+Table Names:
+Users
+Groups
+Requests
+Members
+Courses
+Events
