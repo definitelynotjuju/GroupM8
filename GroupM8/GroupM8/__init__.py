@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 #import db_functions2
 import MySQLdb
 import sys
+import json
 app = Flask(__name__)
 conn = MySQLdb.connect(
         db='groupm8',
@@ -31,6 +32,7 @@ def about():
 #@app.route("/process_query", methods=['GET','POST'])
 #def process_query():
 #    return request.form['query']
+
 @app.route("/create_user", methods=['GET','POST'])
 def create_user():
     netid = request.form['netid']
@@ -42,11 +44,12 @@ def create_user():
     c.execute(cmd)
     conn.commit()
     return "New user " + netid + " has been successfully created."
+
 @app.route("/search_user", methods=['GET', 'POST'])
 def search_user():
 #    conn = MySQLdb.connect(db='groupm8', user='root', passwd='333groupm8', host='localhost')
 #    c = conn.cursor()
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + dept + "' AND Courses.CourseN = '" + courseN + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T' INTO OUTFILE '/var/lib/mysql-files/file.txt' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n'"
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + dept + "' AND Courses.CourseN = '" + courseN + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
     if c.execute(cmd) == 0:
         return "No results"
     else:
@@ -61,7 +64,30 @@ def search_user():
        # conn.close()
        #f = open("/var/www/GroupM8/GroupM8/templates/file.txt", "w")
        #f.write(result_set)
-        return render_template("results.html", result=result_set)
-        
+        return json.dumps(result_set)
+
+@app.route("/create_group", methods=['GET','POST'])
+def create_group():
+    name = request.form['groupname']
+    dept = request.form['groupdept']
+    courseN = request.form['groupnum']
+    print(name)
+    print(dept)
+    print(courseN)
+
+    if name and dept and courseN:
+        cmd = "INSERT INTO Groups (Name,Dept,CourseN,Availability) VALUES ('" + name + "', '" + dept + "', '" + courseN + "', 'T')"
+        c.execute(cmd)
+        cmd = "SELECT MAX(ID) FROM Groups"
+        c.execute(cmd)
+        ID = str(c.fetchone()[0])
+        cmd = "INSERT IGNORE INTO Members (GroupID,UserID,Dept,CourseN,ID) VALUES ('" + ID + "', '" + userid + "', '" + dept + "', '" + courseN + "', '" + (ID + userid) + "')"
+        c.execute(cmd)
+        cmd = "INSERT IGNORE INTO Courses (UserID, Dept, CourseN, Availability,ID) Values ('" + userid + "', '" + dept + "', '" + courseN + "', 'T', '" + (userid + dept + courseN) + "')"
+        c.execute(cmd)
+        conn.commit()
+        cmd = "SELECT FROM Groups WHERE ID = '" + ID + "'"
+        c.execute(cmd)
+        return json.dumps(c.fetchall())
 if __name__ == "__main__":
     app.run(debug=True)

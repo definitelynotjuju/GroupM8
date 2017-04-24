@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 #import db_functions2
 import MySQLdb
 import sys
+import json
 app = Flask(__name__)
 conn = MySQLdb.connect(
         db='groupm8',
@@ -59,9 +60,9 @@ def search_user():
         conn.commit()
        # conn.rollback()
        # conn.close()
-       #f = open("/var/wwwfile.txt", "w")
+       #f = open("/var/www/GroupM8/GroupM8/templates/file.txt", "w")
        #f.write(result_set)
-        return render_template("results.html", result=result_set)
+        return json.dumps(result_set)
         
 if __name__ == "__main__":
     app.run(debug=True)
