@@ -139,13 +139,14 @@
     </div>
     <div class="row">
       <form class="form-horizontal" enctype="multipart/form-data" action="/process_search" method="POST">
+      <form class="form-horizontal" enctype="multipart/form-data" action="/search_user"  method="POST">
         <div class="row form-group">
           <div class="col-sm-5"></div>
           <div class="col-sm-2">
-            <input type="text" class="form-control" id="search">
+            <input type="text" class="form-control" id="search" name="query">
           </div>
           <div class="col-sm-1">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
           <div class="col-sm-4"></div>
         </div>
       </form>
