@@ -96,7 +96,7 @@
         <p class="bigfont" id="groupname">Group Name Here</p>
       </div>
       <div class="col-sm-12 botborder"  align="center">
-        <p>Group Description Here</p>
+        <p id="groupdesc">Group Description Here</p>
       </div>
       <div class="col-sm-12" align="center">
         <button type="button" class="btn btn-default form-control">Edit Group Name</button>
@@ -387,7 +387,8 @@
   </div>
   <script>
     $.getJSON('/group_info', function(data) {
-    $("groupname").html(data[0].name)
+    $("#groupname").html(data[0].name);
+    $("#groupdesc").html(data[0].description);
     });
   </script>
 
