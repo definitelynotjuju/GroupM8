@@ -20,7 +20,7 @@
     }
    .scroll {
      max-height:300px;
-      overflow-y:auto;
+      overflow-y:auto;  
     }
     .username {
       border-bottom: 3px solid;
@@ -53,6 +53,8 @@
 </style>
 </head>
 <body>
+  <p id="test">
+  </p>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -145,27 +147,27 @@
             <form class="form-horizontal" enctype="multipart/form-data" action="/create_group" method="post">
               <div class="row form-group">
                 <label class="col-sm-4" for="groupname">Name:</label>
-                <div class="col-sm-8">
+                <div class="col-sm-8"> 
                   <input type="text" id="groupname" name="groupname">
                 </div>
               </div>
               <div class="row form-group">
                 <label class="col-sm-4" for="groupdept">Department:</label>
-                <div class="col-sm-8">
+                <div class="col-sm-8"> 
                   <input type="text" class="control-form" id="groupdept" name="groupdept">
                 </div>
               </div>
               <div class="row form-group">
                 <label class="col-sm-4" for="groupnum">Course Number:</label>
-                <div class="col-sm-8">
+                <div class="col-sm-8"> 
                   <input type="text" id="groupnum" name="groupnum">
                 </div>
               </div>
-            </form>
+            
             <div class="row" align="center">
-              <button type="button" class="btn btn-default"><b> Create Group </b></button>
+              <button type="submit" class="btn btn-default"><b> Create Group </b></button>
             </div>
-
+	    </form>
 
             <br>
             <br>
@@ -182,7 +184,7 @@
           <h3 align="center"><b>Search for Group</b></h3>
         </div>
         <div class="row">
-          <form enctype="multipart/form-data" method="post" action="/group_search">
+          <form enctype="multipart/form-data" action="/group_search" method="post">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="department">Department</label>
@@ -195,21 +197,22 @@
                 <input type="text" class="form-control" id="coursenum" name="courseN">
               </div>
             </div>
-          </form>
         </div>
+	
         <div class="row" align="center">
           <button type="submit" class="btn btn-default"><b>Search</b></button>
         </div>
+	</form>
         <br>
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-heading" align="center"><b>Results:</b></div>
-            <div class="panel-body scroll">
+            <div class="panel-body scroll" id="results-body">
               <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10 panel panel-default">
                   <div class="panel-heading" align="center">Group 1</div>
-                   <div class="panel-body">
+                  <div class="panel-body">
                     <p>Group Members:</p>
                     <p>Group Desciption Here</p>
                   </div>
@@ -237,27 +240,42 @@
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
-              </div>
+              </div> 
             </div>
           </div>
         </div>
-
         <br>
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-heading" align="center"><b>Pending Invitations:</b></div>
             <div class="panel-body">
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
+              <br><br><br><br><br>
             </div>
           </div>
         </div>
       </div>
     </div>
-  <div>
+  </div>
+  <div></div>
+  <script>
+    $.getJSON('/group_search', function(data) {
+    $.each(data, function(i) {
+    newgroup = "";
+    newgroup.concat('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
+    $("#results-body").append(newgroup);
+    });
+    });
+    
+    <!--function group_search() {
+    alert('working');
+    <!--var dept = document.getElementById("department").value;
+    var courseN = document.getElementById("coursenum").value;
+    $.getJSON('/search_group/' + dept + '/' + courseN, function(data) {
+    $.each(data, function(i) {
+    #("#test").html("hello");
+    <!--$("#results-body").html('<div class="row"><div class="col-sm-1"></div><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p>Group Members:</p><p>' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
+    });
+    });-->
+  </script>
 </body>
 </html>

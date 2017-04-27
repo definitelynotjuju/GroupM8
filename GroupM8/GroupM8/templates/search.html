@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <div></div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var resultsJSON, jsonObj = "";
+      resultsJSON = $.getJSON('/search_user');
+      jsonObj = JSON.parse(resultsJSON);
+      $("#firstrow").append("<b> Hello there! </b>");
+      for (row in jsonObj) {
+        $("#firstrow").append("<tr><td>" + row[0] + "</td><td>" + row[1] + "</td><td>" + row[2] + "</td><td><div class=\"checkbox\" align=\"center\"><input type=\"checkbox\"></div></td></tr>");
+      }
+    });
+  </script>
   <style type="text/css">
     .rightcolumn {
       border-right: 1px solid black;
@@ -62,7 +74,7 @@
     }
     .scroll {
       max-height:100px;
-      overflow-y:auto;
+      overflow-y:auto;  
     }
     .allborders{
       border: 2px solid black;
@@ -115,6 +127,31 @@
 </style>
 </head>
 <body>
+  <p id="test">
+  </p>
+  <div>
+  </div>
+  <!--<script>
+    $("tbody").append("<tr><td></td><td></td><td></td><td></td></tr>");
+    $.getJSON('/search_user', function(data) {
+    <$.each(data, function(i){
+		  $("#table-body").append("<tr><td>" + data[i][1] + "</td><td>" + data[i][2] + "</td><td>" + data[i][0] + "</td><td><div class=&quotcheckbox&quot align=&quotcenter&quot><input type=&quotcheckbox&quot></div></td></tr>");
+		  $("tbody").append("<tr><td>hello</td><td></td><td></td><td></td></tr>");
+    });
+    });
+  </script>-->
+  <!--<script>
+    alert('Working');
+    $(document).ready(function(){
+      var resultsJSON, jsonObj = "";
+      resultsJSON = $.getJSON('/search_user');
+      jsonObj = JSON.parse(resultsJSON);
+      $("p").append("<b> Hello there! </b>");
+      for (row in jsonObj) {
+        $("#table-body").append("<tr><td>" + row[0] + "</td><td>" + row[1] + "</td><td>" + row[2] + "</td><td><div class=\"checkbox\" align=\"center\"><input type=\"checkbox\"></div></td></tr>");
+      }
+    });
+  </script>-->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -138,7 +175,6 @@
       </div>
     </div>
     <div class="row">
-      <form class="form-horizontal" enctype="multipart/form-data" action="/process_search" method="POST">
       <form class="form-horizontal" enctype="multipart/form-data" action="/search_user"  method="POST">
         <div class="row form-group">
           <div class="col-sm-5"></div>
@@ -165,127 +201,7 @@
               <th>Add?</th>
             </tr>
           </thead>
-          <tbody class="">
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>jd1</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mtm</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>jjd</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>jd1</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mtm</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>jjd</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>jd1</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mtm</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>jjd</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>jd1</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mtm</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>jjd</td>
-              <td>
-                <div class="checkbox" align="center">
-                  <input type="checkbox">
-                </div>
-              </td>
-            </tr>
+          <tbody class="" id="table-body">
           </tbody>
         </table>
         </form>
@@ -299,7 +215,17 @@
       </div>
       <div class="col-sm-3"></div>
     </div>
-  </div>
+    </div>
 
+   <div>
+  </div>
+  <script>
+    $.getJSON('/search_user', function(data) {
+    $.each(data, function(i){
+		  $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox"></div></td></tr>');
+    });
+    });
+  </script>
+   
 </body>
 </html>

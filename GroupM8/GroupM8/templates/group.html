@@ -25,7 +25,7 @@
     }
     .scroll {
      max-height:300px;
-      overflow-y:auto;  
+      overflow-y:auto;
     }
     .col-fixed-320 {
       margin-left: 10px;
@@ -34,7 +34,7 @@
       height:100%;
       z-index:1;
     }
-    .col-offset-400 { 
+    .col-offset-400 {
       padding-left:400px;
       z-index:0;
     }
@@ -81,7 +81,7 @@
         <a class="navbar-brand" href="#">GroupM8</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li class="active"><a href="http://www.groupm8.org/home">Home</a></li>
         <li><a href="#">Back</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -93,7 +93,7 @@
   <div class="fluid-container">
     <div class="row">
       <div class="col-sm-12"  align="center">
-        <p class="bigfont">Group Name Here</p>
+        <p class="bigfont" id="groupname">Group Name Here</p>
       </div>
       <div class="col-sm-12 botborder"  align="center">
         <p>Group Description Here</p>
@@ -253,7 +253,9 @@
         </div>
         <br>
         <div class="row" align="center">
-          <button type="button" class="btn btn-default form-control"><b> Add New Member </b></button>
+	  <form action="/search">
+            <button type="submit" class="btn btn-default form-control"><b> Add New Member </b></button>
+	  </form>
         </div>
       </div>
       <div class="col-sm-9">
@@ -293,11 +295,11 @@
               <form class="form-horizontal">
                 <div class="row form-group">
                   <label class="col-sm-1" for="groupname">Event Name:</label>
-                  <div class="col-sm-4"> 
+                  <div class="col-sm-4">
                     <input type="text" id="groupname" placeholder=" Enter Event Name">
                   </div>
                   <label class="col-sm-1" for="groupname">Description:</label>
-                  <div class="col-sm-6"> 
+                  <div class="col-sm-6">
                     <input type="textfield" id="groupdesc" placeholder=" Enter Event Description">
                   </div>
                 </div>
@@ -373,12 +375,21 @@
               <br>
               <br>
               <br>
-              <br>  
+              <br>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
+  </div>
   <div>
+  </div>
+  <script>
+    $.getJSON('/group_info', function(data) {
+    $("groupname").html(data[0].name)
+    });
+  </script>
+
 </body>
 </html>
