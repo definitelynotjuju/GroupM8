@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 #import db_functions2
 import MySQLdb
 import sys
 import json
+
+import CASClient
+#from flask_cas import CAS
+#from flask_cas import login_required
 app = Flask(__name__)
 conn = MySQLdb.connect(
         db='groupm8',
@@ -10,13 +14,34 @@ conn = MySQLdb.connect(
         passwd='333groupm8',
         host='localhost')
 c = conn.cursor()
+#cas = CAS(app, '/cas')
+#app.config['CAS_SERVER'] = 'https://fed.princeton.edu/cas'
+#app.config['CAS_AFTER_LOGIN'] = 'index'
+userid="js45"
 groupid = "12"
 dept = "COS"
 courseN = "333"
 
+@app.before_request
+def session_management():
+    session.permanent = True
+    session["userid"] = "js45"
+    session["groupid"] = "12"
+    session["dept"] = "COS"
+    session["courseN"] = "333"
+
 @app.route("/")
+#@login_required
 def index():
+    #C = CASClient.CASClient()
+    #netid = C.Authenticate()
     return render_template("login.html")
+    #return flask.render_template(
+    #    'layout.html',
+    #    username = cas.username,
+    #    display_name = cas.attributes['cas:displayName']
+    #    )
+    #return render_template("login.html")
 @app.route("/home")
 def home():
     return render_template("home.html")
@@ -49,23 +74,74 @@ def create_user():
 def search_user():
 #    conn = MySQLdb.connect(db='groupm8', user='root', passwd='333groupm8', host='localhost')
 #    c = conn.cursor()
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + dept + "' AND Courses.CourseN = '" + courseN + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + session["dept"] + "' AND Courses.CourseN = '" + session["courseN"] + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
     if c.execute(cmd) == 0:
         return "No results"
     else:
         conn.commit()
         result_set = c.fetchall()
+        result = []
         for row in result_set:
-            cmd = "SELECT * FROM Members WHERE GroupID = '" + groupid + "' AND UserID = '" + row[0] + "'"
+            cmd = "SELECT * FROM Members WHERE GroupID = '" + session["groupid"] + "' AND UserID = '" + row[0] + "'"
             if c.execute(cmd) == 0:
-                print ("%s %s %s" % (row[0], row[1], row[2]))
+                result.append(row)
         conn.commit()
        # conn.rollback()
        # conn.close()
        #f = open("/var/www/GroupM8/GroupM8/templates/file.txt", "w")
        #f.write(result_set)
-        return json.dumps(result_set)
+        return json.dumps(result)
 
+@app.route("/search_group", methods=['GET','POST'])
+def search_group():
+    result = "["
+    dept = request.form['dept']
+    courseN = request.form['courseN']
+    if dept and courseN:
+        cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND Availability = 'T'"
+        if c.execute(cmd) == 0:
+            return "No groups found for this course."
+        else:
+            result_set = c.fetchall()
+            for row in result_set:
+                cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
+                result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\", "
+                if c.execute(cmd) == 0:
+                    return json.dumps("[]")
+                else:
+                    result += "\"members\": ["
+                    members = c.fetchall()
+                    for member in members:
+                        result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
+                    result = result[:-1] + "]},"
+            result = result[:-1] + "]"
+            return result
+                    
+@app.route("/search_group/<dept>/<courseN>")
+def search_group2(dept,courseN):
+    result = "["
+    #dept = request.form['dept']
+    #courseN = request.form['courseN']
+    if dept and courseN:
+        cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = '" + dept + "' AND CourseN = '" + courseN + "' AND Availability = 'T'"
+        if c.execute(cmd) == 0:
+            return "No groups found for this course."
+        else:
+            result_set = c.fetchall()
+            for row in result_set:
+                cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
+                result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\", "
+                if c.execute(cmd) == 0:
+                    return json.dumps("[]")
+                else:
+                    result += "\"members\": ["
+                    members = c.fetchall()
+                    for member in members:
+                        result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
+                    result = result[:-1] + "]},"
+            result = result[:-1] + "]"
+            return result
+                    
 @app.route("/create_group", methods=['GET','POST'])
 def create_group():
     name = request.form['groupname']
@@ -86,8 +162,19 @@ def create_group():
         cmd = "INSERT IGNORE INTO Courses (UserID, Dept, CourseN, Availability,ID) Values ('" + userid + "', '" + dept + "', '" + courseN + "', 'T', '" + (userid + dept + courseN) + "')"
         c.execute(cmd)
         conn.commit()
-        cmd = "SELECT FROM Groups WHERE ID = '" + ID + "'"
-        c.execute(cmd)
-        return json.dumps(c.fetchall())
+        return "Completed"
+
+@app.route("/group_info")
+def group_info():
+    cmd = "SELECT Name, Description FROM Groups WHERE ID = '" + session["groupid"] + "'"
+    if c.execute(cmd) != 0:
+        result = c.fetchall()
+        return "[{\"name\": \"" + result[0][0] + "\", \"description\": \"" + result[0][1] + "\"}]"
+#@app.route("Authenticate", methods=['GET','POST'])
+#def Auth():
+#    netid = request.form['netid']
+#    C = CASClient.CASClient()
+#    netid = C.Authenticate()
+#    return "Hurray!"
 if __name__ == "__main__":
     app.run(debug=True)

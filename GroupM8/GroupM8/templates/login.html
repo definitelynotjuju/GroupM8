@@ -127,7 +127,7 @@
     </div>
     <div class="col-sm-5">
       <h3>Log In</h3>
-      <form>
+      <form enctype="multipart/form-data" action="/Authenticate" method="post">
         <div class="form-group">
             <label for="netid">Princeton net ID:</label>
             <input type="text" class="form-control" id="netid">
@@ -139,7 +139,7 @@
          <br>
          <br>
          <br>
-         <button type="button" class="btn btn-default form-control"><b>Log In</b></button>
+         <button type="submit" class="btn btn-default form-control"><b>Log In</b></button>
       </form>
   </div>
 </div>
