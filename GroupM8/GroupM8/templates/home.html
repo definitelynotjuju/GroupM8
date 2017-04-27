@@ -54,8 +54,8 @@
 
   <script>
     $(document).ready(function(){
- $("#searchbutton").click(function() {
-  alert("Working!");
+    $("#test").click(function(){
+    alert("Working!");
    <!-- $.getJSON('/search_group', function(data) {
     $.each(data, function(i) {
     newgroup = "";
@@ -80,7 +80,7 @@
   
 </head>
 <body>
-  <p id="test">
+  <p id="test">Click on this!
   </p>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -101,7 +101,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Your Groups:</b></div>
+          <div class="panel-heading" align="center" id="group1"><b>Your Groups:</b></div>
           <div class="panel-body">
             <p>Group1</p>
             <p>Group2</p>

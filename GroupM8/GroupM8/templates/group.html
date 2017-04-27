@@ -253,7 +253,7 @@
         </div>
         <br>
         <div class="row" align="center">
-            <button type="button" class="btn btn-default form-control" id="addmember" onclick="changeURL(Search, /search)"><b> Add New Member </b></button>
+            <button type="button" class="btn btn-default form-control" id="addmember" onclick="/search"><b> Add New Member </b></button>
         </div>
       </div>
       <div class="col-sm-9">
@@ -391,17 +391,6 @@
   </script>
   <div>
   </div>
-  <script>
-    function changeURL(title, url) {
-    if (typeof (history.pushState) != "undefined") {
-    var obj = { Title: title, Url: url };
-    history.pushState(obj, obj.Title, obj.Url);
-    }
-    else {
-    alert("Browser does not supprot HTML5.");
-    }
-    }
-  </script>
 
 </body>
 </html>
