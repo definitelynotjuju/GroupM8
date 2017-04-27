@@ -85,6 +85,7 @@
         <li><a href="#">Back</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+	<li><a href="#"><div id="username">Testing</div></a></li>
         <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       </ul>
     </div>
@@ -108,12 +109,7 @@
       <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-heading" align="center"><b>Members</b></div>
-          <div class="panel-body">
-            <p>Member1</p>
-            <p>Member2</p>
-            <p>Member3</p>
-            <p>Member4</p>
-            <p>Member5</p>
+          <div class="panel-body" id="members-list">
           </div>
         </div>
 
@@ -253,7 +249,8 @@
         </div>
         <br>
         <div class="row" align="center">
-            <button type="button" class="btn btn-default form-control" id="addmember" onclick="/search"><b> Add New Member </b></button>
+	  <form action = "/search">
+            <button type="submit" class="btn btn-default form-control" id="addmember"><b> Add New Member </b></button> </form>
         </div>
       </div>
       <div class="col-sm-9">
@@ -388,9 +385,25 @@
     $("#groupname").html(data[0].name);
     $("#groupdesc").html(data[0].description);
     });
+    
   </script>
   <div>
   </div>
-
+  <script>
+    $.getJSON('/user_info', function(data) {
+    alert("working");
+    });
+  </script>
+  <div>
+  </div>
+  <script>
+    $.getJSON('/group_members', function(data) {
+    $.each(data, function(i) {
+    var $member = $("<p>", {id: data[i].userid});
+    $("#members-list").append($member);
+    $("#"+data[i].userid).append(data[i].name);
+    });
+    });
+  </script>
 </body>
 </html>

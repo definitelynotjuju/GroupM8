@@ -52,8 +52,7 @@
 
   </style>
 
-  <script>
-    $(document).ready(function(){
+  <!--  $(document).ready(function(){
     $("#test").click(function(){
     alert("Working!");
    <!-- $.getJSON('/search_group', function(data) {
@@ -74,9 +73,6 @@
     <!--$("#results-body").html('<div class="row"><div class="col-sm-1"></div><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p>Group Members:</p><p>' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
     });
     });-->
-    });
-    });
-  </script>
   
 </head>
 <body>
@@ -227,7 +223,7 @@
         </div>
 	
         <div class="row" align="center">
-          <button type="button" class="btn btn-default" id="searchbutton"><b>Search</b></button>
+          <button type="button" class="btn btn-default" id="sb"><b>Search</b></button>
         </div>
 	</form>
         <br>
@@ -235,12 +231,13 @@
           <div class="panel panel-default">
             <div class="panel-heading" align="center"><b>Results:</b></div>
             <div class="panel-body scroll" id="results-body">
+	      <p id="firstrow"> </p>
               <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10 panel panel-default">
                   <div class="panel-heading" align="center">Group 1</div>
                   <div class="panel-body">
-                    <p>Group Members:</p>
+                    <p id="members1">Group Members:</p>
                     <p>Group Desciption Here</p>
                   </div>
                 </div>
@@ -284,15 +281,33 @@
     </div>
   </div>
   <div></div>
- <!-- <script>
-    $("#searchbutton").click(function() {
-    $.getJSON('/group_search', function(data) {
-    $.each(data, function(i) {
+
+<script>
+  document.getElementById("test").onclick = function() {myfunction()};
+  function myfunction() {
+    alert("Working!");
+    }
+    </script>
+
+
+
+  
+<script>
+  document.getElementById("sb").onclick = function() {searchgroup()};
+  function searchgroup() {
+  alert("You clicked me!");
+  
+    $.getJSON('/search_group', function(data) {
+  $.each(data, function(i) {
+  $("#firstrow").append('<div class="row"><div class="col-sm-10"><p>General Kenobi.</p></div></div>');
     newgroup = "";
-    newgroup.concat('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
-    $("#results-body").append(newgroup);
+    $("#first-row").append('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
+  //$("#results-body").append(newgroup);/
     });
-    });
+   });
+   $("#members1").append('<p>Hello There!</p>');
+  }
+  </script>
     
     <!--function group_search() {
     alert('working');
@@ -304,7 +319,6 @@
     <!--$("#results-body").html('<div class="row"><div class="col-sm-1"></div><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p>Group Members:</p><p>' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
     });
     });
-    });
-  </script>-->
+    });-->
 </body>
 </html>

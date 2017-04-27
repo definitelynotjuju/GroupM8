@@ -170,6 +170,26 @@ def group_info():
     if c.execute(cmd) != 0:
         result = c.fetchall()
         return "[{\"name\": \"" + result[0][0] + "\", \"description\": \"" + result[0][1] + "\"}]"
+@app.route("/group_members")
+def group_members():
+    result = "["
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + groupid + "' AND Users.UserID = Members.UserID"
+    if c.execute(cmd) == 0:
+        print("No users in given group")
+    else:
+        members = c.fetchall()
+        for member in members:
+            result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
+        result = result[:-1] + "]"
+    return result
+                                                                    
+@app.route("/user_info")
+def user_info():
+    cmd = "SELECT FirstName, LastName FROM Users WHERE UserID = '" + session["userid"] + "'"
+    if c.execute(cmd) != 0:
+        user = c.fetchone()
+        return "[{\"" + user[0] + " " + user[1] + "\"}]"
+    return "[]"
 #@app.route("Authenticate", methods=['GET','POST'])
 #def Auth():
 #    netid = request.form['netid']
@@ -177,4 +197,4 @@ def group_info():
 #    netid = C.Authenticate()
 #    return "Hurray!"
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
