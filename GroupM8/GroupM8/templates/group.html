@@ -253,9 +253,7 @@
         </div>
         <br>
         <div class="row" align="center">
-	  <form action="/search">
-            <button type="submit" class="btn btn-default form-control"><b> Add New Member </b></button>
-	  </form>
+            <button type="button" class="btn btn-default form-control" id="addmember" onclick="changeURL(Search, /search)"><b> Add New Member </b></button>
         </div>
       </div>
       <div class="col-sm-9">
@@ -390,6 +388,19 @@
     $("#groupname").html(data[0].name);
     $("#groupdesc").html(data[0].description);
     });
+  </script>
+  <div>
+  </div>
+  <script>
+    function changeURL(title, url) {
+    if (typeof (history.pushState) != "undefined") {
+    var obj = { Title: title, Url: url };
+    history.pushState(obj, obj.Title, obj.Url);
+    }
+    else {
+    alert("Browser does not supprot HTML5.");
+    }
+    }
   </script>
 
 </body>

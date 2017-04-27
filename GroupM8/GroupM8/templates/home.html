@@ -52,10 +52,11 @@
 
   </style>
 
-<script>
-  $("#searchbutton").click(function() {
-  alert)'Working!');
-    $.getJSON('/search_group', function(data) {
+  <script>
+    $(document).ready(function(){
+ $("#searchbutton").click(function() {
+  alert("Working!");
+   <!-- $.getJSON('/search_group', function(data) {
     $.each(data, function(i) {
     newgroup = "";
     newgroup.concat('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
@@ -73,6 +74,7 @@
     <!--$("#results-body").html('<div class="row"><div class="col-sm-1"></div><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p>Group Members:</p><p>' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
     });
     });-->
+    });
     });
   </script>
   
@@ -225,7 +227,7 @@
         </div>
 	
         <div class="row" align="center">
-          <button type="submit" class="btn btn-default" id="searchbutton"><b>Search</b></button>
+          <button type="button" class="btn btn-default" id="searchbutton"><b>Search</b></button>
         </div>
 	</form>
         <br>
