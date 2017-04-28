@@ -288,13 +288,13 @@
             <div class="panel-body">
               <form class="form-horizontal">
                 <div class="row form-group">
-                  <label class="col-sm-1" for="groupname">Event Name:</label>
+                  <label class="col-sm-1" for="eventname">Event Name:</label>
                   <div class="col-sm-4">
-                    <input type="text" id="groupname" placeholder=" Enter Event Name">
+                    <input type="text" id="eventname" name="eventname" placeholder=" Enter Event Name">
                   </div>
-                  <label class="col-sm-1" for="groupname">Description:</label>
+                  <label class="col-sm-1" for="eventdesc">Description:</label>
                   <div class="col-sm-6">
-                    <input type="textfield" id="groupdesc" placeholder=" Enter Event Description">
+                    <input type="textfield" id="eventdesc" name="eventdesc" placeholder=" Enter Event Description">
                   </div>
                 </div>
                 <div class="row form-group">
@@ -355,7 +355,7 @@
                 </div>
               </form>
               <div class="row" align="center">
-                <button type="button" class="btn btn-default"><b> Create Event </b></button>
+                <button type="button" class="btn btn-default" id="eventbtn"><b> Create Event </b></button>
               </div>
             </div>
           </div>
@@ -398,11 +398,18 @@
   <script>
     $.getJSON('/group_members', function(data) {
     $.each(data, function(i) {
-    var $member = $("<p>", {id: data[i].userid});
+    var member = $("<p>", {id: data[i].userid});
     $("#members-list").append($member);
     $("#"+data[i].userid).append(data[i].name);
     });
     });
+
+    document.getElementById("eventbtn").onclick = function() {createEvent()};
+      function createEvent() {
+      var name = document.getElementById("evetname").value;
+      var d = document.getElementById("day").value;
+      alert(d);
+      }
   </script>
 </body>
 </html>

@@ -55,6 +55,24 @@ def search():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/Authenticate", methods=['GET','POST'])
+def Authenticate():
+    netid = request.form['netid']
+    pwd = request.form['pwd']
+    cmd = "SELECT * FROM Users WHERE UserID = '" + netid + "' AND Password = '" + pwd + "'"
+    if c.execute(cmd) == 0:
+        conn.commit()
+        return 'Invalid Login Info'
+    else:
+        conn.commit()
+        return 'Successful Login'
+
+@app.route("/logout")
+def logout():
+    return index()
+                                        
+
 #@app.route("/process_query", methods=['GET','POST'])
 #def process_query():
 #    return request.form['query']
@@ -237,7 +255,7 @@ def check_course_availability():
 @app.route("/list_courses")
 def list_courses():
     result = "["
-    cmd = "SELECT Dept, CourseN, Availability FROM Courses WHERE Userid = mnt2"
+    cmd = "SELECT Dept, CourseN, Availability FROM Courses WHERE UserID = 'js45'"
     if c.execute(cmd) == 0:
         return "[]"
     else:
