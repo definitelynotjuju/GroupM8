@@ -162,7 +162,7 @@
             <input type="text" class="form-control" id="query" name="query">
           </div>
           <div class="col-sm-1">
-            <button type="submit" class="btn btn-default" id="sb"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
+            <button type="button" class="btn btn-default" id="sb"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
           <div class="col-sm-4"></div>
         </div>
       </form>
@@ -187,7 +187,7 @@
         </form>
         <form>
         <div class="row form-group">
-          <button type="button" class="btn btn-default col-sm-5"><b>Return to Group Page</b></button>
+          <a class="btn btn-default col-sm-5" href="http://www.groupm8.org/group" target="_parent"><b>Return to Group Page</b></a>
           <div class="col-sm-2"></div>
           <button type="button" class="btn btn-default col-sm-5"><b>Add All Selected</b></button>
         </div>
@@ -197,11 +197,14 @@
     </div>
     </div>
 
-   <div>
+   <!--<div>
   </div>
-   <!--<script>
+   <script>
      
-     $.getJSON('/search_user/', function(data) {
+     function searchuser() {
+     $("#table-body").html("");
+     var x = document.getElementById("query").value;
+     $.getJSON('/search_user/' + x, function(data) {
      $.each(data, function(i){
      $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox"></div></td></tr>');
      });
@@ -210,19 +213,24 @@
      $.getJSON('/user_info', function(data) {
      $("#username").html(data[0]);
      });
-    
-   </script>
+     }
+   </script>-->
    <div>
-   </div>-->
+   </div>
    <script>
+     window.onload = function() {searchuser()};
      document.getElementById("sb").onclick = function() {searchuser()};
      function searchuser() {
      $("#table-body").html("");
-     var query = document.getElementById("query").value;
-     $.getJSON('/search_user/' + query, function(data) {
-     alert("working");
+     var x = document.getElementById("query").value;
+     $.getJSON('/search_user/' + x, function(data) {
+     $.each(data, function(i) {
+     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox"></div></td></tr>');
+     });
      });
      }
    </script>
+
+   
 </body>
 </html>

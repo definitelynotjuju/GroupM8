@@ -240,11 +240,29 @@ def user_info():
         return "[\"" + user[0] + " " + user[1] + "\"]"
     return "[]"
 
-@app.route("/toggle_course_availability")
-def toggle_course_availability():
+@app.route("/check_course_availability")
+def check_course_availability():
     cmd = "SELECT Availability FROM Courses WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
     if c.execute(cmd) != 0:
-        return 0
+        availability = str(c.techone()[0])
+        if availability == "T":
+            return 1
+        elif avilability == "F":
+            return 0
+
+@app.route("/list_courses")
+def list_courses():
+    result = "["
+    cmd = "SELECT Dept, CourseN, Availability FROM Courses WHERE Userid = mnt2"
+    if c.execute(cmd) == 0:
+        return "[]"
+    else:
+        courses = c.fetchall()
+        for clas in courses:
+            result += "{\"dept\": \"" + clas[0] + "\", \"coursen\": \"" + clas[1] + "\", \"availability\": \"" + clas[2] + "\"},"
+        result = result[:-1] + "]"
+        return result
+        
 #@app.route("Authenticate", methods=['GET','POST'])
 #def Auth():
 #    netid = request.form['netid']

@@ -93,7 +93,6 @@ def search_user():
 
 @app.route("/search_user/<query>")
 def search_user2(query):
-    return query
     queryA = query.split()
     cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + session["dept"] + "' AND Courses.CourseN = '" + session["courseN"] + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
     if c.execute(cmd) == 0:
