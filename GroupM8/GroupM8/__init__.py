@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, session
 import MySQLdb
 import sys
 import json
+import re
 
 import CASClient
 #from flask_cas import CAS
@@ -70,28 +71,53 @@ def create_user():
     conn.commit()
     return "New user " + netid + " has been successfully created."
 
-@app.route("/search_user", methods=['GET', 'POST'])
+@app.route("/search_user/")
 def search_user():
 #    conn = MySQLdb.connect(db='groupm8', user='root', passwd='333groupm8', host='localhost')
 #    c = conn.cursor()
     cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + session["dept"] + "' AND Courses.CourseN = '" + session["courseN"] + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
     if c.execute(cmd) == 0:
-        return "No results"
+        return "[]"
     else:
-        conn.commit()
         result_set = c.fetchall()
         result = []
         for row in result_set:
             cmd = "SELECT * FROM Members WHERE GroupID = '" + session["groupid"] + "' AND UserID = '" + row[0] + "'"
             if c.execute(cmd) == 0:
                 result.append(row)
-        conn.commit()
        # conn.rollback()
        # conn.close()
        #f = open("/var/www/GroupM8/GroupM8/templates/file.txt", "w")
        #f.write(result_set)
         return json.dumps(result)
 
+@app.route("/search_user/<query>")
+def search_user2(query):
+    queryA = query.split()
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = '" + session["dept"] + "' AND Courses.CourseN = '" + session["courseN"] + "' AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
+    if c.execute(cmd) == 0:
+        return "[]"
+    else:
+        result_set = c.fetchall()
+        result = []
+        for row in result_set:
+            cmd = "SELECT * FROM Members WHERE GroupID = '" + session["groupid"] + "' AND UserID = '" + row[0] + "'"
+            add = True
+            if c.execute(cmd) == 0:
+                for i in queryA:
+                    if row[0].startswith(i):
+                        continue
+                    elif row[1].startswith(i):
+                        continue
+                    elif row[2].startswith(i):
+                        continue
+                    else:
+                        add = False
+                        break
+                if add:
+                    result.append(row)
+        return json.dumps(result)
+            
 @app.route("/search_group", methods=['GET','POST'])
 def search_group():
     result = "["
@@ -130,16 +156,10 @@ def search_group2(dept,courseN):
             result_set = c.fetchall()
             for row in result_set:
                 cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
-                result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\", "
+                result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\"}, "
                 if c.execute(cmd) == 0:
                     return json.dumps("[]")
-                else:
-                    result += "\"members\": ["
-                    members = c.fetchall()
-                    for member in members:
-                        result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
-                    result = result[:-1] + "]},"
-            result = result[:-1] + "]"
+            result = result[:-2] + "]"
             return result
                     
 @app.route("/create_group", methods=['GET','POST'])
@@ -173,23 +193,42 @@ def group_info():
 @app.route("/group_members")
 def group_members():
     result = "["
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + groupid + "' AND Users.UserID = Members.UserID"
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + session["groupid"] + "' AND Users.UserID = Members.UserID"
     if c.execute(cmd) == 0:
-        print("No users in given group")
+        return "[]"
     else:
         members = c.fetchall()
         for member in members:
             result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
         result = result[:-1] + "]"
     return result
-                                                                    
+
+@app.route("/group_members/<id>")
+def group_members2(id):
+    result = "["
+    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + id + "' AND Users.UserID = Members.UserID"
+    if c.execute(cmd) == 0:
+        return "[]"
+    else:
+        members = c.fetchall()
+        for member in members:
+            result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
+        result = result[:-1] + "]"
+        return result
+                                                        
 @app.route("/user_info")
 def user_info():
     cmd = "SELECT FirstName, LastName FROM Users WHERE UserID = '" + session["userid"] + "'"
     if c.execute(cmd) != 0:
         user = c.fetchone()
-        return "[{\"" + user[0] + " " + user[1] + "\"}]"
+        return "[\"" + user[0] + " " + user[1] + "\"]"
     return "[]"
+
+@app.route("/toggle_course_availability")
+def toggle_course_availability():
+    cmd = "SELECT Availability FROM Courses WHERE UserId = '" + userid + "' AND Dept = '" + dept + "' AND CourseN = '" + courseN + "'"
+    if c.execute(cmd) != 0:
+        return 0
 #@app.route("Authenticate", methods=['GET','POST'])
 #def Auth():
 #    netid = request.form['netid']

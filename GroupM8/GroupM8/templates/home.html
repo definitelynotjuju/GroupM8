@@ -232,7 +232,7 @@
             <div class="panel-heading" align="center"><b>Results:</b></div>
             <div class="panel-body scroll" id="results-body">
 	      <p id="firstrow"> </p>
-              <div class="row">
+             <!-- <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10 panel panel-default">
                   <div class="panel-heading" align="center">Group 1</div>
@@ -264,7 +264,7 @@
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
-              </div> 
+              </div>--> 
             </div>
           </div>
         </div>
@@ -295,17 +295,19 @@
 <script>
   document.getElementById("sb").onclick = function() {searchgroup()};
   function searchgroup() {
-  alert("You clicked me!");
-  
-    $.getJSON('/search_group', function(data) {
+  $("#results-body").html("");
+  var deptinput = document.getElementById("department").value;
+  var courseinput = document.getElementById("coursenum").value;
+  $.getJSON('/search_group/' + deptinput + '/' + courseinput, function(data) {
   $.each(data, function(i) {
-  $("#firstrow").append('<div class="row"><div class="col-sm-10"><p>General Kenobi.</p></div></div>');
-    newgroup = "";
-    $("#first-row").append('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
-  //$("#results-body").append(newgroup);/
+  $("#results-body").append('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
+  $.getJSON('/group_members/' + data[i].groupid, function(data2) {
+  $.each(data2, function(j) {
+  $("#gmems" + data[i].groupid).append('<span> ' + data2[j].name + ' ; </span>');
+  });
+  });
     });
-   });
-   $("#members1").append('<p>Hello There!</p>');
+  });
   }
   </script>
     
