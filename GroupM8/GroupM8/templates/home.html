@@ -120,9 +120,9 @@
                 <div class="col-sm-6">
                   <p><b>Looking for Group?</b></p>
                 </div>
-		
-		<script>
-		  (function(){
+		<!--<script>
+		  $(document).ready(function() courselist(){
+		  alert("Working!");
 		  $("#classrow").append("Hello there!");
 		  $.getJSON('/list_courses', function(data) {
 		  $.each(data, function(i) {
@@ -131,10 +131,9 @@
 		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '" checked></div></div>');
 		  }
 		  else if (data[i][3] == 0) {
-		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '"></div></div');
-																															 }																													 });
+		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '"></div></div');																														 }																													 });
 																															 });
-																															 })();
+																															 };
 																															 </script>
                 <!--<div class="col-sm-8">
                   <p>Class 1</p>
@@ -339,5 +338,22 @@
     });
     });
     });-->
+
+<script>
+		  (function() {
+		  alert("Working!");
+		  $("#classrow").append("Hello there!");
+		  $.getJSON('/list_courses', function(data) {
+		  $.each(data, function(i) {
+		  ${"#classrow").append("General Kenobi.");
+		  if (data[i][3] == 1) {
+		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '" checked></div></div>');
+		  }
+		  else if (data[i][3] == 0) {
+		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '"></div></div');																														 }																													 });
+																															 });
+																															 })();
+																															 </script>
+    
 </body>
 </html>
