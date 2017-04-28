@@ -59,6 +59,22 @@ def about():
 #def process_query():
 #    return request.form['query']
 
+@app.route("/Authenticate", methods=['GET','POST'])
+def Authenticate:
+    netid = request.form['netid']
+    pwd = request.form['pwd']
+    cmd = "SELECT * FROM Users WHERE UserID = '" + netid + "' AND Password = '" + pwd + "'"
+    if c.execute(cmd) == 0:
+        flash('Invalid Login Info.')
+        return index()
+    else:
+        flash('Successful Login')
+        return home()
+
+@app.route("/logout")
+def logout():
+    return index()
+
 @app.route("/create_user", methods=['GET','POST'])
 def create_user():
     netid = request.form['netid']
@@ -117,7 +133,7 @@ def search_user2(query):
                 if add:
                     result.append(row)
         return json.dumps(result)
-            
+
 @app.route("/search_group", methods=['GET','POST'])
 def search_group():
     result = "["
@@ -142,7 +158,7 @@ def search_group():
                     result = result[:-1] + "]},"
             result = result[:-1] + "]"
             return result
-                    
+
 @app.route("/search_group/<dept>/<courseN>")
 def search_group2(dept,courseN):
     result = "["
@@ -161,7 +177,7 @@ def search_group2(dept,courseN):
                     return json.dumps("[]")
             result = result[:-2] + "]"
             return result
-                    
+
 @app.route("/create_group", methods=['GET','POST'])
 def create_group():
     name = request.form['groupname']
@@ -215,7 +231,7 @@ def group_members2(id):
             result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
         result = result[:-1] + "]"
         return result
-                                                        
+
 @app.route("/user_info")
 def user_info():
     cmd = "SELECT FirstName, LastName FROM Users WHERE UserID = '" + session["userid"] + "'"
