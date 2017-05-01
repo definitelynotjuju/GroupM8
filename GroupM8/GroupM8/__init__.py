@@ -71,27 +71,11 @@ def Authenticate():
 @app.route("/logout")
 def logout():
     return index()
-                                        
+
 
 #@app.route("/process_query", methods=['GET','POST'])
 #def process_query():
 #    return request.form['query']
-
-@app.route("/Authenticate", methods=['GET','POST'])
-def Authenticate:
-    netid = request.form['netid']
-    pwd = request.form['pwd']
-    cmd = "SELECT * FROM Users WHERE UserID = '" + netid + "' AND Password = '" + pwd + "'"
-    if c.execute(cmd) == 0:
-        flash('Invalid Login Info.')
-        return index()
-    else:
-        flash('Successful Login')
-        return home()
-
-@app.route("/logout")
-def logout():
-    return index()
 
 @app.route("/create_user", methods=['GET','POST'])
 def create_user():
@@ -280,7 +264,7 @@ def list_courses():
             result += "{\"dept\": \"" + clas[0] + "\", \"coursen\": \"" + clas[1] + "\", \"availability\": \"" + clas[2] + "\"},"
         result = result[:-1] + "]"
         return result
-        
+
 #@app.route("Authenticate", methods=['GET','POST'])
 #def Auth():
 #    netid = request.form['netid']
