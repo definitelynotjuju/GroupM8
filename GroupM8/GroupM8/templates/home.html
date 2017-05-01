@@ -22,6 +22,21 @@
      max-height:300px;
       overflow-y:auto;  
     }
+    .sidebox {
+    background-color: #FF6600;
+    }
+    .pageback {
+    background: #FFFFFF;
+    }
+    .btncolor {
+    background: #E98074;
+    }
+    .approve {
+    background: green;
+    }
+    .reject {
+    background: red;
+    }
     .username {
       border-bottom: 3px solid;
     }
@@ -50,7 +65,36 @@
 }
 .navbar {min-height:30px !important;}
 
+
+    .panel-default > .panel-heading-custom {
+    background: #000000;
+    color: #fff;
+    }
+    
   </style>
+
+
+  <!--<script>
+    $(document).ready(function() {
+    alert("Running!");
+    $("input[name='course']").on('click', function(){
+    alert("Yay, I got clicked!");
+    var checked = $(this).attr('checked');
+    if(checked){
+    var value = $(this).val();
+    var vals = value.split(" ");
+    alert("Vals[1] is " + vals[1]);
+    $.post('/toggle_course_availability/js45/' +  vals[0] + '/' + vals[1], function(data){
+    if (data == '1') {
+    alert("Data successfully saved!");
+    }
+    });
+    }
+    });
+    });
+    </script>-->
+
+  
 
   <!--  $(document).ready(function(){
     $("#test").click(function(){
@@ -76,9 +120,7 @@
 
     
 </head>
-<body>
-  <p id="test">Click on this!
-  </p>
+<body class="pageback">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -89,17 +131,18 @@
         <li><a href="#">Back</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+	<li><a href="#"><div id="username"></div></a></li>
         <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="container-fluid">
+  <div class="container-fluid pageback">
     <div class="row">
       <div class="col-sm-3">
         <div class="panel panel-default">
-          <div class="panel-heading" align="center" id="group1"><b>Your Groups:</b></div>
-          <div class="panel-body">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Your Groups:</b></div>
+          <div class="panel-body sidebox" id="yourgroups">
             <p>Group1</p>
             <p>Group2</p>
             <p>Group3</p>
@@ -110,31 +153,17 @@
         </div>
 
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Your Classes:</b></div>
-          <div class="panel-body">
-            <form>
-              <div class="row" id="classrow">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Your Classes:</b></div>
+          <div class="panel-body sidebox">
+	    <form>
+              <div class="row">
                 <div class="col-sm-6">
                   <p><b>Course:</b></p>
                 </div>
                 <div class="col-sm-6">
                   <p><b>Looking for Group?</b></p>
                 </div>
-		<!--<script>
-		  $(document).ready(function() courselist(){
-		  alert("Working!");
-		  $("#classrow").append("Hello there!");
-		  $.getJSON('/list_courses', function(data) {
-		  $.each(data, function(i) {
-		  ${"#classrow").append("General Kenobi.");
-		  if (data[i][3] == 1) {
-		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '" checked></div></div>');
-		  }
-		  else if (data[i][3] == 0) {
-		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '"></div></div');																														 }																													 });
-																															 });
-																															 };
-																															 </script>
+		<div id="classrow"></div>														
                 <!--<div class="col-sm-8">
                   <p>Class 1</p>
                 </div>
@@ -174,15 +203,39 @@
                   <div class="checkbox">
                     <input type="checkbox">
                   </div>
-                </div>-->
-
+                </div>-->	
               </div>
             </form>
           </div>
         </div>
+
+	<div class="panel panel-default">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Add a Course</b></div>
+          <div class="panel-body sidebox">
+            <form class="form-horizontal" enctype="multipart/form-data" action="/add_course" method="post">
+              <div class="row form-group">
+                <label class="col-sm-4" for="coursedept">Department:</label>
+                <div class="col-sm-8"> 
+                  <input type="text" class="control-form" id="coursedept" name="coursedept">
+                </div>
+              </div>
+              <div class="row form-group">
+                <label class="col-sm-4" for="coursenum">Course Number:</label>
+                <div class="col-sm-8"> 
+                  <input type="text" id="coursenum" name="coursenum">
+                </div>
+              </div>
+            
+            <div class="row" align="center">
+              <button type="submit" class="btn btn-default btncolor"><b> Add Course </b></button>
+            </div>
+	    </form>
+          </div>
+        </div>
+	
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Create a Group</b></div>
-          <div class="panel-body">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Create a Group</b></div>
+          <div class="panel-body sidebox">
             <form class="form-horizontal" enctype="multipart/form-data" action="/create_group" method="post">
               <div class="row form-group">
                 <label class="col-sm-4" for="groupname">Name:</label>
@@ -204,19 +257,16 @@
               </div>
             
             <div class="row" align="center">
-              <button type="submit" class="btn btn-default"><b> Create Group </b></button>
+              <button type="submit" class="btn btn-default btncolor"><b> Create Group </b></button>
             </div>
 	    </form>
-
-            <br>
-            <br>
           </div>
         </div>
       </div>
       <div class="col-sm-9">
         <div class="row username">
           <div align="center">
-            <h2>Your Name Here</h2>
+            <h2 id="group1">Your Name Here</h2>
           </div>
         </div>
         <div class="row">
@@ -226,27 +276,28 @@
           <form enctype="multipart/form-data">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="department">Department</label>
-                <input type="text" class="form-control" id="department" name="dept">
+                <label for="searchdept">Department</label>
+                <input type="text" class="form-control" id="searchdept" name="dept">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="coursenum">Course Number</label>
-                <input type="text" class="form-control" id="coursenum" name="courseN">
+                <label for="searchnum">Course Number</label>
+                <input type="text" class="form-control" id="searchnum" name="courseN">
               </div>
             </div>
         </div>
 	
         <div class="row" align="center">
-          <button type="button" class="btn btn-default" id="sb"><b>Search</b></button>
+          <button type="button" class="btn btn-default btncolor" id="sb"><b>Search</b></button>
         </div>
 	</form>
         <br>
         <div class="row">
-          <div class="panel panel-default">
-            <div class="panel-heading" align="center"><b>Results:</b></div>
-            <div class="panel-body scroll" id="results-body">
+	  <div class="col-sm-1"></div>
+          <div class="col-sm-10 panel panel-default pageback">
+            <div class="panel-heading panel-heading-custom" align="center"><b>Results:</b></div>
+            <div class="panel-body scroll pageback" id="results-body">
 	      <p id="firstrow"> </p>
              <!-- <div class="row">
                 <div class="col-sm-1"></div>
@@ -286,9 +337,21 @@
         </div>
         <br>
         <div class="row">
-          <div class="panel panel-default">
-            <div class="panel-heading" align="center"><b>Pending Invitations:</b></div>
-            <div class="panel-body">
+	  <div class="col-sm-3 pageback"></div>
+          <div class="panel panel-default col-sm-6 pageback">
+            <div class="panel-heading panel-heading-custom" align="center"><b>Pending Invitations:</b></div>
+	    <form>
+            <div class="panel-body pageback">
+	      <div class="row bordered">
+		<div class="col-sm-7"><p>Group 1</p></div>
+		<div class="col-sm-3">
+		  <button type="button" class="btn btn-default approve"><b>Accept</b><span class="glyphicon glyphicon-ok"></span></button>
+		</div>
+		<div class="col-sm-2">
+		  <button type="button" class="btn btn-default reject"><b>Decline</b><span class="glyphicon glyphicon-remove"></span></button>
+		</div>
+	      </div>
+	    </form>
               <br><br><br><br><br>
             </div>
           </div>
@@ -311,12 +374,13 @@
 <script>
   document.getElementById("sb").onclick = function() {searchgroup()};
   function searchgroup() {
+  alert("Search button clicked!");
   $("#results-body").html("");
-  var deptinput = document.getElementById("department").value;
-  var courseinput = document.getElementById("coursenum").value;
+  var deptinput = document.getElementById("searchdept").value;
+  var courseinput = document.getElementById("searchnum").value;
   $.getJSON('/search_group/' + deptinput + '/' + courseinput, function(data) {
   $.each(data, function(i) {
-  $("#results-body").append('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
+  $("#results-body").append('<div class="row pageback"><div class="col-sm-1"><span class="pageback"></span></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
   $.getJSON('/group_members/' + data[i].groupid, function(data2) {
   $.each(data2, function(j) {
   $("#gmems" + data[i].groupid).append('<span> ' + data2[j].name + ' ; </span>');
@@ -339,20 +403,61 @@
     });
     });-->
 
-<script>
-		  (function() {
-		  alert("Working!");
-		  $("#classrow").append("Hello there!");
-		  $.getJSON('/list_courses', function(data) {
-		  $.each(data, function(i) {
-		  ${"#classrow").append("General Kenobi.");
-		  if (data[i][3] == 1) {
-		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '" checked></div></div>');
-		  }
-		  else if (data[i][3] == 0) {
-		  $("#classrow").append('<div class="col-sm-8"><p>' + data[i][1] + ' ' + data[i][2] + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" name="course" value="' + data[i][1] + ' ' + data[i][2] + '"></div></div') ;}														});
-			});
-			})();														 </script>
+    <script>
+      (function() {
+      $("#yourgroups").html("");
+      //alert("Running!");
+      $.getJSON('/list_groups', function(data) {
+      $.each(data, function(i) {
+      //var link = "http:\/\/www.groupm8.org\/group\/" + data[i].groupid;
+      //alert(link);
+      $("#yourgroups").append('<a href="http://www.groupm8.org/group/' + data[i].groupid + '" target="_parent"><p id="' + data[i].groupid + '"><b>' + data[i].groupname + '<b></p></a>');
+      });
+      });
+      })();
+    </script>
+
+    <script>
+      (function() {
+	  $.getJSON('/list_courses', function(data) {
+	  $.each(data, function(i) {
+	  if (data[i].availability  == "T") {
+	  $("#classrow").append('<div class="col-sm-8"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '" checked></div></div>');
+	  }
+	  else if (data[i].availability == "F") {
+					      $("#classrow").append('<div class="col-sm-8"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '"></div></div>');
+      }
+      });
+      });
+      })();
+    </script>
+
     
-</body>
+    <script>
+      $(document).ready(function() {
+      $(document).on("change", "input:checkbox", function() {
+      //alert("Clicked!");
+      //$("#group1").append("HELLO THERE");
+      var value = $(this).val();
+      var vals = value.split(" ");
+      //alert("Vals[0] is " + vals[0]);
+      //alert("Vals[1] is " + vals[1]);
+      var u = '/toggle_course_availability/' + vals[0] + '/' + vals[1];
+      //alert(u);
+      $.get(u, function(data){
+     // if (data == "1") {
+      alert("Data value is: " + data );
+     // }
+      });
+      });
+      });
+    </script>
+
+    <script>
+      $.getJSON('/user_info', function(data) {
+      $("#username").html(data[0]);
+      });
+    </script>
+
+      
 </html>

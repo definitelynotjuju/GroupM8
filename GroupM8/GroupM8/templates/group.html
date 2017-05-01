@@ -65,6 +65,29 @@
     .something {
       font-size: 120%;
     }
+    .sidebox {
+    background-color: #D8C3A5;
+    }
+    .approve {
+    background: green;
+    }
+    .reject {
+    background: red;
+    }
+    .pageback {
+    background: #EAE7DC;
+    }
+    .btncolor {
+    background: #E98074;
+    }
+    .bordered {
+    borders: black 1px;
+    }
+    .panel-default > .panel-heading-custom {
+    background: #8E8D8A;
+    color: #fff;
+    }
+    
 .navbar-nav > li > a, .navbar-brand {
     padding-top:5px !important; padding-bottom:0 !important;
     height: 30px;
@@ -74,7 +97,7 @@
 
 </style>
 </head>
-<body>
+<body class="pageback">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -93,30 +116,30 @@
 
   <div class="fluid-container">
     <div class="row">
-      <div class="col-sm-12"  align="center">
+      <div class="col-sm-12"  align="center" id="groupname2">
         <p class="bigfont" id="groupname">Group Name Here</p>
       </div>
       <div class="col-sm-12 botborder"  align="center">
         <p id="groupdesc">Group Description Here</p>
       </div>
       <div class="col-sm-12" align="center">
-        <button type="button" class="btn btn-default form-control">Edit Group Name</button>
-        <button type="button" class="btn btn-default form-control">Edit Group Description</button>
-        <button type="button" class="btn btn-default form-control">Leave Group</button>
-    <br>
+        <button type="button" class="btn btn-default form-control" id="editgroupname">Edit Group Name</button>
+        <button type="button" class="btn btn-default form-control" id="editgroupdesc">Edit Group Description</button>
+        <button type="button" class="btn btn-default form-control" id="leavegroup">Leave Group</button>
+	<br>
     </div>
     <div class="row">
       <div class="col-sm-3">
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Members</b></div>
-          <div class="panel-body" id="members-list">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Members</b></div>
+          <div class="panel-body sidebox" id="members-list">
           </div>
         </div>
 
 
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Pending Requests to Join</b></div>
-          <div class="panel-body">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Pending Requests to Join</b></div>
+          <div class="panel-body sidebox">
             <form>
               <div class="row">
                 <div class="col-sm-6">
@@ -194,8 +217,8 @@
         </div>
 
         <div class="panel panel-default">
-          <div class="panel-heading" align="center"><b>Pending Invitations to Join</b></div>
-          <div class="panel-body">
+          <div class="panel-heading panel-heading-custom" align="center"><b>Pending Invitations to Join</b></div>
+          <div class="panel-body sidebox">
             <form>
               <div class="row">
                 <div class="col-sm-7">
@@ -238,25 +261,21 @@
         </div>
 
         <div class="row something" align="center">
-          <span>Accepting outside applications? </span>
+          <span id="acceptingapps">Accepting outside applications? </span>
           &nbsp;
           &nbsp;
           &nbsp;
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">Yes</label>
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">No</label>
         </div>
         <br>
         <div class="row" align="center">
-            <a class="btn btn-default form-control" id="addmember" href="http://www.groupm8.org/search" target="_parent"><b> Add New Member </b></a>
+            <a class="btn btn-default form-control btncolor" id="addmember" href="http://www.groupm8.org/search" target="_parent"><b> Add New Member </b></a>
         </div>
       </div>
       <div class="col-sm-9">
         <div class="row">
           <div class="panel panel-default">
-            <div class="panel-heading" align="center"><h4>Pinned Events</h4></div>
-             <div class="panel-body scroll">
+            <div class="panel-heading panel-heading-custom" align="center"><h4>Pinned Events</h4></div>
+             <div class="panel-body scroll pageback">
               <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10 panel panel-default">
@@ -284,9 +303,9 @@
           </div>
         <div class="row">
           <div class="panel panel-default">
-            <div class="panel-heading" align="center"><h4>Create Event</h4></div>
-            <div class="panel-body">
-              <form class="form-horizontal">
+            <div class="panel-heading panel-heading-custom" align="center"><h4>Create Event</h4></div>
+            <div class="panel-body pageback">
+              <form class="form-horizontal" enctype="multipart/form-data" action="/add_event" method="post">
                 <div class="row form-group">
                   <label class="col-sm-1" for="eventname">Event Name:</label>
                   <div class="col-sm-4">
@@ -301,61 +320,61 @@
                   <div class="col-sm-3">
                   <label for="day">Day:</label>
                   <select class="form-control" id="day">
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                    <option>Sunday</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option vlaue="Sunday">Sunday</option>
                   </select>
                   </div>
                   <div class="col-sm-6">
                   <label for="hour">Time:</label>
                   <select class="form-control" id="hour">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
                   </select>
                   <select class="form-control" id="minutes">
-                    <option>00</option>
-                    <option>05</option>
-                    <option>10</option>
-                    <option>15</option>
-                    <option>20</option>
-                    <option>25</option>
-                    <option>30</option>
-                    <option>35</option>
-                    <option>40</option>
-                    <option>45</option>
-                    <option>50</option>
-                    <option>55</option>
+                    <option value="00">00</option>
+                    <option value="05">05</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
                   </select>
                   <select class="form-control" id="ampm">
-                    <option>AM</option>
-                    <option>PM</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
                   </select>
                   </div>
                   <div class="col-sm-3">
                   <label for="repeating">Repeating?</label>
                   <select class="form-control" id="repeating">
-                    <option>Repeating</option>
-                    <option>Not Repeating</option>
+                    <option value="T">Repeating</option>
+                    <option value="F">Not Repeating</option>
                   </select>
                 </div>
                 </div>
               </form>
               <div class="row" align="center">
-                <button type="button" class="btn btn-default" id="eventbtn"><b> Create Event </b></button>
+                <button type="button" class="btn btn-default btncolor" id="eventbtn"><b> Create Event </b></button>
               </div>
             </div>
           </div>
@@ -381,6 +400,7 @@
   </div>
   <script>
     $.getJSON('/group_info', function(data) {
+    var $gname = $("<p>", {"class": "bigfont"});
     $("#groupname").html(data[0].name);
     $("#groupdesc").html(data[0].description);
     });
@@ -391,14 +411,18 @@
   <div>
   </div>
   <script>
-    
+    /*
+    $.getJSON('/list_events/name/desc/day/hour/min/repeating', function(data) {
+
+    });
+    */
   </script>
   <div>
   </div>
   <script>
     $.getJSON('/group_members', function(data) {
     $.each(data, function(i) {
-    var member = $("<p>", {id: data[i].userid});
+    var $member = $("<p>", {id: data[i].userid});
     $("#members-list").append($member);
     $("#"+data[i].userid).append(data[i].name);
     });
@@ -406,8 +430,44 @@
 
     document.getElementById("eventbtn").onclick = function() {createEvent()};
       function createEvent() {
-      alert("working");
+      var eventn = document.getElementById("eventname").value;
+      var eventd = document.getElementById("eventdesc").value;
+      var d = document.getElementById("day").value;
+      var h = document.getElementById("hour").value;
+      var m = document.getElementById("minutes").value;
+      var r = document.getElementById("repeating").value;
+      alert(m);
       }
   </script>
+
+  
+  <script>
+    (function() {
+    $.get('/check_group_availability', function(data) {
+    if (data == "T") {
+    $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" checked>Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no">No</label>');
+    }
+    else if (data == "F") {
+    $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes">Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no" checked>No</label>');
+    }
+    else {
+    alert("Error: value of data is: " + data);
+    }
+    });
+    })();
+  </script>
+
+  <script>
+    $(document).ready(function() {
+    $(document).on("change", "input:radio",function() {
+    alert("Clicked!");
+    var value = $(this).val();
+    $.get('/toggle_group_availability', function(data){
+    alert("Group availability is now: " + data);
+    });
+    });
+    });
+  </script>
+  
 </body>
 </html>
