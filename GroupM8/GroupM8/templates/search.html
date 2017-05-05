@@ -142,7 +142,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li><a href="#"><div id="username"></div></a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+        <li><a href="http://www.groupm8.org/logout" target="_parent"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       </ul>
     </div>
   </nav>
@@ -189,7 +189,7 @@
         <div class="row form-group">
           <a class="btn btn-default col-sm-5" href="http://www.groupm8.org/group" target="_parent"><b>Return to Group Page</b></a>
           <div class="col-sm-2"></div>
-          <button type="button" class="btn btn-default col-sm-5"><b>Add All Selected</b></button>
+          <button type="button" class="btn btn-default col-sm-5" name="addAll" id="addAll"><b>Add All Selected</b></button>
         </div>
       </form>
       </div>
@@ -225,11 +225,29 @@
      var x = document.getElementById("query").value;
      $.getJSON('/search_user/' + x, function(data) {
      $.each(data, function(i) {
-     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox"></div></td></tr>');
+     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox" id="' + data[i][0] + '" name="checked"></div></td></tr>');
      });
      });
      }
    </script>
+   
+   <script>
+     $(document).ready(function () {
+     $(document).on("click", "#addAll", function() {
+     sendInvitations();
+     searchuser();
+     });
+     });
+     function sendInvitations() {
+     var $checkedBoxes = $("input[name='checked']:checked");
+     $checkedBoxes.each( function() {
+     var uid = $(this).attr('id');
+     $.get('/send_invitation/' + uid, function(data) {
+     });
+     });
+     }
+   </script>
+   
    <div>
    </div>
 

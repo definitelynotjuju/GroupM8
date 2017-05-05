@@ -19,8 +19,19 @@
       max-width: none;
     }
    .scroll {
+    max-height:300px;
+    min-height:200px;
+      overflow-y:auto;  
+    }
+    .groupscroll {
      max-height:300px;
       overflow-y:auto;  
+    }
+    .classscroll {
+    max-height:200px;
+    min-height:200px;
+    overflow-y:auto;
+    overflow-x: hidden;
     }
     .sidebox {
     background-color: #FF6600;
@@ -29,7 +40,9 @@
     background: #FFFFFF;
     }
     .btncolor {
-    background: #E98074;
+    background: #2F4F4F;
+    color: #FFFFFF;
+    border-color: #000000;
     }
     .approve {
     background: green;
@@ -124,15 +137,14 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">GroupM8</a>
+        <a class="navbar-brand" href="">GroupM8</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Back</a></li>
+        <li class="active"><a href="">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li><a href="#"><div id="username"></div></a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+        <li><a href="http://www.groupm8.org/logout"><span class="glyphicon glyphicon-log-out"></span>Log Out</a></li>
       </ul>
     </div>
   </nav>
@@ -154,7 +166,7 @@
 
         <div class="panel panel-default">
           <div class="panel-heading panel-heading-custom" align="center"><b>Your Classes:</b></div>
-          <div class="panel-body sidebox">
+          <div class="panel-body sidebox classscroll">
 	    <form>
               <div class="row">
                 <div class="col-sm-6">
@@ -163,7 +175,9 @@
                 <div class="col-sm-6">
                   <p><b>Looking for Group?</b></p>
                 </div>
-		<div id="classrow"></div>														
+		<div class="container-fluid">
+		  <div id="classrow"></div>
+		</div>
                 <!--<div class="col-sm-8">
                   <p>Class 1</p>
                 </div>
@@ -266,7 +280,7 @@
       <div class="col-sm-9">
         <div class="row username">
           <div align="center">
-            <h2 id="group1">Your Name Here</h2>
+            <h2 id="group1"></h2>
           </div>
         </div>
         <div class="row">
@@ -341,19 +355,21 @@
           <div class="panel panel-default col-sm-6 pageback">
             <div class="panel-heading panel-heading-custom" align="center"><b>Pending Invitations:</b></div>
 	    <form>
-            <div class="panel-body pageback">
-	      <div class="row bordered">
-		<div class="col-sm-7"><p>Group 1</p></div>
-		<div class="col-sm-3">
-		  <button type="button" class="btn btn-default approve"><b>Accept</b><span class="glyphicon glyphicon-ok"></span></button>
+              <div class="panel-body pageback">
+		<div id="invitations-list">
+		  <div class="row bordered">
+		    <div class="col-sm-7"><p>Group 1</p></div>
+		    <div class="col-sm-2">
+		      <button type="button" class="btn btn-default approve"><b></b><span class="glyphicon glyphicon-ok"></span></button>
+		    </div>
+		    <div class="col-sm-2">
+		      <button type="button" class="btn btn-default reject"><b></b><span class="glyphicon glyphicon-remove"></span></button>
+		    </div>
+		  </div>
 		</div>
-		<div class="col-sm-2">
-		  <button type="button" class="btn btn-default reject"><b>Decline</b><span class="glyphicon glyphicon-remove"></span></button>
-		</div>
-	      </div>
 	    </form>
-              <br><br><br><br><br>
-            </div>
+	    <br><br><br><br><br>
+	    </div>
           </div>
         </div>
       </div>
@@ -366,9 +382,9 @@
   function myfunction() {
     alert("Working!");
     }
-    </script>
+</script>
 
-
+<div></div>
 
   
 <script>
@@ -380,7 +396,7 @@
   var courseinput = document.getElementById("searchnum").value;
   $.getJSON('/search_group/' + deptinput + '/' + courseinput, function(data) {
   $.each(data, function(i) {
-  $("#results-body").append('<div class="row pageback"><div class="col-sm-1"><span class="pageback"></span></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
+  $("#results-body").append('<div class="row pageback"><div class="col-sm-1"><span class="pageback"></span></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p><p><button type="button" class="btn btn-default btncolor" name="join" value="' + data[i].groupid + '"><b>Join</b><span class="glyphicon glyphicon-ok"></span></button></p></div></div><div class="col-sm-1"></div></div>');
   $.getJSON('/group_members/' + data[i].groupid, function(data2) {
   $.each(data2, function(j) {
   $("#gmems" + data[i].groupid).append('<span> ' + data2[j].name + ' ; </span>');
@@ -403,33 +419,35 @@
     });
     });-->
 
+    <div>
+    </div>
     <script>
-      (function() {
+      function listGroups() {
       $("#yourgroups").html("");
-      //alert("Running!");
       $.getJSON('/list_groups', function(data) {
       $.each(data, function(i) {
-      //var link = "http:\/\/www.groupm8.org\/group\/" + data[i].groupid;
-      //alert(link);
       $("#yourgroups").append('<a href="http://www.groupm8.org/group/' + data[i].groupid + '" target="_parent"><p id="' + data[i].groupid + '"><b>' + data[i].groupname + '<b></p></a>');
       });
       });
-      })();
+      }listGroups();
     </script>
 
+    <div>
+    </div>
     <script>
-      (function() {
-	  $.getJSON('/list_courses', function(data) {
+      function listcourses() {
+      $.getJSON('/list_courses', function(data) {
+      $("#classrow").html('');
 	  $.each(data, function(i) {
 	  if (data[i].availability  == "T") {
-	  $("#classrow").append('<div class="col-sm-8"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '" checked></div></div>');
+	  $("#classrow").append('<div class="row"><div class="col-sm-5"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '" checked></div></div><div class="col-sm-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' ' + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-sm-2"><span> </span></div></div>');
 	  }
 	  else if (data[i].availability == "F") {
-					      $("#classrow").append('<div class="col-sm-8"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-4"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '"></div></div>');
+					      $("#classrow").append('<div class="row"><div class="col-sm-5"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-sm-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '"></div></div><div class="col-sm-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' '  + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-sm-2"></div></div>');
       }
       });
       });
-      })();
+      } listcourses();
     </script>
 
     
@@ -453,9 +471,67 @@
       });
     </script>
 
+    <div></div>
+    <script>
+      $(document).ready(function() {
+      //$("button[name='course']").on("click", function() {
+      //$("button[name='course']").click(function() {
+      $(document).on("click", "button[name='course']", function() {
+      alert("Clicked the remove button.");
+      var value = $(this).val();
+      var vals = value.split(" ");
+      var x = '/remove_course/' + vals[0] + '/' + vals[1];
+      $.get(x, function(data){
+      alert(data);
+      listcourses();
+      });
+      });
+      });
+    </script>
+      
+
     <script>
       $.getJSON('/user_info', function(data) {
       $("#username").html(data[0]);
+      $("#group1").html(data[0]);
+      });
+    </script>
+
+    <script>
+      function listInvitations() {
+      $("#invitations-list").html("");
+      $.getJSON('/list_user_requests', function(data) {
+      $.each(data, function(i) {
+      $("#invitations-list").append('<div class="row bordered"><div class="col-sm-7"><p>' + data[i].groupname + '</p></div><div class="col-sm-2"><button name="accept" value="' + data[i].requestid + '" type="button" class="btn btn-default approve"><span class="glyphicon glyphicon-ok"></span></button></div><div class="col-sm-2"><button name="reject" value="' + data[i].requestid + '" type="button" class="btn btn-default reject"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
+      });
+      });
+      }
+    </script>
+    
+    <script>
+      window.onload = function() {
+      listInvitations();
+      }
+      $(document).ready( function() {
+      $(document).on("click", "button[name='accept']", function() {
+      var rid = $(this).val();
+      $.get('/process_request/' + rid + '/A', function(data) {
+      listGroups();
+      listInvitations();
+      });
+      });
+      $(document).on("click", "button[name='reject']", function() {
+      var rid2 = $(this).val();
+      $.get('/process_request/' + rid2 + '/R', function(data) {
+      listInvitations();
+      });
+      });
+      $(document).on("click", "button[name='join']", function() {
+      var gid = $(this).val();
+      $.get('/send_request/' + gid, function(data) {
+      searchgroup();
+      });
+      });
       });
     </script>
 
