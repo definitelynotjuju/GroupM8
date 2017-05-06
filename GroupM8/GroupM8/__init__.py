@@ -242,7 +242,7 @@ def search_group():
     if dept and courseN:
         cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
         if c.execute(cmd, (dept, courseN,)) == 0:
-            return "No groups found for this course."
+            return "F"
         else:
             result_set = c.fetchall()
             for row in result_set:
@@ -278,16 +278,13 @@ def search_group2(dept,courseN):
     if dept and courseN:
         cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
         if c.execute(cmd, (dept, courseN,)) == 0:
-            return "No groups found for this course."
+            return "F"
         else:
             result_set = c.fetchall()
             for row in result_set:
                 cmd = "SELECT * FROM Requests WHERE GroupID = %s AND UserID = %s"
-                if c.execute(cmd, (row[0],uid,)) == 0:
-                    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
+                if c.execute(cmd, (uid, row[0])) == 0:
                     result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\"}, "
-                    if c.execute(cmd) == 0:
-                        return json.dumps("[]")
             result = result[:-2] + "]"
             return result
 
@@ -306,7 +303,7 @@ def create_group():
     uid = session["userid"]
 
     if name and dept and courseN:
-        cmd = "INSERT INTO Groups (Name,Dept,CourseN,Availability,Description) VALUES (%s, %s, %s, 'T', '')"
+        cmd = "INSERT INTO Groups (Name,Dept,CourseN,Availability,Description) VALUES (%s, %s, %s, 'T', 'No description (yet)')"
         c.execute(cmd, (name, dept, courseN,))
         conn.commit()
         cmd = "SELECT MAX(ID) FROM Groups"
@@ -508,7 +505,7 @@ def remove_course(dept, coursen):
     return 'UNABLE TO REMOVE COURSE'
 
 @app.route("/remove_group")
-def remove_group(dept, coursen):
+def remove_group():
     conn = MySQLdb.connect(
                 db='groupm8',
                 user='root',
@@ -518,17 +515,17 @@ def remove_group(dept, coursen):
 
     uid = session["userid"]
     groupid = session["groupid"]
-    cmd = "DELETE FROM Member WHERE GroupID = %s AND UserID = %s"
+    cmd = "DELETE FROM Members WHERE GroupID = %s AND UserID = %s"
     if c.execute(cmd, (groupid, uid)) != 0:
         conn.commit()
     else:
         return 'UNABLE TO REMOVE GROUP'
-    cmd = "SELECT * FROM Member WHERE GroupID = %s'"
-    if c.execute(cmd, (groupid)) == 0:
+    cmd = "SELECT * FROM Members WHERE GroupID = %s"
+    if c.execute(cmd, (groupid,)) == 0:
         cmd = "DELETE FROM Groups WHERE ID = %s"
-        if c.execute(cmd, (groupid)) != 0:
+        if c.execute(cmd, (groupid),) != 0:
             conn.commit()
-    return render_template("home.html") 
+    return "success!"
     
 
 
@@ -592,10 +589,10 @@ def list_groups():
     else:
         result_set = c.fetchall()
         for row in result_set:
-            cmd = "SELECT Name FROM Groups WHERE ID = %s"
+            cmd = "SELECT Name, Dept, CourseN FROM Groups WHERE ID = %s"
             c.execute(cmd, (row[0],))
             groupName = c.fetchone()
-            result += "{\"groupid\": \"" + row[0] + "\", \"groupname\": \"" + groupName[0] + "\"}, "
+            result += "{\"groupid\": \"" + row[0] + "\", \"groupname\": \"" + groupName[0] + "\", \"groupdept\": \"" + groupName[1] + "\", \"groupcoursenum\": \"" + groupName[2] +  "\"}, "
         return result[:-2] + "]"
 
 @app.route("/list_events")
@@ -757,6 +754,23 @@ def send_request(gid):
     c.execute(cmd, (uid, gid, gid + uid,))
     conn.commit()
     return "Success"
+
+@app.route("/edit_group_text", methods=['POST'])
+def edit_group_text():
+    conn = MySQLdb.connect(
+        db='groupm8',
+        user='root',
+        passwd='333groupm8',
+        host='localhost')
+    c = conn.cursor()
+    name = request.form['editname']
+    desc = request.form['editdesc']
+    gid = session["groupid"]
+    cmd = "UPDATE Groups SET Name=%s, Description=%s WHERE ID=%s)"
+    if c.execute(cmd, (name, desc, gid,)) != 0:
+        return "Success!"
+    else:
+        return "Failure!"
 
 #@app.route("Authenticate", methods=['GET','POST'])
 #def Auth():

@@ -224,7 +224,7 @@ def search_group():
     if dept and courseN:
         cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
         if c.execute(cmd, (dept, courseN,)) == 0:
-            return "No groups found for this course."
+            return "F"
         else:
             result_set = c.fetchall()
             for row in result_set:
@@ -260,16 +260,13 @@ def search_group2(dept,courseN):
     if dept and courseN:
         cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
         if c.execute(cmd, (dept, courseN,)) == 0:
-            return "No groups found for this course."
+            return "F"
         else:
             result_set = c.fetchall()
             for row in result_set:
                 cmd = "SELECT * FROM Requests WHERE GroupID = %s AND UserID = %s"
-                if c.execute(cmd, (row[0],uid,)) == 0:
-                    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
+                if c.execute(cmd, (uid, row[0])) == 0:
                     result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\"}, "
-                    if c.execute(cmd) == 0:
-                        return json.dumps("[]")
             result = result[:-2] + "]"
             return result
                     
@@ -461,13 +458,35 @@ def remove_course(dept, coursen):
     c = conn.cursor()
 
     uid = session["userid"]
-    #department = dept.upper()
     cmd = "DELETE FROM Courses WHERE UserID = %s AND Dept = %s AND CourseN = %s"
     if c.execute(cmd, (uid, dept.upper(), coursen,)) != 0:
         conn.commit()
         return "Success!"
     return 'UNABLE TO REMOVE COURSE'
 
+@app.route("/remove_group")
+def remove_group():
+    conn = MySQLdb.connect(
+                db='groupm8',
+                user='root',
+                passwd='333groupm8',
+                host='localhost')
+    c = conn.cursor()
+
+    uid = session["userid"]
+    groupid = session["groupid"]
+    cmd = "DELETE FROM Members WHERE GroupID = %s AND UserID = %s"
+    if c.execute(cmd, (groupid, uid)) != 0:
+        conn.commit()
+    else:
+        return 'UNABLE TO REMOVE GROUP'
+    cmd = "SELECT * FROM Members WHERE GroupID = %s"
+    if c.execute(cmd, (groupid,)) == 0:
+        cmd = "DELETE FROM Groups WHERE ID = %s"
+        if c.execute(cmd, (groupid),) != 0:
+            conn.commit()
+    return "success!"
+    
 
 
 @app.route("/list_courses")
@@ -682,10 +701,10 @@ def send_request(gid):
         passwd='333groupm8',
         host='localhost')
     c = conn.cursor()
-
+    gid = str(gid)
     uid = session["userid"]
     cmd = "INSERT IGNORE INTO Requests (UserID, GroupID, Type, ID) VALUES (%s, %s, 'U', %s)"
-    c.execute(cmd, (uid, gid, gdi + uid,))
+    c.execute(cmd, (uid, gid, gid + uid,))
     conn.commit()
     return "Success"
 
