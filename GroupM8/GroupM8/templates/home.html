@@ -11,25 +11,24 @@
     .rightcolumn {
       border-right: 1px solid black;
     }
-    .container {
-      padding-right: 0px;
-      padding-left: 0px;
-      margin-right: 0px;
-      margin-left: 0px;
-      max-width: none;
+
+    .checkbox {
+    margin: 0 0 0 0;
     }
+   
    .scroll {
     max-height:300px;
-    min-height:200px;
       overflow-y:auto;  
     }
     .groupscroll {
-     max-height:300px;
-      overflow-y:auto;  
+     max-height:160px;
+    overflow-y:auto;
+    min-height: 160px;
+    overflow-x:hidden;
     }
     .classscroll {
-    max-height:200px;
-    min-height:200px;
+    max-height:160px;
+    min-height:160px;
     overflow-y:auto;
     overflow-x: hidden;
     }
@@ -71,6 +70,15 @@
       margin-right: 0px;
     }
 
+    .group {
+    border: 1px solid;
+    border-radius: 25px;
+    margin: 1px;
+    background-color: #2F4F4F;
+    text-align: center;
+    vertical-align: middle;
+    }
+
 
     .navbar-nav > li > a, .navbar-brand {
     padding-top:5px !important; padding-bottom:0 !important;
@@ -85,51 +93,6 @@
     }
     
   </style>
-
-
-  <!--<script>
-    $(document).ready(function() {
-    alert("Running!");
-    $("input[name='course']").on('click', function(){
-    alert("Yay, I got clicked!");
-    var checked = $(this).attr('checked');
-    if(checked){
-    var value = $(this).val();
-    var vals = value.split(" ");
-    alert("Vals[1] is " + vals[1]);
-    $.post('/toggle_course_availability/js45/' +  vals[0] + '/' + vals[1], function(data){
-    if (data == '1') {
-    alert("Data successfully saved!");
-    }
-    });
-    }
-    });
-    });
-    </script>-->
-
-  
-
-  <!--  $(document).ready(function(){
-    $("#test").click(function(){
-    alert("Working!");
-   <!-- $.getJSON('/search_group', function(data) {
-    $.each(data, function(i) {
-    newgroup = "";
-    newgroup.concat('<div class="row"><div class="col-sm-1"></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i][2] + '</div><div class="panel-body"><p>Group Members: ' + data[i][4][1] + '</p><p>Group Description: ' + data[i][3] + '</p></div></div><div class="col-sm-1"></div></div>');
-    $("#results-body").append(newgroup);
-    });
-    });
-    
-    <!--function group_search() {
-    alert('working');
-    <!--var dept = document.getElementById("department").value;
-    var courseN = document.getElementById("coursenum").value;
-    $.getJSON('/search_group/' + dept + '/' + courseN, function(data) {
-    $.each(data, function(i) {
-    #("#test").html("hello");
-    <!--$("#results-body").html('<div class="row"><div class="col-sm-1"></div><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p>Group Members:</p><p>' + data[i].description + '</p></div></div><div class="col-sm-1"></div></div>');
-    });
-    });-->
 
     
 </head>
@@ -154,13 +117,8 @@
       <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-heading panel-heading-custom" align="center"><b>Your Groups:</b></div>
-          <div class="panel-body sidebox" id="yourgroups">
-            <p>Group1</p>
-            <p>Group2</p>
-            <p>Group3</p>
-            <p>Group4</p>
-            <p>Group5</p>
-
+          <div class="panel-body sidebox groupscroll" id="yourgroups">
+            <p>No Groups (Yet)</p>
           </div>
         </div>
 
@@ -169,7 +127,7 @@
           <div class="panel-body sidebox classscroll">
 	    <form>
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <p><b>Course:</b></p>
                 </div>
                 <div class="col-sm-6">
@@ -177,47 +135,7 @@
                 </div>
 		<div class="container-fluid">
 		  <div id="classrow"></div>
-		</div>
-                <!--<div class="col-sm-8">
-                  <p>Class 1</p>
-                </div>
-                <div class="col-sm-4">
-                  <div class="checkbox">
-                    <input type="checkbox">
-                  </div>
-                </div>
-                <div class="col-sm-8">
-                  <p>Class 2</p>
-                </div>
-                <div class="col-sm-4">
-                  <div class="checkbox">
-                    <input type="checkbox">
-                  </div>
-                </div>
-                <div class="col-sm-8">
-                  <p>Class 3</p>
-                </div>
-                <div class="col-sm-4">
-                  <div class="checkbox">
-                    <input type="checkbox">
-                  </div>
-                </div>
-                <div class="col-sm-8">
-                  <p>Class 4</p>
-                </div>
-                <div class="col-sm-4">
-                  <div class="checkbox">
-                    <input type="checkbox">
-                  </div>
-                </div>
-                <div class="col-sm-8">
-                  <p>Class 5</p>
-                </div>
-                <div class="col-sm-4">
-                  <div class="checkbox">
-                    <input type="checkbox">
-                  </div>
-                </div>-->	
+		</div>	
               </div>
             </form>
           </div>
@@ -226,20 +144,17 @@
 	<div class="panel panel-default">
           <div class="panel-heading panel-heading-custom" align="center"><b>Add a Course</b></div>
           <div class="panel-body sidebox">
-            <form class="form-horizontal" enctype="multipart/form-data" action="/add_course" method="post">
+            <form enctype="multipart/form-data" action="/add_course" method="post">
               <div class="row form-group">
-                <label class="col-sm-4" for="coursedept">Department:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" class="control-form" id="coursedept" name="coursedept">
-                </div>
+		<div class="col-xs-6">
+                  <label for="coursedept">Department:</label>
+                  <input type="text" class="form-control" id="coursedept" name="coursedept">
+		</div>
+		<div class="col-xs-6">
+                  <label for="coursenum">Course Number:</label> 
+                  <input type="text" class="form-control col-sm-2" id="coursenum" name="coursenum">
+		</div>
               </div>
-              <div class="row form-group">
-                <label class="col-sm-4" for="coursenum">Course Number:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" id="coursenum" name="coursenum">
-                </div>
-              </div>
-            
             <div class="row" align="center">
               <button type="submit" class="btn btn-default btncolor"><b> Add Course </b></button>
             </div>
@@ -250,26 +165,23 @@
         <div class="panel panel-default">
           <div class="panel-heading panel-heading-custom" align="center"><b>Create a Group</b></div>
           <div class="panel-body sidebox">
-            <form class="form-horizontal" enctype="multipart/form-data" action="/create_group" method="post">
+            <form enctype="multipart/form-data" action="/create_group" method="post">
               <div class="row form-group">
-                <label class="col-sm-4" for="groupname">Name:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" id="groupname" name="groupname">
+                <label class="col-xs-2" for="groupname">Name:</label>
+                <div class="col-xs-8"> 
+                  <input type="text" id="groupname" name="groupname" class="form-control">
                 </div>
               </div>
-              <div class="row form-group">
-                <label class="col-sm-4" for="groupdept">Department:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" class="control-form" id="groupdept" name="groupdept">
-                </div>
+	      <div class="row form-group">
+		<div class="col-xs-6">
+                  <label for="groupdept">Department:</label>
+                  <input type="text" class="form-control" id="groupdept" name="groupdept">
+		</div>
+		<div class="col-xs-6">
+                  <label for="groupnum">Course Number:</label> 
+                  <input type="text" class="form-control col-sm-2" id="groupnum" name="groupnum">
+		</div>
               </div>
-              <div class="row form-group">
-                <label class="col-sm-4" for="groupnum">Course Number:</label>
-                <div class="col-sm-8"> 
-                  <input type="text" id="groupnum" name="groupnum">
-                </div>
-              </div>
-            
             <div class="row" align="center">
               <button type="submit" class="btn btn-default btncolor"><b> Create Group </b></button>
             </div>
@@ -307,7 +219,7 @@
         </div>
 	</form>
         <br>
-        <div class="row">
+        <div class="row" style="display:none" id="resultsrow">
 	  <div class="col-sm-1"></div>
           <div class="col-sm-10 panel panel-default pageback">
             <div class="panel-heading panel-heading-custom" align="center"><b>Results:</b></div>
@@ -394,6 +306,8 @@
   $("#results-body").html("");
   var deptinput = document.getElementById("searchdept").value;
   var courseinput = document.getElementById("searchnum").value;
+  if (deptinput != '' && courseinput != '') {
+  $("#resultsrow").attr("style", "display:block");
   $.getJSON('/search_group/' + deptinput + '/' + courseinput, function(data) {
   $.each(data, function(i) {
   $("#results-body").append('<div class="row pageback"><div class="col-sm-1"><span class="pageback"></span></div><div class="col-sm-10 panel panel-default"><div class="panel-heading" align="center">' + data[i].name + '</div><div class="panel-body"><p id="gmems' + data[i].groupid + '">Group Members: </p><p>Group Description: ' + data[i].description + '</p><p><button type="button" class="btn btn-default btncolor" name="join" value="' + data[i].groupid + '"><b>Join</b><span class="glyphicon glyphicon-ok"></span></button></p></div></div><div class="col-sm-1"></div></div>');
@@ -404,6 +318,15 @@
   });
     });
   });
+  $.get('/search_group/' + deptinput + '/' + courseinput, function(data2) {
+  if (data2 == "F") {
+  $("#results-body").html('<div align="center"><p>No groups found.</p></div>');
+  }
+  });
+  } else {
+  $("#results-body").html('<div align="center"><p>Empty search.</p></div>');
+  }
+  
   }
   </script>
     
@@ -426,7 +349,7 @@
       $("#yourgroups").html("");
       $.getJSON('/list_groups', function(data) {
       $.each(data, function(i) {
-      $("#yourgroups").append('<a href="http://www.groupm8.org/group/' + data[i].groupid + '" target="_parent"><p id="' + data[i].groupid + '"><b>' + data[i].groupname + '<b></p></a>');
+      $("#yourgroups").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10 group"><a href="http://www.groupm8.org/group/' + data[i].groupid + '" target="_parent"><p id="' + data[i].groupid + '"><b style="color:white">' + data[i].groupname + ' (' + data[i].groupdept + ' ' + data[i].groupcoursenum + ')<b></p></a></div><div class="col-xs-1"></div></div>');
       });
       });
       }listGroups();
