@@ -1,0 +1,28 @@
+-A user searches for a group and selects a group to join. If a user in the group
+indicates that this group is not open to join after the user seraches for the group,
+the request will still go through even when the invite is sent after the group
+indicates that it is unavailable.
+
+-Likewise if a group searches for users and selects a user to send a request to,
+if the user marks themselves as unavailable before the request is sent, the
+request will still be sent.
+
+-If the last member of a group invites a user but leaves the group, causing the group
+to have no members left, the user will still receive and be able to click on the invitation.
+This appears to recreate the group, with only the first member within.
+
+-Removing a course still goes through even when the user has groups in the course that they're in.
+
+-In the same manner a user can still recieve requests even if they remove the course that
+they've been invited to. Accepting this invitation adds back the course.
+
+-Check that the urls properly redirect to the actual url (not add_course, create_group, etc.)
+(Most have been fixed, just make sure all functions are like this).
+
+-A user can simultaneously be logged in at two locations at the same time, and end up
+with overlap. Make sure only one session can be opened at a time per user, probably
+by logging out the first instance of the user.
+
+-Simultaneous editing of descriptions is problematic, they don't update
+at the same time for all users. When refreshed, changes to the most recently
+pushed update.
