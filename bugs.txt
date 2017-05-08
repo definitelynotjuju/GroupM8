@@ -13,7 +13,7 @@ This appears to recreate the group, with only the first member within.
 
 -Removing a course still goes through even when the user has groups in the course that they're in.
 
--In the same manner a user can still recieve requests even if they remove the course that
+-In the same manner a user can still receive requests even if they remove the course that
 they've been invited to. Accepting this invitation adds back the course.
 
 -Check that the urls properly redirect to the actual url (not add_course, create_group, etc.)
@@ -26,3 +26,8 @@ by logging out the first instance of the user.
 -Simultaneous editing of descriptions is problematic, they don't update
 at the same time for all users. When refreshed, changes to the most recently
 pushed update.
+
+-If two separate users try to both change a group's availability from true to false,
+the group goes from available to unavailable back to available.
+
+-
