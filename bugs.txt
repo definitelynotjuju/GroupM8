@@ -1,36 +1,60 @@
-*****************IMPORTANT******************
+***************** FIXED ******************
 -Invitations are bugged and do not work.
-*****************IMPORTANT******************
-
+***************** FIXED ******************
 
 -A user searches for a group and selects a group to join. If a user in the group
-indicates that this group is not open to join after the user seraches for the group,
-the request will still go through even when the invite is sent after the group
-indicates that it is unavailable.
+indicates that this group is not open to join after the user searches for the
+group, the request will still go through even when the invite is sent after the
+group indicates that it is unavailable.
 
 -Likewise if a group searches for users and selects a user to send a request to,
-if the user marks themselves as unavailable before the request is sent, the
+even if the user marks themselves as unavailable before the request is sent, the
 request will still be sent.
+(Both of these just need a control statement to check for availability)
 
--If the last member of a group invites a user but leaves the group, causing the group
-to have no members left, the user will still receive and be able to click on the invitation.
-This appears to recreate the group, with only the first member within.
+-If the last member of a group invites a user but leaves the group, causing the
+group to have no members left, the user will still receive and be able to click
+on the invitation. This appears to recreate the group, with only the first
+member within.
+(Remove all requests that have the groupid of the group that was deleted, and
+also when accepting requests have a control statement that checks whether the
+group exists or not.)
 
--Removing a course still goes through even when the user has groups in the course that they're in.
+-Removing a course still goes through even when the user has groups in the
+course that they're in.
 
--In the same manner a user can still receive requests even if they remove the course that
-they've been invited to. Accepting this invitation adds back the course.
+-In the same manner a user can still receive requests even if they remove the
+course that they've been invited to. Accepting this invitation adds back the
+course.
 
--Check that the urls properly redirect to the actual url (not add_course, create_group, etc.)
+I'm unsure how to fix the above two problems. We could either delete the user
+from all of the groups that they are in and remove the requests involving them
+and the course, or we prompt them to remove all offending groups and deal with
+requests first. Leaning towards prompting them.
+(We could prompt a warning, and then have it automatically deal with it if they
+choose to continue.)
+
+-Check that the urls properly redirect to the actual url (not add_course,
+create_group, etc.)
 (Most have been fixed, just make sure all functions are like this).
+This looks fixed.
 
--A user can simultaneously be logged in at two locations at the same time, and end up
-with overlap. Make sure only one session can be opened at a time per user, probably
-by logging out the first instance of the user.
+-A user can simultaneously be logged in at two locations at the same time, and
+end up with overlap. Make sure only one session can be opened at a time per
+user, probably by logging out the first instance of the user. Alternatively we
+have it such that
+
 
 -Simultaneous editing of descriptions is problematic, they don't update
 at the same time for all users. When refreshed, changes to the most recently
 pushed update.
+(This may be fine though)
 
--If two separate users try to both change a group's availability from true to false,
-the group goes from available to unavailable back to available.
+************************** FIXED ******************************
+-If two separate users try to both change a group's availability from true to
+false, the group goes from available to unavailable back to available.
+
+(Fixed, now it goes through but only changes availability when the value differs
+from the availability that it's currently set to. So a user won't even know that
+another user changed the group availability.)
+************************** FIXED ******************************
