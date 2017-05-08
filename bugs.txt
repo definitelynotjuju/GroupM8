@@ -1,3 +1,8 @@
+*****************IMPORTANT******************
+-Invitations are bugged and do not work.
+*****************IMPORTANT******************
+
+
 -A user searches for a group and selects a group to join. If a user in the group
 indicates that this group is not open to join after the user seraches for the group,
 the request will still go through even when the invite is sent after the group
@@ -29,5 +34,3 @@ pushed update.
 
 -If two separate users try to both change a group's availability from true to false,
 the group goes from available to unavailable back to available.
-
--
