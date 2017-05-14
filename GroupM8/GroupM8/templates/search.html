@@ -7,18 +7,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <div></div>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      var resultsJSON, jsonObj = "";
-      resultsJSON = $.getJSON('/search_user');
-      jsonObj = JSON.parse(resultsJSON);
-      $("#firstrow").append("<b> Hello there! </b>");
-      for (row in jsonObj) {
-        $("#firstrow").append("<tr><td>" + row[0] + "</td><td>" + row[1] + "</td><td>" + row[2] + "</td><td><div class=\"checkbox\" align=\"center\"><input type=\"checkbox\"></div></td></tr>");
-      }
-    });
-  </script>
   <style type="text/css">
     .rightcolumn {
       border-right: 1px solid black;
@@ -61,6 +49,9 @@
     }
     .allborders {
       border: 1px solid black;
+    }
+    .checkbox-inline {
+    margin: 0 0 0 0;
     }
 
     .something {
@@ -130,7 +121,8 @@
   <p id="test"></p>
   <div>
   </div>
-  
+
+  <!-- Navigation Bar -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -138,11 +130,10 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="http://www.groupm8.org/home" target="_parent">Home</a></li>
-        <li><a href="#">Back</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li><a href="#"><div id="username"></div></a></li>
-        <li><a href="http://www.groupm8.org/logout" target="_parent"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+        <li><a id="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       </ul>
     </div>
   </nav>
@@ -154,6 +145,8 @@
         <br>
       </div>
     </div>
+
+    <!-- Form for searching for users to join the group. -->
     <div class="row">
       <form class="form-horizontal" enctype="multipart/form-data">
         <div class="row form-group">
@@ -166,11 +159,14 @@
           <div class="col-sm-4"></div>
         </div>
       </form>
-    </div>
+      </div>
+
+      <!-- Results from the search. -->
     <div class="row">
       <div class="col-sm-3"></div>
       <div class="col-sm-6">
-      <h3 align="center"><u>Results</u></h3>
+	<h3 align="center"><u>Results</u></h3>
+	<h5 align="center" id="desc">Students in </h5>
         <form>
         <table class="table table-striped allborders">
           <thead>
@@ -185,10 +181,13 @@
           </tbody>
         </table>
         </form>
+	
         <form>
-        <div class="row form-group">
+          <div class="row form-group">
+	    <!-- Link back to the group page. -->
           <a class="btn btn-default col-sm-5" href="http://www.groupm8.org/group" target="_parent"><b>Return to Group Page</b></a>
           <div class="col-sm-2"></div>
+	  <!-- Button to send an invitation to all selected users. -->
           <button type="button" class="btn btn-default col-sm-5" name="addAll" id="addAll"><b>Add All Selected</b></button>
         </div>
       </form>
@@ -197,60 +196,62 @@
     </div>
     </div>
 
-   <!--<div>
-  </div>
-   <script>
-     
-     function searchuser() {
-     $("#table-body").html("");
-     var x = document.getElementById("query").value;
-     $.getJSON('/search_user/' + x, function(data) {
-     $.each(data, function(i){
-     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox"></div></td></tr>');
-     });
-     });
 
-     $.getJSON('/user_info', function(data) {
-     $("#username").html(data[0]);
-     });
-     }
-   </script>-->
-   <div>
-   </div>
+    <!-- Script for searching for members. -->
+   <div></div>
    <script>
      window.onload = function() {searchuser()};
      document.getElementById("sb").onclick = function() {searchuser()};
      function searchuser() {
+     var group = $.getJSON('/group_info', function(data) {
+     $("#desc").html('Students in ' + data[2] + ' ' + data[3] + ':');
+     });
      $("#table-body").html("");
      var x = document.getElementById("query").value;
      $.getJSON('/search_user/' + x, function(data) {
      $.each(data, function(i) {
-     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox" align="center"><input type="checkbox" id="' + data[i][0] + '" name="checked"></div></td></tr>');
+     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox-inline" align="center"><input type="checkbox" id="' + data[i][0] + '" name="checked"></div></td></tr>');
      });
      });
      }
    </script>
-   
+
+   <!-- Script for the user's information. -->
+   <div></div>
+   <script>
+     $.getJSON('/user_info', function(data) {
+     $("#username").html(data[0]);
+     });
+   </script>
+
+   <!-- Script to send invitations to all selected users. -->
    <script>
      $(document).ready(function () {
      $(document).on("click", "#addAll", function() {
-     sendInvitations();
-     searchuser();
-     });
-     });
-     function sendInvitations() {
      var $checkedBoxes = $("input[name='checked']:checked");
      $checkedBoxes.each( function() {
-     var uid = $(this).attr('id');
-     $.get('/send_invitation/' + uid, function(data) {
+     var $uid = $(this).attr('id');
+     $.get('/send_invitation/' + $uid, function(data) {
+     window.location.assign("http://www.groupm8.org/search");
      });
      });
-     }
+     });
+     });
    </script>
    
    <div>
    </div>
 
+   <!-- Script for logout button. -->
+   <script>
+     $(document).ready(function () {
+     $(document).on("click", "#logout", function() {
+     window.open("http://www.groupm8.org/logging_out", "_self");
+     });
+     });
+   </script>
+   
+   <!-- Prevents pressing enter on the search bar from refreshing the page.-->
    <script>
      $("#query").keypress(function(e) {
      if (e.keyCode == 13) {
