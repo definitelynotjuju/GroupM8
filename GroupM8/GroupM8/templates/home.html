@@ -1,331 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>GroupM8 User Page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style type="text/css">
-    .rightcolumn {
+  <head>
+    <title>GroupM8 User Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+      .rightcolumn {
       border-right: 1px solid black;
-    }
+      }
 
-    .checkbox {
-    margin: 0 0 0 0;
-    }
-   
-   .scroll {
-    max-height:300px;
+      .checkbox {
+      margin: 0 0 0 0;
+      }
+      
+      .scroll {
+      max-height:300px;
       overflow-y:auto;  
-    }
-    .groupscroll {
-     max-height:160px;
-    overflow-y:auto;
-    min-height: 160px;
-    }
-    .classscroll {
-    max-height:160px;
-    min-height:160px;
-    overflow-y:auto;
-    }
-    .sidebox {
-    background-color: #FF6600;
-    }
-    .pageback {
-    background: #FFFFFF;
-    }
-    .btncolor {
-    background: #2F4F4F;
-    color: #FFFFFF;
-    border-color: #000000;
-    }
-    .approve {
-    background: green;
-    }
-    .reject {
-    background: red;
-    }
-    .username {
+      }
+      .groupscroll {
+      max-height:160px;
+      overflow-y:auto;
+      min-height: 160px;
+      }
+      .classscroll {
+      max-height:160px;
+      min-height:160px;
+      overflow-y:auto;
+      }
+      .sidebox {
+      background-color: #FF6600;
+      }
+      .pageback {
+      background: #FFFFFF;
+      }
+      .btncolor {
+      background: #2F4F4F;
+      color: #FFFFFF;
+      border-color: #000000;
+      }
+      .approve {
+      background: green;
+      }
+      .reject {
+      background: red;
+      }
+      .username {
       border-bottom: 3px solid;
-    }
-    .col-fixed-320 {
+      }
+      .col-fixed-320 {
       margin-left: 10px;
       width:320px;
       position:fixed;
       height:100%;
       z-index:1;
-    }
-    .col-offset-400 {
+      }
+      .col-offset-400 {
       padding-left:400px;
       z-index:0;
-    }
-    .nopadrow {
+      }
+      .nopadrow {
       padding-left: 0px;
       padding-right: 0px;
       margin-left: 0px;
       margin-right: 0px;
-    }
-
-    .group {
-    text-align: center;
-    vertical-align: middle;
-    margin: 1px;
-    }
-
-    .stdfont {
-    /*font-family: Georgia, serif;
-    */
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-size: 1.2em;
-    }
-
-    .headfont {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-size: 1.3em;
-    }
+      }
+      
+      .group {
+      text-align: center;
+      vertical-align: middle;
+      margin: 1px;
+      }
+      
+      .stdfont {
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-size: 1.2em;
+      }
+      
+      .headfont {
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-size: 1.3em;
+      }
   
-    .navbar-nav > li > a, .navbar-brand {
-    padding-top:5px !important; padding-bottom:0 !important;
-    height: 30px;
-}
-.navbar {min-height:30px !important;}
-
-
-    .panel-default > .panel-heading-custom {
-    background: #000000;
-    color: #fff;
-    }
+      .navbar-nav > li > a, .navbar-brand {
+      padding-top:5px !important; padding-bottom:0 !important;
+      height: 30px;
+      }
+      .navbar {min-height:30px !important;}
+      
+      
+      .panel-default > .panel-heading-custom {
+      background: #000000;
+      color: #fff;
+      }
     
-  </style>
+    </style>
 
     
-</head>
-<body class="pageback">
+  </head>
+  <body class="pageback">
   
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="">GroupM8</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+	<div class="navbar-header">
+          <a class="navbar-brand" href="">GroupM8</a>
+	</div>
+	<ul class="nav navbar-nav">
+          <li class="active"><a href="">Home</a></li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+	  <li><a href="#"><div id="username"></div></a></li>
+          <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>Log Out</a></li>
+	</ul>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-	<li><a href="#"><div id="username"></div></a></li>
-        <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>Log Out</a></li>
-      </ul>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="container-fluid pageback">
-    <div class="row">
-      <div class="col-xs-3">
-
-	<!-- List of User's Groups -->
-	<div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Your Groups:</b></div>
-          <div class="panel-body sidebox groupscroll" id="yourgroups">
-            <p>No Groups (Yet)</p>
-          </div>
-	 </div>
-        </div>
-
-	<!-- List of User's Courses -->
-	<div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Your Courses:</b></div>
-          <div class="panel-body sidebox classscroll">
-	    <form>
-              <div class="row">
-                <div class="col-xs-3 stdfont">
-                  <p><b><u>Course:</u></b></p>
-                </div>
-                <div class="col-xs-6 stdfont">
-                  <p><b><u>Looking for Group?</u></b></p>
-                </div>
-		<div class="container-fluid">
-		  <div id="classrow"></div>
-		</div>	
+    <div class="container-fluid pageback">
+      <div class="row">
+	<div class="col-xs-3">
+	  
+	  <!-- List of User's Groups -->
+	  <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Your Groups:</b></div>
+              <div class="panel-body sidebox groupscroll" id="yourgroups">
+		<p>No Groups (Yet)</p>
               </div>
-            </form>
+	    </div>
           </div>
-        </div>
-	</div>
 
-	<!-- Form to add a course -->
-	<div class="row">
-	<div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Add a Course</b></div>
-          <div class="panel-body sidebox">
-            <form enctype="multipart/form-data" action="/add_course" method="post">
-              <div class="row form-group">
-		<div class="col-xs-6 stdfont">
-                  <label for="coursedept">Department:</label>
-                  <input type="text" class="form-control" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" id="coursedept" name="coursedept" placeholder="e.g. 'ABC'">
-		</div>
-		<div class="col-xs-6 stdfont">
-                  <label for="coursenum">Course Number:</label> 
-                  <input type="text" class="form-control col-sm-2" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" id="coursenum" name="coursenum" placeholder="123">
-		</div>
-              </div>
-            <div class="row" align="center">
-              <button type="submit" class="btn btn-default btncolor"><b> Add Course </b></button>
-            </div>
-	    </form>
-          </div>
-        </div>
-	</div>
-
-	<!-- Form to create a group -->
-	<div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Create a Group</b></div>
-          <div class="panel-body sidebox">
-            <form enctype="multipart/form-data" action="/create_group" method="post">
-              <div class="row form-group stdfont">
-                <label class="col-xs-2" for="groupname">Name:</label>
-                <div class="col-xs-8"> 
-                  <input type="text" id="groupname" maxlength="20" name="groupname" class="form-control" placeholder="Group name here">
-                </div>
-              </div>
-	      <div class="row form-group">
-		<div class="col-xs-6 stdfont">
-                  <label for="groupdept">Department:</label>
-                  <input type="text" class="form-control" id="groupdept" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" name="groupdept" placeholder="e.g. 'ABC'">
-		</div>
-		<div class="col-xs-6 stdfont">
-                  <label for="groupnum">Course Number:</label> 
-                  <input type="text" class="form-control col-sm-2" id="groupnum" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" name="groupnum" placeholder="123">
-		</div>
-              </div>
-            <div class="row" align="center">
-              <button type="submit" class="btn btn-default btncolor"><b> Create Group </b></button>
-            </div>
-	    </form>
-          </div>
-        </div>
-	</div>
-      </div>
-      <div class="col-xs-9">
-
-	<!-- User's Name (Can edit) -->
-        <div class="row username">
-	  <div class="col-xs-2"></div>
-          <div class="col-xs-8" align="center">
-            <h2 id="usernamebig" contenteditable="true">New User</h2>
-          </div>
-	  <div class="col-xs-2">
-	    <button type="button" class="btn btn-default" name="savename"><b>Save Name Edits</b></button>
-	  </div>
-        </div>
-
-	<!-- Search for groups -->
-        <div class="row">
-          <h3 align="center"><b>Group Search</b></h3>
-        </div>
-        <div class="row">
-          <form enctype="multipart/form-data">
-	    <div class="col-xs-4"></div>
-            <div class="col-xs-2 stdfont">
-              <div class="form-group">
-                <label for="searchdept">Department</label>
-                <input type="text" class="form-control" id="searchdept" name="dept" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" placeholder="'e.g. ABC'">
-              </div>
-            </div>
-            <div class="col-xs-2 stdfont">
-              <div class="form-group">
-                <label for="searchnum">Course Number</label>
-                <input type="text" class="form-control" id="searchnum" name="courseN" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" placeholder="123">
-              </div>
-            </div>
-	    <div class="col-xs-4"></div>
-        </div>
-	
-        <div class="row" align="center">
-          <button type="button" class="btn btn-default btncolor" id="sb"><b>Search Groups</b></button>
-        </div>
-	</form>
-        <br>
-
-	<!-- Search Results -->
-        <div class="row" style="display:none" id="resultsrow">
-	  <div class="col-xs-1"></div>
-          <div class="col-xs-10">
-	    <div class="panel panel-default pageback">
-            <div class="panel-heading panel-heading-custom headfont" align="center"><b>Results:</b></div>
-            <div class="panel-body scroll pageback" id="results-body">
-	      <p id="firstrow"> </p> 
-            </div>
-          </div>
-          </div>
-	</div>
-        <br>
-
-	<!-- List of upcoming events -->
-	<div class="row">
-	  <div class="col-xs-1"></div>
-	  <div class="col-xs-10">
-	    <div class="panel panel-default pageback">
-	      <div class="panel-heading panel-heading-custom headfont" align="center"><b>Upcoming Events:</b></div>
-	      <div class="panel-body pageback" id="events-body">
-
-		<div class="row"><div class="col-xs-1"></div><div class="col-xs-10"><div class=" panel panel-default"><div class="panel-heading" align="center">Event Name + Group Name (course)</div><div class="panel-body"><div class="row"><div class="col-xs-4"><p><b>Date:</b> actual date here</p></div><div class="col-xs-8"><p><b>Time: </b> actual time here</p></div></div><div class="row"><div class="col-xs-12"><p><b>Description: </b>Description here</p></div></div></div></div>
+	  <!-- List of User's Courses -->
+	  <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Your Courses:</b></div>
+              <div class="panel-body sidebox classscroll">
+		<form>
+		  <div class="row">
+                    <div class="col-xs-3 stdfont">
+                      <p><b><u>Course:</u></b></p>
+                    </div>
+                    <div class="col-xs-6 stdfont">
+                      <p><b><u>Looking for Group?</u></b></p>
+                    </div>
+		    <div class="container-fluid">
+		      <div id="classrow"></div>
+		    </div>	
 		  </div>
-		</div>
-	      </div>
-	      </div>
-	
-        <div class="row">
+		</form>
+              </div>
+            </div>
+	  </div>
 
-	  <!-- List of pending invitations from groups -->
-	  <div class="col-xs-2 pageback"></div>
-	  <div class="col-xs-3">
-          <div class="panel panel-default pageback">
-            <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Invitations:</b></div>
-	    <form>
-              <div class="panel-body pageback classscroll">
-		<div id="invitations-list">
-		  <div class="row bordered">
-		    <div class="col-xs-7"><p>Group 1</p></div>
-		    <div class="col-xs-2">
-		      <button type="button" class="btn btn-default approve"><b></b><span class="glyphicon glyphicon-ok"></span></button>
+	  <!-- Form to add a course -->
+	  <div class="row">
+	    <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Add a Course</b></div>
+              <div class="panel-body sidebox">
+		<form enctype="multipart/form-data" action="/add_course" method="post">
+		  <div class="row form-group">
+		    <div class="col-xs-6 stdfont">
+                      <label for="coursedept">Department:</label>
+                      <input type="text" class="form-control" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" id="coursedept" name="coursedept" placeholder="e.g. 'ABC'">
 		    </div>
-		    <div class="col-xs-2">
-		      <button type="button" class="btn btn-default reject"><b></b><span class="glyphicon glyphicon-remove"></span></button>
+		    <div class="col-xs-6 stdfont">
+                      <label for="coursenum">Course Number:</label> 
+                      <input type="text" class="form-control col-sm-2" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" id="coursenum" name="coursenum" placeholder="123">
+		    </div>
+		  </div>
+		  <div class="row" align="center">
+		    <button type="submit" class="btn btn-default btncolor"><b> Add Course </b></button>
+		  </div>
+		</form>
+              </div>
+            </div>
+	  </div>
+	  
+	  <!-- Form to create a group -->
+	  <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Create a Group</b></div>
+              <div class="panel-body sidebox">
+		<form enctype="multipart/form-data" action="/create_group" method="post">
+		  <div class="row form-group stdfont">
+                    <label class="col-xs-2" for="groupname">Name:</label>
+                    <div class="col-xs-8"> 
+                      <input type="text" id="groupname" maxlength="20" name="groupname" class="form-control" placeholder="Group name here">
+                    </div>
+		  </div>
+		  <div class="row form-group">
+		    <div class="col-xs-6 stdfont">
+                      <label for="groupdept">Department:</label>
+                      <input type="text" class="form-control" id="groupdept" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" name="groupdept" placeholder="e.g. 'ABC'">
+		    </div>
+		    <div class="col-xs-6 stdfont">
+                      <label for="groupnum">Course Number:</label> 
+                      <input type="text" class="form-control col-sm-2" id="groupnum" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" name="groupnum" placeholder="123">
+		    </div>
+		  </div>
+		  <div class="row" align="center">
+		    <button type="submit" class="btn btn-default btncolor"><b> Create Group </b></button>
+		  </div>
+		</form>
+              </div>
+            </div>
+	  </div>
+	</div>
+	<div class="col-xs-9">
+	  
+	  <!-- User's Name (Can edit) -->
+          <div class="row username">
+	    <div class="col-xs-2"></div>
+            <div class="col-xs-8" align="center">
+              <h2 id="usernamebig" contenteditable="true">New User</h2>
+            </div>
+	    <div class="col-xs-2">
+	      <button type="button" class="btn btn-default" name="savename"><b>Save Name Edits</b></button>
+	    </div>
+          </div>
+	  
+	  <!-- Search for groups -->
+          <div class="row">
+            <h3 align="center"><b>Group Search</b></h3>
+          </div>
+          <div class="row">
+            <form enctype="multipart/form-data">
+	      <div class="col-xs-4"></div>
+              <div class="col-xs-2 stdfont">
+		<div class="form-group">
+                  <label for="searchdept">Department</label>
+                  <input type="text" class="form-control" id="searchdept" name="dept" maxlength="3" pattern="[A-Za-z]{3,}" required title="3 letters" placeholder="'e.g. ABC'">
+		</div>
+              </div>
+              <div class="col-xs-2 stdfont">
+		<div class="form-group">
+                  <label for="searchnum">Course Number</label>
+                  <input type="text" class="form-control" id="searchnum" name="courseN" maxlength="3" pattern="[0-9]{3,}" required title="3 numbers" placeholder="123">
+		</div>
+              </div>
+	      <div class="col-xs-4"></div>
+          </div>
+	  
+          <div class="row" align="center">
+            <button type="button" class="btn btn-default btncolor" id="sb"><b>Search Groups</b></button>
+          </div>
+	  </form>
+          <br>
+	  
+	  <!-- Search Results -->
+          <div class="row" style="display:none" id="resultsrow">
+	    <div class="col-xs-1"></div>
+            <div class="col-xs-10">
+	      <div class="panel panel-default pageback">
+		<div class="panel-heading panel-heading-custom headfont" align="center"><b>Results:</b></div>
+		<div class="panel-body scroll pageback" id="results-body">
+		  <p id="firstrow"> </p> 
+		</div>
+              </div>
+            </div>
+	  </div>
+          <br>
+
+	  <!-- List of upcoming events -->
+	  <div class="row">
+	    <div class="col-xs-1"></div>
+	    <div class="col-xs-10">
+	      <div class="panel panel-default pageback">
+		<div class="panel-heading panel-heading-custom headfont" align="center"><b>Upcoming Events:</b></div>
+		<div class="panel-body pageback" id="events-body">
+		  <div class="row">
+		    <div class="col-xs-1"></div>
+		    <div class="col-xs-10">
+		      <div class=" panel panel-default">
+			<div class="panel-heading" align="center">Event Name + Group Name (course)</div>
+			<div class="panel-body">
+			  <div class="row">
+			    <div class="col-xs-4"><p><b>Date:</b> actual date here</p></div>
+			    <div class="col-xs-8"><p><b>Time: </b> actual time here</p></div>
+			  </div>
+			  <div class="row"><div class="col-xs-12"><p><b>Description: </b>Description here</p></div>
+			  </div>
+			</div>
+		      </div>
 		    </div>
 		  </div>
 		</div>
-	    </form>
-	    </div>
+	      </div>
 	    </div>
 	  </div>
-
-	  <!-- List of pending requests from the User to groups -->
-	  <div class="col-xs-2"></div>
-	  <div class="col-xs-3">
-	    <div class="panel panel-default pageback">
-            <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Requests:</b></div>
-	    <form>
-              <div class="panel-body pageback classscroll">
-		<div id="requests-list">
-		  <div class="row bordered">
-		  </div>
+	
+          <div class="row">
+		
+	    <!-- List of pending invitations from groups -->
+	    <div class="col-xs-2 pageback"></div>
+	    <div class="col-xs-3">
+	      <div class="panel panel-default pageback">
+		<div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Invitations:</b></div>
+		<form>
+		  <div class="panel-body pageback classscroll">
+		    <div id="invitations-list">
+		      <div class="row bordered">
+			<div class="col-xs-7"><p>Group 1</p></div>
+			<div class="col-xs-2">
+			  <button type="button" class="btn btn-default approve"><b></b><span class="glyphicon glyphicon-ok"></span></button>
+			</div>
+			<div class="col-xs-2">
+			  <button type="button" class="btn btn-default reject"><b></b><span class="glyphicon glyphicon-remove"></span></button>
+			</div>
+		      </div>
+		    </div>
+		</form>
 		</div>
-	    </form>
+	      </div>
 	    </div>
-	    </div>
+	    
+	    <!-- List of pending requests from the User to groups -->
+	    <div class="col-xs-2"></div>
+	    <div class="col-xs-3">
+	      <div class="panel panel-default pageback">
+		<div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Requests:</b></div>
+		<form>
+		  <div class="panel-body pageback classscroll">
+		    <div id="requests-list">
+		      <div class="row bordered">
+		      </div>
+		    </div>
+		  </div>
+		</form>
+	      </div>
             </div>
 	    <div class="col-xs-2"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-    <div></div>
+    
+<div></div>
 
 
 <!-- Refresh the page (corrects the address bar) -->  
