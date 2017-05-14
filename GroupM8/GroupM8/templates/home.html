@@ -341,12 +341,12 @@
 
 
 <!-- Refresh the page (corrects the address bar) -->  
-  {% if refresh %}
-  <div></div>
-  <script>
-    window.open("http://www.groupm8.org", "_self");
-  </script>
-  {% endif %}
+{% if refresh %}
+<div></div>
+<script>
+  window.open("http://www.groupm8.org", "_self");
+</script>
+{% endif %}
   
 
 <div></div>
@@ -380,174 +380,175 @@
   }
   
   }
-  </script>
-    
+</script>
+
 <div></div>
 
 <!-- Script for listing the groups the User is currently in. -->
-    <script>
-      function listGroups() {
-      $("#yourgroups").html("");
-      $.getJSON('/list_groups', function(data) {
-      $.each(data, function(i) {
-      $("#yourgroups").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10 group headfont"><button type="button" class="btn btn-default btncolor btn-block" value="' + data[i].groupid + '" name="group"><b>' + data[i].groupname + ' (' + data[i].groupdept + ' ' + data[i].groupcoursenum +  ')</b></button></div><div class="col-xs-1"></div></div>');
-      });
-      });
-      }listGroups();
-    </script>
-   
-    <div></div>
+<script>
+  function listGroups() {
+  $("#yourgroups").html("");
+  $.getJSON('/list_groups', function(data) {
+  $.each(data, function(i) {
+  $("#yourgroups").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10 group headfont"><button type="button" class="btn btn-default btncolor btn-block" value="' + data[i].groupid + '" name="group"><b>' + data[i].groupname + ' (' + data[i].groupdept + ' ' + data[i].groupcoursenum +  ')</b></button></div><div class="col-xs-1"></div></div>');
+  });
+  });
+  }listGroups();
+</script>
+
+<div></div>
 
 <!-- Script for listing the courses the User had added. -->
-    <script>
-      function listcourses() {
-      $.getJSON('/list_courses', function(data) {
-      $("#classrow").html('');
-	  $.each(data, function(i) {
-	  if (data[i].availability  == "T") {
-	  $("#classrow").append('<div class="row"><div class="col-xs-5 stdfont"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-xs-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '" checked></div></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' ' + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-xs-2"><span> </span></div></div>');
-	  }
-	  else if (data[i].availability == "F") {
-					      $("#classrow").append('<div class="row"><div class="col-xs-5 stdfont"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-xs-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '"></div></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' '  + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-xs-2"></div></div>');
-      }
-      });
-      });
-      } listcourses();
-    </script>
+<script>
+  function listcourses() {
+  $.getJSON('/list_courses', function(data) {
+  $("#classrow").html('');
+  $.each(data, function(i) {
+  if (data[i].availability  == "T") {
+  $("#classrow").append('<div class="row"><div class="col-xs-5 stdfont"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-xs-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '" checked></div></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' ' + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-xs-2"><span> </span></div></div>');
+  }
+  else if (data[i].availability == "F") {
+  $("#classrow").append('<div class="row"><div class="col-xs-5 stdfont"><p>' + data[i].dept + ' ' + data[i].coursen + '</p></div><div class="col-xs-3"><div class="checkbox"><input type="checkbox" class="course" value="' + data[i].dept + ' ' + data[i].coursen + '"></div></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" value="' + data[i].dept + ' '  + data[i].coursen + '" name="course"><b>Remove</b><span class="glyphicon glyphicon-remove"></span></button></div><div class="col-xs-2"></div></div>');
+  }
+  });
+  });
+  } listcourses();
+</script>
 
 <!-- Script for listing the upcoming events for the User. -->
-    <script>
-      $("#events-body").html("");
-      $.getJSON('/list_user_events', function(data) {
-      if (data=="") {
-      $("#events-body").append('<h3 align="center"> No events currently scheduled. </h3>');
-      }
-      else {
-      $.each(data, function(i) {
-      var datetime = data[i].datetime.split(' ');
-      $("#events-body").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10"><div class=" panel panel-default"><div class="panel-heading panel-heading-custom" align="center"><div class="row"><div class="col-xs-6"><b>Event: </b>' + data[i].eventname + '</div><div class="col-xs-6"><b>Group: </b>' + data[i].groupname + ' (' + data[i].dept + ' ' + data[i].courseN + ')</div></div></div><div class="panel-body"><div class="row"><div class="col-xs-4"><p><b>Date:</b> ' + datetime[0] + '</p></div><div class="col-xs-8"><p><b>Time: </b>' + datetime[1] + ' ' + datetime[2] +  '</p></div></div><div class="row"><div class="col-xs-12"><p><b>Description: </b>' + data[i].eventdesc + '</p></div></div></div></div>');
-	  });
-	  }
-	  });
-    </script>
+<script>
+  $("#events-body").html("");
+  $.getJSON('/list_user_events', function(data) {
+  if (data=="") {
+  $("#events-body").append('<h3 align="center"> No events currently scheduled. </h3>');
+  }
+  else
+  {
+  $.each(data, function(i) {
+  var datetime = data[i].datetime.split(' ');
+  $("#events-body").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10"><div class=" panel panel-default"><div class="panel-heading panel-heading-custom" align="center"><div class="row"><div class="col-xs-6"><b>Event: </b>' + data[i].eventname + '</div><div class="col-xs-6"><b>Group: </b>' + data[i].groupname + ' (' + data[i].dept + ' ' + data[i].courseN + ')</div></div></div><div class="panel-body"><div class="row"><div class="col-xs-4"><p><b>Date:</b> ' + datetime[0] + '</p></div><div class="col-xs-8"><p><b>Time: </b>' + datetime[1] + ' ' + datetime[2] +  '</p></div></div><div class="row"><div class="col-xs-12"><p><b>Description: </b>' + data[i].eventdesc + '</p></div></div></div></div>');
+  });
+  }
+  });
+</script>
 
 <!-- Script for updating course availability. -->
-    <script>
-      $(document).ready(function() {
-      $(document).on("change", "input:checkbox", function() {
-      var value = $(this).val();
-      var vals = value.split(" ");
-      var u = '/toggle_course_availability/' + vals[0] + '/' + vals[1];
-      $.get(u, function(data){
-      });
-      });
-      });
-    </script>
-    
-    <div></div>
+<script>
+  $(document).ready(function() {
+  $(document).on("change", "input:checkbox", function() {
+  var value = $(this).val();
+  var vals = value.split(" ");
+  var u = '/toggle_course_availability/' + vals[0] + '/' + vals[1];
+  $.get(u, function(data){
+  });
+  });
+  });
+</script>
+
+<div></div>
 
 <!-- Script for removing a course. -->
-    <script>
-      $(document).ready(function() {
-      $(document).on("click", "button[name='course']", function() {
-      var value = $(this).val();
-      var vals = value.split(" ");
-      if (confirm("Remove course " + vals[0] + " " + vals[1] + "?")) {
-      var x = '/remove_course/' + vals[0] + '/' + vals[1];
-      $.get(x, function(data){
-      listcourses();
-      });
-      }
-      });
-      });
-    </script>
+<script>
+  $(document).ready(function() {
+  $(document).on("click", "button[name='course']", function() {
+  var value = $(this).val();
+  var vals = value.split(" ");
+  if (confirm("Remove course " + vals[0] + " " + vals[1] + "?")) {
+  var x = '/remove_course/' + vals[0] + '/' + vals[1];
+  $.get(x, function(data){
+  listcourses();
+  });
+  }
+  });
+  });
+</script>
 
-    <div></div>
+<div></div>
 
 <!-- Script for redirecting to the group that was clicked. -->
-    <script>
-      $(document).ready(function() {
-      $(document).on("click", "button[name='group']", function() {
-      var val = $(this).val();
-      window.location.assign('http://www.groupm8.org/group/' + val);
-      });
-      });
-    </script>
-      
+<script>
+  $(document).ready(function() {
+  $(document).on("click", "button[name='group']", function() {
+  var val = $(this).val();
+  window.location.assign('http://www.groupm8.org/group/' + val);
+  });
+  });
+</script>
+
 <!-- Script for displaying the user's information. (Just the name for now) -->
-    <script>
-      $.getJSON('/user_info', function(data) {
-      $("#username").html(data[0]);
-      $("#usernamebig").html(data[0]);
-      });
-    </script>
+<script>
+  $.getJSON('/user_info', function(data) {
+  $("#username").html(data[0]);
+  $("#usernamebig").html(data[0]);
+  });
+</script>
 
 <!-- Script for listing the pending requests/invitations. -->
-    <script>
-      function listRequests() {
-      $("#invitations-list").html("");
-      $("#requests-list").html("");
-      $.getJSON('/list_user_requests', function(data) {
-      $.each(data, function(i) {
-      $("#invitations-list").append('<div class="row bordered"><div class="col-xs-7 stdfont"><p>' + data[i].groupname + '</p></div><div class="col-xs-2"><button name="accept" value="' + data[i].requestid + '" type="button" class="btn btn-default approve"><span class="glyphicon glyphicon-ok"></span></button></div><div class="col-xs-2"><button name="reject" value="' + data[i].requestid + '" type="button" class="btn btn-default reject"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
-      });
-      });
-      $.getJSON('/list_user_requests2', function(data) {
-      $.each(data, function(i) {
-      $("#requests-list").append('<div class="row bordered"><div class="col-xs-7 stdfont"><p>' + data[i].groupname + '</p></div><div class="col-xs-2"><button name="reject" value="' + data[i].requestid + '" type="button" class="btn btn-default reject"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
-      });
-      });
-      }
-    </script>
+<script>
+  function listRequests() {
+  $("#invitations-list").html("");
+  $("#requests-list").html("");
+  $.getJSON('/list_user_requests', function(data) {
+  $.each(data, function(i) {
+  $("#invitations-list").append('<div class="row bordered"><div class="col-xs-7 stdfont"><p>' + data[i].groupname + '</p></div><div class="col-xs-2"><button name="accept" value="' + data[i].requestid + '" type="button" class="btn btn-default approve"><span class="glyphicon glyphicon-ok"></span></button></div><div class="col-xs-2"><button name="reject" value="' + data[i].requestid + '" type="button" class="btn btn-default reject"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
+  });
+  });
+  $.getJSON('/list_user_requests2', function(data) {
+  $.each(data, function(i) {
+  $("#requests-list").append('<div class="row bordered"><div class="col-xs-7 stdfont"><p>' + data[i].groupname + '</p></div><div class="col-xs-2"><button name="reject" value="' + data[i].requestid + '" type="button" class="btn btn-default reject"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
+  });
+  });
+  }
+</script>
 
 <!-- Script for buttons. (logout, accept/reject invitation, join a group) -->
-    <script>
-      window.onload = function() {
-      listRequests();
-      }
-      $(document).ready( function() {
-      $(document).on("click", "#logout", function() {
-      window.open("http://www.groupm8.org/logging_out", "_self");
-      });
-      $(document).on("click", "button[name='accept']", function() {
-      var rid = $(this).val();
-      if (confirm("Accept this invitation?")) {
-      $.get('/process_request/' + rid + '/A', function(data) {
-      listGroups();
-      listRequests();
-      listcourses();
-      });
-      }
-      });
-      $(document).on("click", "button[name='reject']", function() {
-      var rid2 = $(this).val();
-      if (confirm("Reject this invitation?")) {
-      $.get('/process_request/' + rid2 + '/R', function(data) {
-      listRequests();
-      });
-      }
-      });
-      $(document).on("click", "button[name='join']", function() {
-      var gid = $(this).val();
-      $.get('/send_request/' + gid, function(data) {
-      alert("Request to join group sent.");
-      searchgroup();
-      listRequests();
-      });
-      });
-      });
-    </script>
+<script>
+  window.onload = function() {
+  listRequests();
+  }
+  $(document).ready( function() {
+  $(document).on("click", "#logout", function() {
+  window.open("http://www.groupm8.org/logging_out", "_self");
+  });
+  $(document).on("click", "button[name='accept']", function() {
+  var rid = $(this).val();
+  if (confirm("Accept this invitation?")) {
+  $.get('/process_request/' + rid + '/A', function(data) {
+  listGroups();
+  listRequests();
+  listcourses();
+  });
+  }
+  });
+  $(document).on("click", "button[name='reject']", function() {
+  var rid2 = $(this).val();
+  if (confirm("Reject this invitation?")) {
+  $.get('/process_request/' + rid2 + '/R', function(data) {
+  listRequests();
+  });
+  }
+  });
+  $(document).on("click", "button[name='join']", function() {
+  var gid = $(this).val();
+  $.get('/send_request/' + gid, function(data) {
+  alert("Request to join group sent.");
+  searchgroup();
+  listRequests();
+  });
+  });
+  });
+</script>
 
 <!-- Script for editing the User's name. -->
-    <script>
-      $(document).ready( function() {
-      $(document).on("click", "button[name='savename']", function() {
-      var editName = document.getElementById("usernamebig");
-      var name = editName.innerHTML.substr(0,40);
-      $.post('/edit_username', {editname: name}, function(data) {
-      });
-      });
-      });
-      </script>
-   
+<script>
+  $(document).ready( function() {
+  $(document).on("click", "button[name='savename']", function() {
+  var editName = document.getElementById("usernamebig");
+  var name = editName.innerHTML.substr(0,40);
+  $.post('/edit_username', {editname: name}, function(data) {
+  });
+  });
+  });
+</script>
+
 </html>
