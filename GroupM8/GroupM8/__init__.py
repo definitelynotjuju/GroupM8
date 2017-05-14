@@ -47,6 +47,7 @@ def home():
     cmd = "SELECT * FROM Users WHERE UserID = %s"
 
     if c.execute(cmd, (uid,)) == 0:
+        
         #add new user to the database
         cmd = "INSERT IGNORE INTO Users (UserID) VALUES (%s)"
         c.execute(cmd, (uid,))
@@ -161,6 +162,7 @@ def search_user():
         result_set = c.fetchall()
         result = []
         for row in result_set:
+            
             #Filter our users already in the group or have requests/invitations for the group
             gid = session["groupid"]
             cmd = "SELECT * FROM Members WHERE GroupID = %s AND UserID = %s"
@@ -199,6 +201,7 @@ def search_user2(query):
         result_set = c.fetchall()
         result = []
         for row in result_set:
+            
             #Filter out users already in the group or has a request/invitation for the group
             #Filters the remaining list with a query
             gid = session["groupid"]
@@ -240,19 +243,23 @@ def search_group2():
     courseN = request.args.get('courseN', '', type=str)
     
     if dept and courseN:
+        
         #Grabs a list of groups with the corresponding dept and courseN
         cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
         if c.execute(cmd, (dept, courseN,)) == 0:
             return "F"
         else:
+            
             #Filter out groups the user is already in and groups that the user has a request/invitation for
             result_set = c.fetchall()
+            
             for row in result_set:
                 cmd = "SELECT * FROM Members WHERE GroupID = %s AND UserID = %s"
                 if c.execute(cmd, (row[0], uid,)) == 0:
                     cmd = "SELECT * FROM Requests WHERE GroupID = %s AND UserID = %s"
                     if c.execute(cmd, (row[0], uid,)) == 0:
                         result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\"}, "
+                        
             if len(result) == 1:
                 return "F"
             result = result[:-2] + "]"
@@ -277,6 +284,7 @@ def create_group():
     uid = session["userid"]
     
     if name and dept and courseN:
+        
         #Insert a new entry into the Groups table in the database
         cmd = "INSERT INTO Groups (Name,Dept,CourseN,Availability,Description) VALUES (%s, %s, %s, 'T', 'No description (yet)')"
         c.execute(cmd, (name, dept, courseN,))
@@ -387,6 +395,7 @@ def group_members2():
 
     result = "["
     gid = request.args.get('gid', '', type=str)
+    
     #Grabs a list of Users that are in the given group (from the id)
     cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = %s AND Users.UserID = Members.UserID"
     if c.execute(cmd, (gid,)) == 0:
@@ -434,6 +443,7 @@ def toggle_course_availability(dept, coursen):
     cmd = "SELECT Availability FROM Courses WHERE UserId = %s AND Dept = %s AND CourseN = %s"
     if c.execute(cmd, (uid, dept, coursen,)) != 0:
         availability = str(c.fetchone()[0])
+        
         #Change the availability
         if availability == "T":
             cmd = "UPDATE Courses SET Availability = 'F' WHERE UserID = %s AND Dept = %s AND CourseN = %s"
@@ -464,6 +474,7 @@ def toggle_group_availability(value):
     cmd = "SELECT Availability FROM Groups WHERE ID = %s"
     if c.execute(cmd, (gid,)) != 0:
         availability = str(c.fetchone()[0])
+        
         #Change the availability
         if availability == "T":
             if value == "no":
@@ -499,9 +510,6 @@ def remove_course(dept, coursen):
     #Delete the corresponding course entry from the Courses table
     cmd = "DELETE FROM Courses WHERE UserID = %s AND Dept = %s AND CourseN = %s"
     if c.execute(cmd, (uid, dept.upper(), coursen,)) != 0:
-        #Are we supposed to do this?
-        cmd = "DELETE FROM Members WHERE UserID = %s AND Dept = %s AND CourseN = %s"
-        c.execute(cmd, (uid, dept.upper(), coursen,))
         conn.commit()
         return "Success!"
     return 'UNABLE TO REMOVE COURSE'
@@ -650,17 +658,21 @@ def list_events():
         for event in events:
             date_string = event[0] + " " + event[1]
             event_dt = local_tz.localize(datetime.strptime(date_string, f))
+            
             #Displays all events that are in the future and none that are in the past
             if local_dt <= event_dt:
                 event_tuples.append((event_dt, str(event[5]), event[3], event[2], event[4]))
             else:
+                
                 #Removes events from the past and replaces them with the next repeating event (if there is one)
                 freq = event[4]
+                
                 #Deletes a one-time event that has already passed
                 if freq == "never":
                     cmd = "DELETE FROM Events WHERE ID = %s"
                     c.execute(cmd, (event[5],))
                     conn.commit()
+                    
                 #Updates a repeating event to its next meeting
                 else:
                     d = timedelta()
@@ -675,12 +687,14 @@ def list_events():
                     c.execute(cmd, (new_dt.strftime("%m/%d/%Y"), new_dt.strftime("%I:%M %p"), str(event[5]),))
                     conn.commit()
                     event_tuples.append((new_dt, str(event[5]), event[3], event[2], event[4]))
-                        
+
+        #Sort the events by chronological order (using datetime object)
         sorted_events = sorted(event_tuples, key = lambda tup: tup[0])
 
         if len(sorted_events) == 0:
             return "[]"
 
+        #Construct a JSON string of the sorted events
         for e in sorted_events:
             results += ("{\"date\": \"" + e[0].strftime("%m/%d/%Y") + "\", \"time\": \"" + e[0].strftime("%I:%M %p") +
                         "\", \"id\": \"" + e[1] + "\", \"name\": \"" + e[2] + "\", \"desc\": \"" + e[3] + 
@@ -904,6 +918,7 @@ def send_invitation(uid):
     gid = session["groupid"]
     dept = session["dept"]
     courseN = session["courseN"]
+    
     #Checks to see whether a user has marked themselves as unavailable
     cmd = "SELECT Availability FROM Courses WHERE UserID = %s AND Dept = %s AND CourseN = %s"
     if c.execute(cmd, (uid, dept, courseN,)) == 0:
@@ -913,6 +928,7 @@ def send_invitation(uid):
         if a[0] == "F":
             return "[]"
         else:
+            
             #Sends a request when a user has marked themselves as available
             cmd = "INSERT IGNORE INTO Requests (UserID, GroupID, Type, ID) VALUES (%s, %s, 'G', %s)"
             c.execute(cmd, (uid, gid, gid + uid,))
@@ -921,8 +937,7 @@ def send_invitation(uid):
 
 #Send a request from the user to the corresponding group (gid)
 @app.route("/send_request/<gid>")
-def send_request(gid):
-                                                
+def send_request(gid):                                    
     #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
@@ -940,8 +955,7 @@ def send_request(gid):
 
 #Edit the group's name and/or description
 @app.route("/edit_group_text", methods=['POST'])
-def edit_group_text():
-                                                
+def edit_group_text():                         
     #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
@@ -962,8 +976,7 @@ def edit_group_text():
 
 #Edit the name of the user
 @app.route("/edit_username", methods=['POST'])
-def edit_username():
-                                                
+def edit_username():                                                
     #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
@@ -986,8 +999,7 @@ def edit_username():
 
 #List the upcoming n events for the user (from all the groups the user is currently in)
 @app.route("/list_user_events")
-def list_next_n_events():
-                                                
+def list_next_n_events():                                                
     #Connects to the database
     conn = MySQLdb.connect(
         db='groupm8',
@@ -1044,12 +1056,13 @@ def list_next_n_events():
                             c.execute(cmd, (new_dt.strftime("%m/%d/%Y"), new_dt.strftime("%I:%M %p"), event_info[0],))
                             conn.commit()
                             event_tuples.append((new_dt, str(event_info[0]), even_info[1], event_info[2], group[0], group_info[0], group_info[1], group_info[2]))
+                            
         #Sort the events by their date and time
         sorted_events = sorted(event_tuples, key = lambda tup: tup[0])
         if len(sorted_events) == 0:
             return "[]"
 
-        #Return the first n events
+        #Return the first n events as a JSON string
         results = "["
         for i in range(0, min(n, len(sorted_events))):
             e = sorted_events[i]
