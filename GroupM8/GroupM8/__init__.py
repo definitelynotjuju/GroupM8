@@ -136,11 +136,6 @@ def load_static_files(path):
     #returns the files in the static directory
     return send_from_directory("", path)
 
-#returns the current group's id, dept, and courseN
-@app.route("/current_gid")
-def groupid():
-    return session["groupid"] + session["dept"] + session["courseN"]
-
 #Returns a list of potential members for the group with an empty query
 @app.route("/search_user/")
 def search_user():
@@ -156,7 +151,10 @@ def search_user():
     courseN = session["courseN"]
 
     #Grabs a list of Users in the course that have their availability set to 'T' (True)
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = %s AND Courses.CourseN = %s AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
+    cmd = ("SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, " +
+           "Courses WHERE Courses.Dept = %s AND Courses.CourseN = %s AND Users.UserID = " +
+           "Courses.UserID AND Courses.Availability = 'T'")
+    
     if c.execute(cmd, (dept, courseN,)) == 0:
         return "[]"
     else:
@@ -191,7 +189,10 @@ def search_user2(query):
     courseN = session["courseN"]
 
     #Grabs a list of users currently looking for a group for the group's course
-    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Courses WHERE Courses.Dept = %s AND Courses.CourseN = %s AND Users.UserID = Courses.UserID AND Courses.Availability = 'T'"
+    cmd = ("SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, " +
+           "Courses WHERE Courses.Dept = %s AND Courses.CourseN = %s AND " +
+           "Users.UserID = Courses.UserID AND Courses.Availability = 'T'")
+    
     if c.execute(cmd, (dept, courseN,)) == 0:
         return "[]"
     else:

@@ -19,6 +19,7 @@ app.config['CAS_AFTER_LOGOUT'] = 'home'
 
 @app.before_request
 def session_management():
+    #makes the session permanent as long as not logged out through CAS
     session.permanent = True
 
 @app.route("/")
@@ -132,12 +133,8 @@ def about():
 
 @app.route("/static/<path:path>")
 def load_static_files(path):
+    #returns the files in the static directory
     return send_from_directory("", path)
-
-#returns the current group's id, dept, and courseN
-@app.route("/current_gid")
-def groupid():
-    return session["groupid"] + session["dept"] + session["courseN"]
 
 #Returns a list of potential members for the group with an empty query
 @app.route("/search_user/")
@@ -220,43 +217,6 @@ def search_user2(query):
             return "[]"
         return json.dumps(result)
             
-@app.route("/search_group", methods=['GET','POST'])
-def search_group():
-    
-    conn = MySQLdb.connect(
-                db='groupm8',
-                user='root',
-                passwd='333groupm8',
-                host='localhost')
-    c = conn.cursor()
-    
-    result = "["
-    uid = session["userid"]
-    dept = request.form['dept']
-    courseN = request.form['courseN']
-    if dept and courseN:
-        cmd = "SELECT ID, Name, Description FROM Groups WHERE Dept = %s AND CourseN = %s AND Availability = 'T'"
-        if c.execute(cmd, (dept, courseN,)) == 0:
-            return "F"
-        else:
-            result_set = c.fetchall()
-            for row in result_set:
-                cmd = "SELECT * FROM Requests WHERE GroupID = %s AND UserID = %s"
-                if c.execute(cmd, (row[0],uid,)) == 0:
-                                     
-                    cmd = "SELECT Users.UserID, Users.FirstName, Users.LastName FROM Users, Members WHERE Members.GroupID = '" + str(row[0]) + "' AND Users.UserID = Members.UserID"
-                    result += "{\"groupid\": \"" + str(row[0]) + "\", \"name\": \"" + str(row[1]) + "\", \"description\": \"" + str(row[2]) + "\", "
-                    if c.execute(cmd) == 0:
-                        return json.dumps("[]")
-                    else:
-                        result += "\"members\": ["
-                        members = c.fetchall()
-                        for member in members:
-                            result += "{\"userid\": \"" + member[0] + "\", \"name\": \"" + member[1] + " " + member[2] + "\"},"
-                            result = result[:-1] + "]},"
-            result = result[:-1] + "]"
-            return result
-
 #Returns a list of groups for the course (dept, courseN) in JSON and "F" if the resulting list is empty
 @app.route("/search_group/")
 def search_group2():
@@ -293,7 +253,7 @@ def search_group2():
             return result
 
 
-#Creates a new group (Add a new entry to the Groups table in the database)                    
+#Creates a new group (Add a new entry to the Groups table in the database)
 @app.route("/create_group", methods=['GET','POST'])
 def create_group():
     #connect to the database                 
@@ -665,6 +625,7 @@ def list_events():
     uid = session["userid"]
     groupid = session["groupid"]
 
+    #calibrates the date and time of the server
     local_tz = pytz.timezone('US/Eastern')
     f = '%m/%d/%Y %I:%M %p'
     
@@ -683,14 +644,18 @@ def list_events():
         for event in events:
             date_string = event[0] + " " + event[1]
             event_dt = local_tz.localize(datetime.strptime(date_string, f))
+            #Displays all events that are in the future and none that are in the past
             if local_dt <= event_dt:
                 event_tuples.append((event_dt, str(event[5]), event[3], event[2], event[4]))
             else:
+                #Removes events from the past and replaces them with the next repeating event (if there is one)
                 freq = event[4]
+                #Deletes a one-time event that has already passed
                 if freq == "never":
                     cmd = "DELETE FROM Events WHERE ID = %s"
                     c.execute(cmd, (event[5],))
                     conn.commit()
+                #Updates a repeating event to its next meeting
                 else:
                     d = timedelta()
                     if freq == "daily":
@@ -741,13 +706,15 @@ def add_event():
 
     if date == "":
         return render_template("group.html")
-    
+
+    #Calibrates the time of the server
     local_tz = pytz.timezone('US/Eastern')
     f = '%m/%d/%Y %I:%M %p'
 
     event_dt = local_tz.localize(datetime.strptime(dt_string, f))
     local_dt = datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(local_tz)
 
+    #Prevents adding events that would have happened in the past
     if event_dt < local_dt:
         return render_template("group.html", passed = "True")
     
@@ -767,13 +734,15 @@ def add_event():
 @app.route("/remove_event", methods=['POST'])
 def remove_event():
 
+    #connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
         passwd='333groupm8',
         host='localhost')
     c = conn.cursor()
-    
+
+    #deletes selected event
     eventid = request.form['id']
     cmd =  "DELETE FROM Events WHERE ID = %s"
     c.execute(cmd, (eventid,))
@@ -784,13 +753,17 @@ def remove_event():
 #attributes: requestid, groupid, groupname, groupdesc
 @app.route("/list_user_requests")
 def list_user_requests():
-                                            
+
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
         passwd='333groupm8',
         host='localhost')
     c = conn.cursor()
+
+    #Grab a list of invitations sent to the user
+    #Formats data as a JSON string
     result = ""
     uid = session["userid"]
     cmd = "SELECT ID, GroupID FROM Requests WHERE UserID = %s AND Type = 'G'"
@@ -812,13 +785,17 @@ def list_user_requests():
 #attributes: requestid, groupid, groupname, groupdesc
 @app.route("/list_user_requests2")
 def list_user_requests2():
-    
+
+    #connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
         passwd='333groupm8',
         host='localhost')
     c = conn.cursor()
+
+    #Grabs the list of requests a user has sent out
+    #Formats data as a JSON string
     result = ""
     uid = session["userid"]
     cmd = "SELECT ID, GroupID FROM Requests WHERE UserID = %s AND Type = 'U'"
@@ -842,6 +819,7 @@ def list_user_requests2():
 @app.route("/list_group_requests/<t>")
 def list_group_requests(t):
                                             
+    #Connects to database
     conn = MySQLdb.connect(
                 db='groupm8',
                 user='root',
@@ -849,6 +827,8 @@ def list_group_requests(t):
                 host='localhost')
     c = conn.cursor()
 
+    #Grabs the list of requests sent to a group
+    #Returns result as a JSON string
     result = ""
     gid = session["groupid"]
     cmd = "SELECT ID, UserID FROM Requests WHERE GroupID = %s and Type = %s"
@@ -869,7 +849,8 @@ def list_group_requests(t):
 #Accept: add a new entry to the Members table for the user that just joined (the course as well if the user does not already have it)
 @app.route("/process_request/<rid>/<response>")
 def process_request(rid, response):
-    
+
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
@@ -877,6 +858,8 @@ def process_request(rid, response):
         host='localhost')
     c = conn.cursor()
 
+    #Accepting adds a user to the given group based off the data in the request table
+    #Removes request when processsing is complete
     if response == 'A':
         cmd = "SELECT UserID, GroupID FROM Requests WHERE ID = %s"
         if c.execute(cmd, (rid,)) != 0:
@@ -904,6 +887,7 @@ def process_request(rid, response):
 @app.route("/send_invitation/<uid>")
 def send_invitation(uid):
                                             
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
@@ -914,6 +898,7 @@ def send_invitation(uid):
     gid = session["groupid"]
     dept = session["dept"]
     courseN = session["courseN"]
+    #Checks to see whether a user has marked themselves as unavailable
     cmd = "SELECT Availability FROM Courses WHERE UserID = %s AND Dept = %s AND CourseN = %s"
     if c.execute(cmd, (uid, dept, courseN,)) == 0:
         return "[]"
@@ -922,6 +907,7 @@ def send_invitation(uid):
         if a[0] == "F":
             return "[]"
         else:
+            #Sends a request when a user has marked themselves as available
             cmd = "INSERT IGNORE INTO Requests (UserID, GroupID, Type, ID) VALUES (%s, %s, 'G', %s)"
             c.execute(cmd, (uid, gid, gid + uid,))
             conn.commit()
@@ -931,6 +917,7 @@ def send_invitation(uid):
 @app.route("/send_request/<gid>")
 def send_request(gid):
                                                 
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
@@ -949,6 +936,7 @@ def send_request(gid):
 @app.route("/edit_group_text", methods=['POST'])
 def edit_group_text():
                                                 
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
@@ -970,12 +958,15 @@ def edit_group_text():
 @app.route("/edit_username", methods=['POST'])
 def edit_username():
                                                 
+    #Connects to database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
         passwd='333groupm8',
         host='localhost')
     c = conn.cursor()
+
+    #Updates the user's name based on their input. On a user's first login, the field will be blank
     name = request.form['editname']
     names = name.split(' ');
     uid = session["userid"]
@@ -991,6 +982,7 @@ def edit_username():
 @app.route("/list_user_events")
 def list_next_n_events():
                                                 
+    #Connects to the database
     conn = MySQLdb.connect(
         db='groupm8',
         user='root',
