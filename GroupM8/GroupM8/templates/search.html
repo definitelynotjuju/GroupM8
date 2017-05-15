@@ -1,265 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>GroupM8 Search</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style type="text/css">
-    .rightcolumn {
+  <head>
+    <title>GroupM8 Search</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+      .rightcolumn {
       border-right: 1px solid black;
-    }
-    .botborder {
+      }
+      .botborder {
       border-bottom: 2px solid black;
-    }
-    .leftpadded {
+      }
+      .leftpadded {
       margin-left: 10px;
-    }
-    .username {
+      }
+      .username {
       border-bottom: 2px solid;
-    }
-    .col-fixed-320 {
+      }
+      .col-fixed-320 {
       margin-left: 10px;
       width:320px;
       position:fixed;
       height:100%;
       z-index:1;
-    }
-    .col-offset-400 {
+      }
+      .col-offset-400 {
       padding-left:400px;
       z-index:0;
-    }
-    .nopadrow {
+      }
+      .nopadrow {
       padding-left: 0px;
       padding-right: 0px;
       margin-left: 0px;
       margin-right: 0px;
-    }
-    .form-full {
+      }
+      .form-full {
       width:100%;
       display:inline-block;
-    }
-    .fluid-container {
+      }
+      .fluid-container {
       padding-left: 15px;
       padding-right: 15px;
       margin-left: auto;
       margin-right: auto;
-    }
-    .allborders {
+      }
+      .allborders {
       border: 1px solid black;
-    }
-    .checkbox-inline {
-    margin: 0 0 0 0;
-    }
-
-    .something {
+      }
+      .checkbox-inline {
+      margin: 0 0 0 0;
+      }
+      
+      .something {
       font-size: 120%;
-    }
-    .vcentered {
+      }
+      .vcentered {
       vertical-align: top;
-    }
-    .ind {
+      }
+      .ind {
       padding-left: 200px;
-    }
-    .scroll {
+      }
+      .scroll {
       max-height:100px;
       overflow-y:auto;
-    }
-    .allborders{
+      }
+      .allborders{
       border: 2px solid black;
-    }
+      }
+      
+      /* This is from stack overflow
+      http://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody/17380697#17380697:
+      make sure to give credit to author or rewrite the code */
+      
+      table {
+      width: 100%;
+      border-spacing: 0;
+      }
+      
+      thead, tbody, tr, th, td { display: block; }
+      
+      thead tr {
+      /* fallback */
+      width: 97%;
+      /* minus scroll bar width */
+      width: -webkit-calc(100% - 16px);
+      width:    -moz-calc(100% - 16px);
+      width:         calc(100% - 16px);
+      }
+      
+      tr:after {  /* clearing float */
+      content: ' ';
+      display: block;
+      visibility: hidden;
+      clear: both;
+      }
+      
+      tbody {
+      height: 300px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      }
 
-    /* This is from stack overflowhttp://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody/17380697#17380697: make sure to give credit to author or rewrite the code */
-    table {
-        width: 100%;
-        border-spacing: 0;
-    }
-
-    thead, tbody, tr, th, td { display: block; }
-
-    thead tr {
-        /* fallback */
-        width: 97%;
-        /* minus scroll bar width */
-        width: -webkit-calc(100% - 16px);
-        width:    -moz-calc(100% - 16px);
-        width:         calc(100% - 16px);
-    }
-
-    tr:after {  /* clearing float */
-        content: ' ';
-        display: block;
-        visibility: hidden;
-        clear: both;
-    }
-
-    tbody {
-        height: 300px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    tbody td, thead th {
-        width: 25%;  /* 19% is less than (100% / 5 cols) = 20% */
-        float: left;
-    }
-
-
-/* http://stackoverflow.com/questions/19576175/how-do-you-decrease-navbar-height-in-bootstrap-3 */
-    .navbar-nav > li > a, .navbar-brand {
-    padding-top:5px !important; padding-bottom:0 !important;
-    height: 30px;
-}
-.navbar {min-height:30px !important;}
-
-
-</style>
-</head>
-<body>
-  <p id="test"></p>
-  <div>
-  </div>
-
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-inverse">
+      tbody td, thead th {
+      width: 25%;  /* 19% is less than (100% / 5 cols) = 20% */
+      float: left;
+      }
+      
+      
+      /* http://stackoverflow.com/questions/19576175/how-do-you-decrease-navbar-height-in-bootstrap-3 */
+      .navbar-nav > li > a, .navbar-brand {
+      padding-top:5px !important; padding-bottom:0 !important;
+      height: 30px;
+      }
+      .navbar {min-height:30px !important;}
+      
+      
+    </style>
+  </head>
+  <body>
+    <p id="test"></p>
+    <div>
+    </div>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+	<div class="navbar-header">
+          <a class="navbar-brand" href="http://www.groupm8.org/home" target="_parent">GroupM8</a>
+	</div>
+	<ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.groupm8.org/home" target="_parent">Home</a></li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+	  <li><a href="#"><div id="username"></div></a></li>
+          <li><a id="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+	</ul>
+      </div>
+    </nav>
+    
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="http://www.groupm8.org/home" target="_parent">GroupM8</a>
+      <div class="row">
+	<div class="col-sm-12"  align="center">
+          <h2>Classmate Search</h2>
+          <br>
+	</div>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="http://www.groupm8.org/home" target="_parent">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-	<li><a href="#"><div id="username"></div></a></li>
-        <li><a id="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-12"  align="center">
-        <h2>Classmate Search</h2>
-        <br>
-      </div>
-    </div>
-
-    <!-- Form for searching for users to join the group. -->
-    <div class="row">
-      <form class="form-horizontal" enctype="multipart/form-data">
-        <div class="row form-group">
-          <div class="col-sm-5"></div>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" id="query" name="query">
-          </div>
-          <div class="col-sm-1">
-            <button type="button" class="btn btn-default" id="sb"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
-          <div class="col-sm-4"></div>
-        </div>
-      </form>
-      </div>
-
-      <!-- Results from the search. -->
-    <div class="row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-6">
-	<h3 align="center"><u>Results</u></h3>
-	<h5 align="center" id="desc">Students in </h5>
-        <form>
-        <table class="table table-striped allborders">
-          <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>NetID</th>
-              <th>Add?</th>
-            </tr>
-          </thead>
-          <tbody class="" id="table-body">
-          </tbody>
-        </table>
-        </form>
-	
-        <form>
+      
+      <!-- Form for searching for users to join the group. -->
+      <div class="row">
+	<form class="form-horizontal" enctype="multipart/form-data">
           <div class="row form-group">
-	    <!-- Link back to the group page. -->
-          <a class="btn btn-default col-sm-5" href="http://www.groupm8.org/group" target="_parent"><b>Return to Group Page</b></a>
-          <div class="col-sm-2"></div>
-	  <!-- Button to send an invitation to all selected users. -->
-          <button type="button" class="btn btn-default col-sm-5" name="addAll" id="addAll"><b>Add All Selected</b></button>
-        </div>
-      </form>
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" id="query" name="query">
+            </div>
+            <div class="col-sm-1">
+              <button type="button" class="btn btn-default" id="sb"><span class="glyphicon glyphicon-search"></span><b> Search</b></button>
+              <div class="col-sm-4"></div>
+            </div>
+	</form>
+	</div>
+
+	<!-- Results from the search. -->
+	<div class="row">
+	  <div class="col-sm-3"></div>
+	  <div class="col-sm-6">
+	    <h3 align="center"><u>Results</u></h3>
+	    <h5 align="center" id="desc">Students in </h5>
+            <form>
+              <table class="table table-striped allborders">
+		<thead>
+		  <tr>
+		    <th>Firstname</th>
+		    <th>Lastname</th>
+		    <th>NetID</th>
+		    <th>Add?</th>
+		  </tr>
+		</thead>
+		<tbody class="" id="table-body">
+		</tbody>
+              </table>
+            </form>
+	    
+            <form>
+              <div class="row form-group">
+		
+		<!-- Link back to the group page. -->
+		<a class="btn btn-default col-sm-5" href="http://www.groupm8.org/group" target="_parent"><b>Return to Group Page</b></a>
+		<div class="col-sm-2"></div>
+		
+		<!-- Button to send an invitation to all selected users. -->
+		<button type="button" class="btn btn-default col-sm-5" name="addAll" id="addAll"><b>Add All Selected</b></button>
+              </div>
+	    </form>
+	  </div>
+	  <div class="col-sm-3"></div>
+	</div>
       </div>
-      <div class="col-sm-3"></div>
-    </div>
-    </div>
 
 
-    <!-- Script for searching for members. -->
-   <div></div>
-   <script>
-     window.onload = function() {searchuser()};
-     document.getElementById("sb").onclick = function() {searchuser()};
-     function searchuser() {
-     var group = $.getJSON('/group_info', function(data) {
-     $("#desc").html('Students in ' + data[2] + ' ' + data[3] + ':');
-     });
-     $("#table-body").html("");
-     var x = document.getElementById("query").value;
-     $.getJSON('/search_user/' + x, function(data) {
-     $.each(data, function(i) {
-     $("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox-inline" align="center"><input type="checkbox" id="' + data[i][0] + '" name="checked"></div></td></tr>');
-     });
-     });
-     }
-   </script>
-
-   <!-- Script for the user's information. -->
-   <div></div>
-   <script>
-     $.getJSON('/user_info', function(data) {
-     $("#username").html(data[0]);
-     });
-   </script>
-
-   <!-- Script to send invitations to all selected users. -->
-   <script>
-     $(document).ready(function () {
-     $(document).on("click", "#addAll", function() {
-     var $checkedBoxes = $("input[name='checked']:checked");
-     $checkedBoxes.each( function() {
-     var $uid = $(this).attr('id');
-     $.get('/send_invitation/' + $uid, function(data) {
-     window.location.assign("http://www.groupm8.org/search");
-     });
-     });
-     });
-     });
-   </script>
-   
-   <div>
-   </div>
-
-   <!-- Script for logout button. -->
-   <script>
-     $(document).ready(function () {
-     $(document).on("click", "#logout", function() {
-     window.open("http://www.groupm8.org/logging_out", "_self");
-     });
-     });
-   </script>
-   
-   <!-- Prevents pressing enter on the search bar from refreshing the page.-->
-   <script>
-     $("#query").keypress(function(e) {
-     if (e.keyCode == 13) {
-     e.preventDefault();
-     $("#sb").click();
-     }
-     });
-   </script>
-   
-</body>
+      <!-- Script for searching for members. -->
+      <div></div>
+      <script>
+	window.onload = function() {searchuser()};
+	document.getElementById("sb").onclick = function() {searchuser()};
+	function searchuser() {
+	var group = $.getJSON('/group_info', function(data) {
+	$("#desc").html('Students in ' + data[2] + ' ' + data[3] + ':');
+	});
+	$("#table-body").html("");
+	var x = document.getElementById("query").value;
+	$.getJSON('/search_user/' + x, function(data) {
+	$.each(data, function(i) {
+	$("#table-body").append('<tr><td>' + data[i][1] + '</td><td>' + data[i][2] + '</td><td>' + data[i][0] + '</td><td><div class="checkbox-inline" align="center"><input type="checkbox" id="' + data[i][0] + '" name="checked"></div></td></tr>');
+	});
+	});
+	}
+      </script>
+      
+      <!-- Script for the user's information. -->
+      <div></div>
+      <script>
+	$.getJSON('/user_info', function(data) {
+	$("#username").html(data[0]);
+	});
+      </script>
+      
+      <!-- Script to send invitations to all selected users. -->
+      <script>
+	$(document).ready(function () {
+	$(document).on("click", "#addAll", function() {
+	var $checkedBoxes = $("input[name='checked']:checked");
+	$checkedBoxes.each( function() {
+	var $uid = $(this).attr('id');
+	$.get('/send_invitation/' + $uid, function(data) {
+	window.location.assign("http://www.groupm8.org/search");
+	});
+	});
+	});
+	});
+      </script>
+      
+      <div></div>
+      
+      <!-- Script for logout button. -->
+      <script>
+	$(document).ready(function () {
+	$(document).on("click", "#logout", function() {
+	window.open("http://www.groupm8.org/logging_out", "_self");
+	});
+	});
+      </script>
+      
+      <!-- Prevents pressing enter on the search bar from refreshing the page.-->
+      <script>
+	$("#query").keypress(function(e) {
+	if (e.keyCode == 13) {
+	e.preventDefault();
+	$("#sb").click();
+	}
+	});
+      </script>
+      
+  </body>
 </html>
