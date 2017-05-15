@@ -1,536 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>GroupM8 Group Page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <style type="text/css">
-    .rightcolumn {
+  <head>
+    <title>GroupM8 Group Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style type="text/css">
+      .rightcolumn {
       border-right: 1px solid black;
-    }
-    .bigfont{
+      }
+      .bigfont{
       font-size: 2em;
-    }
-    .stdfont {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-size: 1.2em;
-    }
-    .headfont {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-size: 1.3em;
-    }
-    
-    .botborder {
+      }
+      .stdfont {
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-size: 1.2em;
+      }
+      .headfont {
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-size: 1.3em;
+      }
+      
+      .botborder {
       border-bottom: 3px solid black;
-    }
-    .leftpadded {
+      }
+      .leftpadded {
       margin-left: 10px;
-    }
-    .username {
+      }
+      .username {
       border-bottom: 2px solid;
-    }
-    .scroll {
-     max-height:300px;
+      }
+      .scroll {
+      max-height:300px;
       overflow-y:auto;
-    }
-    .membersscroll {
-    max-height: 250px;
-    min-height: 120px;
-    overflow-y:auto;
-    }
-    .requestscroll {
-    max-height: 200px;
-    min-height: 100px;
-    overflow-y:auto;
-    }
-    .col-fixed-320 {
+      }
+      .membersscroll {
+      max-height: 250px;
+      min-height: 120px;
+      overflow-y:auto;
+      }
+      .requestscroll {
+      max-height: 200px;
+      min-height: 100px;
+      overflow-y:auto;
+      }
+      .col-fixed-320 {
       margin-left: 10px;
       width:320px;
       position:fixed;
       height:100%;
       z-index:1;
-    }
-    .col-offset-400 {
+      }
+      .col-offset-400 {
       padding-left:400px;
       z-index:0;
-    }
-    .nopadrow {
+      }
+      .nopadrow {
       padding-left: 0px;
       padding-right: 0px;
       margin-left: 0px;
       margin-right: 0px;
-    }
-    .form-control {
+      }
+      .form-control {
       width:auto;
       display:inline-block;
-    }
-    .form-full {
+      }
+      .form-full {
       width:100%;
       display:inline-block;
-    }
-    .fluid-container {
+      }
+      .fluid-container {
       padding-left: 30px;
       padding-right: 40px;
       margin-left: auto;
       margin-right: auto;
-    }
-    .allborders {
+      }
+      .allborders {
       border: 1px solid black;
-    }
-    .form-control-inline {
-    min-width: 0;
-    width: auto;
-    display: inline;
-    }
-
-    .something {
+      }
+      .form-control-inline {
+      min-width: 0;
+      width: auto;
+      display: inline;
+      }
+      
+      .something {
       font-size: 120%;
-    }
-    .sidebox {
-    background-color: #FF6600;
-    }
-    .approve {
-    background: green;
-    }
-    .reject {
-    background: red;
-    }
-    .pageback {
-    background: #FFFFFF;
-    }
-    .btncolor {
-    background: #777777;
-    color: #FFFFFF;
-    border-color: #000000;
-    }
-    .bordered {
-    borders: black 1px;
-    }
-    .panel-default > .panel-heading-custom {
-    background: #000000;
-    color: #fff;
-    }
+      }
+      .sidebox {
+      background-color: #FF6600;
+      }
+      .approve {
+      background: green;
+      }
+      .reject {
+      background: red;
+      }
+      .pageback {
+      background: #FFFFFF;
+      }
+      .btncolor {
+      background: #777777;
+      color: #FFFFFF;
+      border-color: #000000;
+      }
+      .bordered {
+      borders: black 1px;
+      }
+      .panel-default > .panel-heading-custom {
+      background: #000000;
+      color: #fff;
+      }
+      
+      .navbar-nav > li > a, .navbar-brand {
+      padding-top:5px !important; padding-bottom:0 !important;
+      height: 30px;
+      }
+      .navbar {min-height:30px !important;}
+      
+      
+    </style>
     
-.navbar-nav > li > a, .navbar-brand {
-    padding-top:5px !important; padding-bottom:0 !important;
-    height: 30px;
-}
-.navbar {min-height:30px !important;}
-
-
-  </style>
-
-  <!-- Retrieves the current date on the server -->
-  <script>
+    <!-- Retrieves the current date on the server -->
+    <script>
     $(function() {
     $("#date").datepicker();
     });
-  </script>
-  
-  
-</head>
-<body class="pageback">
-
-  <!-- Navigation Bar (contains a button to home, displays the user's name, and has a logout button.) -->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="http://www.groupm8.org/home" target="_parent">GroupM8</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="http://www.groupm8.org/home" target="_parent">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-	<li><a href="#"><div id="username"></div></a></li>
-        <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="fluid-container">
-    <div class="row">
-
-      <!-- Displays name of Group -->
-      <div class="col-xs-2"></div>
-      <div class="col-xs-8"  align="center" id="groupname2" contenteditable="true">
-        <p class="bigfont" id="groupname">Group Name Here</p>
-      </div>
-      
-      <!-- Button to change group name and/or description-->
-      <div class="col-xs-2">
-	<button type="button" class="btn btn-default form-control" name="saveedits" id="saveedits"><b>Save Name and Description Edits</b></button>
-      </div>
-    </div>
+    </script>
     
-    <div class="row">
+    
+  </head>
+  <body class="pageback">
+    
+    <!-- Navigation Bar (contains a button to home, displays the user's name, and has a logout button.) -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+	<div class="navbar-header">
+          <a class="navbar-brand" href="http://www.groupm8.org/home" target="_parent">GroupM8</a>
+	</div>
+	<ul class="nav navbar-nav">
+          <li class="active"><a href="http://www.groupm8.org/home" target="_parent">Home</a></li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+	  <li><a href="#"><div id="username"></div></a></li>
+          <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+	</ul>
+      </div>
+    </nav>
+    
+    <div class="fluid-container">
+      <div class="row">
+	
+	<!-- Displays name of Group -->
+	<div class="col-xs-2"></div>
+	<div class="col-xs-8"  align="center" id="groupname2" contenteditable="true">
+          <p class="bigfont" id="groupname">Group Name Here</p>
+	</div>
+	
+	<!-- Button to change group name and/or description-->
+	<div class="col-xs-2">
+	  <button type="button" class="btn btn-default form-control" name="saveedits" id="saveedits"><b>Save Name and Description Edits</b></button>
+	</div>
+      </div>
       
-      <!-- Displays Group Description  -->
-      <div class="col-xs-12 botborder"  align="center" contenteditable="true">
-        <p id="groupdesc">Group Description Here</p>
-      </div>
-
-      <!-- Button to Leave selected Group -->
-      <div class="col-xs-12" align="center">
-        <button type="button" class="btn btn-default form-control" id="leavegroup" name="leavegroup">Leave Group</button>
-	<br>
-      </div>
-
-    <!-- Sidebar (contains list for members, requests, invitations and buttons to toggle availability and to add a new member -->
-    <div class="row">
-      <div class="col-xs-3">
-
-	<!-- Lists members -->
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Members</b></div>
-          <div class="panel-body sidebox membersscroll" id="members-list">
-          </div>
-        </div>
-
-	<!-- List of Pending Requests from Other People -->
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Requests to Join</b></div>
-          <div class="panel-body sidebox requestscroll">
-	    <!-- Form lists names, and a button indicating whether to accept or reject -->
-            <form>
-              <div class="row">
-                <div class="col-xs-6 stdfont">
-                  <p><b><u>Name:</u></b></p>
-                </div>
-                <div class="col-xs-3 stdfont">
-                  <p><b><u>Approve</u></b></p>
-                </div>
-                <div class="col-xs-3 stdfont">
-                  <p><b><u>Reject</u></b></p>
-                </div>
+      <div class="row">
+	
+	<!-- Displays Group Description  -->
+	<div class="col-xs-12 botborder"  align="center" contenteditable="true">
+          <p id="groupdesc">Group Description Here</p>
+	</div>
+	
+	<!-- Button to Leave selected Group -->
+	<div class="col-xs-12" align="center">
+          <button type="button" class="btn btn-default form-control" id="leavegroup" name="leavegroup">Leave Group</button>
+	  <br>
+	</div>
+	
+	<!-- Sidebar (contains list for members, requests, invitations and buttons to toggle availability and to add a new member -->
+	<div class="row">
+	  <div class="col-xs-3">
+	    
+	    <!-- Lists members -->
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Members</b></div>
+              <div class="panel-body sidebox membersscroll" id="members-list">
               </div>
-	      <div id="requests-body">
-              
-	      </div>
-            </form>
-          </div>
-        </div>
-
-	<!-- List of pending invitations this group has made -->
-        <div class="panel panel-default">
-          <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Invitations to Join</b></div>
-          <div class="panel-body sidebox requestscroll">
-            <form>
-	      <div id="invitations">
-              <div class="row">
-                <div class="col-xs-7">
-                  <p>Person 1</p>
-                </div>
-                <div class="col-xs-3">
-                </div>
-                <div class="col-xs-2">
-                </div>
+            </div>
+	    
+	    <!-- List of Pending Requests from Other People -->
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Requests to Join</b></div>
+              <div class="panel-body sidebox requestscroll">
+		<!-- Form lists names, and a button indicating whether to accept or reject -->
+		<form>
+		  <div class="row">
+                    <div class="col-xs-6 stdfont">
+                      <p><b><u>Name:</u></b></p>
+                    </div>
+                    <div class="col-xs-3 stdfont">
+                      <p><b><u>Approve</u></b></p>
+                    </div>
+                    <div class="col-xs-3 stdfont">
+                      <p><b><u>Reject</u></b></p>
+                    </div>
+		  </div>
+		  <div id="requests-body">
+		    
+		  </div>
+		</form>
               </div>
+            </div>
+	    
+	    <!-- List of pending invitations this group has made -->
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom headfont" align="center"><b>Pending Invitations to Join</b></div>
+              <div class="panel-body sidebox requestscroll">
+		<form>
+		  <div id="invitations">
+		    <div class="row">
+                      <div class="col-xs-7">
+			<p>Person 1</p>
+                      </div>
+                      <div class="col-xs-3">
+                      </div>
+                      <div class="col-xs-2">
+                      </div>
+		    </div>
+		  </div>
+		</form>
               </div>
-            </form>
-          </div>
-        </div>
+            </div>
 
-	<!-- Toggles the ability to be requested by other members to join -->
-        <div class="row something stdfont" align="center">
-          <span id="acceptingapps">Accepting outside applications? </span>
-          &nbsp;
-          &nbsp;
-          &nbsp;
-        </div>
-        <br>
-	<!-- Button that takes user to the search page for users -->
-        <div class="row" align="center">
-            <a class="btn btn-default form-control btncolor" id="addmember" href="http://www.groupm8.org/search" target="_parent"><b> Add New Member </b></a>
-        </div>
-      </div>
-      <!-- Events Toolbar, (pinned events, creating a new event). -->
-      <div class="col-xs-9">
-        <div class="row">
-	  <!-- Lists pinned events -->
-          <div class="panel panel-default">
-            <div class="panel-heading panel-heading-custom" align="center"><h4>Pinned Events</h4></div>
-             <div class="panel-body scroll pageback" id="eventlist">
-              <div class="row" id="eventrow">
-                </div>
-             </div>
+	    <!-- Toggles the ability to be requested by other members to join -->
+            <div class="row something stdfont" align="center">
+              <span id="acceptingapps">Accepting outside applications? </span>
+              &nbsp;
+              &nbsp;
+              &nbsp;
+            </div>
+            <br>
+	    
+	    <!-- Button that takes user to the search page for users -->
+            <div class="row" align="center">
+              <a class="btn btn-default form-control btncolor" id="addmember" href="http://www.groupm8.org/search" target="_parent"><b> Add New Member </b></a>
+            </div>
 	  </div>
-          </div>
-        <div class="row">
-	  <!-- Creating a new event -->
-          <div class="panel panel-default">
-            <div class="panel-heading panel-heading-custom" align="center"><h4>Create Event</h4></div>
-            <div class="panel-body pageback">
-              <form enctype="multipart/form-data" action="/add_event" method="post">
-		<!-- User inputs event name, description, date, time, and whether this event is scheduled to be a repeating event -->
-                <div class="form-group row">
-                  <div class="col-xs-5 stdfont">
-		    <label for="eventname">Event Name:</label>
-                    <input type="text" class="form-control form-control-inline" id="eventname" name="eventname" placeholder=" Enter Event Name" maxlength="20">
-                  </div>
-                  <div class="col-xs-7 stdfont">
-		    <label for="eventdesc">Description:</label>
-                    <input type="textfield" class="form-control form-control-inline" id="eventdesc" name="eventdesc" placeholder=" Enter Event Description" maxlength="60">
-                  </div>
+	  
+	  <!-- Events Toolbar, (pinned events, creating a new event). -->
+	  <div class="col-xs-9">
+            <div class="row">
+	      <!-- Lists pinned events -->
+              <div class="panel panel-default">
+		<div class="panel-heading panel-heading-custom" align="center"><h4>Pinned Events</h4></div>
+		<div class="panel-body scroll pageback" id="eventlist">
+		  <div class="row" id="eventrow">
                 </div>
-                <div class="row form-group">
-                  <div class="col-xs-3 stdfont">
-                    <label for="datepicker">Date: </label>
-		    <input type="text" class="input-large form-control" id="date" name="date" placeholder="Click here to enter date">
-                  </div>
-                  <div class="col-xs-6 stdfont">
-                  <label for="hour">Time:</label>
-                  <select class="form-control" id="hour" name="hour">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                  </select>
-                  <select class="form-control" id="minutes" name="minutes">
-                    <option value="00">00</option>
-                    <option value="05">05</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="30">30</option>
-                    <option value="35">35</option>
-                    <option value="40">40</option>
-                    <option value="45">45</option>
-                    <option value="50">50</option>
-                    <option value="55">55</option>
-                  </select>
-                  <select class="form-control" id="ampm" name="ampm">
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                  </select>
-                  </div>
-                  <div class="col-xs-3 stdfont">
-                  <label for="repeating">Repeating?</label>
-                  <select class="form-control" id="repeating" name="repeating">
-                    <option value="never">Never</option>
-		    <option value="daily">Daily</option>
-		    <option value="weekly">Weekly</option>
-                    <option value="biweekly">Biweekly</option>
-                  </select>
-                </div>
-                </div>
-              
-              <div class="row" align="center">
-                <button type="submit" class="btn btn-default btncolor" id="eventbtn"><b> Create Event </b></button>
+		</div>
+	      </div>
+            </div>
+            <div class="row">
+	      <!-- Creating a new event -->
+              <div class="panel panel-default">
+		<div class="panel-heading panel-heading-custom" align="center"><h4>Create Event</h4></div>
+		<div class="panel-body pageback">
+		  <form enctype="multipart/form-data" action="/add_event" method="post">
+		    <!-- User inputs event name, description, date, time, and whether this event is scheduled to be a repeating event -->
+                    <div class="form-group row">
+                      <div class="col-xs-5 stdfont">
+			<label for="eventname">Event Name:</label>
+			<input type="text" class="form-control form-control-inline" id="eventname" name="eventname" placeholder=" Enter Event Name" maxlength="20">
+                      </div>
+                      <div class="col-xs-7 stdfont">
+			<label for="eventdesc">Description:</label>
+			<input type="textfield" class="form-control form-control-inline" id="eventdesc" name="eventdesc" placeholder=" Enter Event Description" maxlength="60">
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-xs-3 stdfont">
+			<label for="datepicker">Date: </label>
+			<input type="text" class="input-large form-control" id="date" name="date" placeholder="Click here to enter date">
+                      </div>
+                      <div class="col-xs-6 stdfont">
+			<label for="hour">Time:</label>
+			<select class="form-control" id="hour" name="hour">
+			  <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			  <option value="5">5</option>
+			  <option value="6">6</option>
+			  <option value="7">7</option>
+			  <option value="8">8</option>
+			  <option value="9">9</option>
+			  <option value="10">10</option>
+			  <option value="11">11</option>
+			  <option value="12">12</option>
+			</select>
+			<select class="form-control" id="minutes" name="minutes">
+			  <option value="00">00</option>
+			  <option value="05">05</option>
+			  <option value="10">10</option>
+			  <option value="15">15</option>
+			  <option value="20">20</option>
+			  <option value="25">25</option>
+			  <option value="30">30</option>
+			  <option value="35">35</option>
+			  <option value="40">40</option>
+			  <option value="45">45</option>
+			  <option value="50">50</option>
+			  <option value="55">55</option>
+			</select>
+			<select class="form-control" id="ampm" name="ampm">
+			  <option value="AM">AM</option>
+			  <option value="PM">PM</option>
+			</select>
+                      </div>
+                      <div class="col-xs-3 stdfont">
+			<label for="repeating">Repeating?</label>
+			<select class="form-control" id="repeating" name="repeating">
+			  <option value="never">Never</option>
+			  <option value="daily">Daily</option>
+			  <option value="weekly">Weekly</option>
+			  <option value="biweekly">Biweekly</option>
+			</select>
+                      </div>
+                    </div>
+		    
+		    <div class="row" align="center">
+                      <button type="submit" class="btn btn-default btncolor" id="eventbtn"><b> Create Event </b></button>
+		    </div>
+		  </form>
+		</div>
               </div>
-	      </form>
             </div>
-          </div>
-        </div>
-	<!-- Chat would have gone here but is unimplemented in the current build -->
-        <div class="row">
-          <div class="panel panel-default" style="display:none">
-            <div class="panel-heading" align="center"><b>Chat Goes Here:</b></div>
-            <div class="panel-body">
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
+	    <!-- Chat would have gone here but is unimplemented in the current build -->
+            <div class="row">
+              <div class="panel panel-default" style="display:none">
+		<div class="panel-heading" align="center"><b>Chat Goes Here:</b></div>
+		<div class="panel-body">
+		  <br>
+		  <br>
+		  <br>
+		  <br>
+		  <br>
+		  <br>
+		</div>
+              </div>
             </div>
-          </div>
-        </div>
+	  </div>
+	</div>
       </div>
     </div>
-    </div>
-  </div>
   
-  <div></div>
-  <!-- Retrieves information for the specific group and the user accessing the page -->
-  <script>
-    $.getJSON('/group_info', function(data) {
-    var $gname = $("<p>", {"class": "bigfont"});
-    $("#groupname").html(data[0]);
-    $("#groupdesc").html(data[1]);
-    });
-    $.getJSON('/user_info', function(data) {
-    $("#username").html(data[0]);
-    });
-  </script>
-  
-  <div></div>
-  <!-- Retrieves the list of all members in the group -->
-  <script>
-    function listMembers() {
-    $("#members-list").html("");
-    $.getJSON('/group_members', function(data) {
-    $.each(data, function(i) {
-    $("#members-list").append('<div class="stdfont"><p>' + data[i].name + '</p></div>');
-    });
-    });
+    <div></div>
+    <!-- Retrieves information for the specific group and the user accessing the page -->
+    <script>
+      $.getJSON('/group_info', function(data) {
+      var $gname = $("<p>", {"class": "bigfont"});
+	$("#groupname").html(data[0]);
+	$("#groupdesc").html(data[1]);
+	});
+	$.getJSON('/user_info', function(data) {
+	$("#username").html(data[0]);
+	});
+    </script>
+    
+    <div></div>
+    <!-- Retrieves the list of all members in the group -->
+    <script>
+      function listMembers() {
+      $("#members-list").html("");
+      $.getJSON('/group_members', function(data) {
+      $.each(data, function(i) {
+      $("#members-list").append('<div class="stdfont"><p>' + data[i].name + '</p></div>');
+      });
+      });
     } listMembers();
-  </script>
+    </script>
+    
+    <!-- Identifies group availability and displays the current state on the toggleable button -->
+    <script>
+      (function() {
+      $.get('/check_group_availability', function(data) {
+      if (data == "T") {
+      $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" checked>Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no">No</label>');
+      }
+      else if (data == "F") {
+      $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes">Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no" checked>No</label>');
+      }
+      else {
+      alert("Error: value of data is: " + data);
+      }
+      });
+      })();
+    </script>
+    
+    <!-- Toggles group availability when selecting the appropriate button -->
+    <script>
+      $(document).ready(function() {
+      $(document).on("change", "input:radio",function() {
+      var value = $(this).val();
+      $.get('/toggle_group_availability/' + value, function(data){
+      });
+      });
+      });
+    </script>
+    
+    <div></div>
+    <!-- Retrieves all currently scheduled events for this group -->
+    <script>
+      $("#eventlist").html("");
+      $.getJSON('/list_events', function(data) {
+      if (data == "") {
+      $("#eventlist").append('<h3 align="center"> No events currently scheduled. </h3>');
+      }
+      else {
+      $.each(data, function(i) {
+      $("#eventlist").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10"><div class=" panel panel-default"><div class="panel-heading panel-heading-custom" align="center">' + data[i].name + '</div><div class="panel-body"><div class="row"><div class="col-xs-4"><p><b>Date: </b>' + data[i].date + '</p></div><div class="col-xs-8"><p><b>Time: </b>' + data[i].time + '</p></div></div><div class="row"><div class="col-xs-10"><p><b>Description: </b>' + data[i].desc + '</p></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" name="deleteevent" id="deleteevent" value="' + data[i].id + '"><b> Delete </b></button></div></div></div></div><div class="col-xs-1"></div></div></div>');
+      });
+      }
+      });
+    </script>
+    
+    <!-- Retrieves the requests from users, and enables confirmation of these requests -->
+    <script>
+      function listRequests() {
+      $("#requests-body").html("");
+      $.getJSON('/list_group_requests/U', function(data) {
+      $.each(data, function(i) {
+      $("#requests-body").append('<div class="row"><div class="col-xs-7 stdfont"><p>' + data[i].username + '</p></div><div class="col-xs-3"><button type="button" class="btn btn-default approve" name="accept" value="' + data[i].requestid + '"><span class="glyphicon glyphicon-ok"></span></button></div><div class="col-xs-2"><button type="button" class="btn btn-default reject" name="reject" value="'+ data[i].requestid +'"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
+      });
+      });
+      } listRequests();
+      
+      <!-- Retrieves all pending invitations the group has made -->
+      function listInvitations() {
+      $("#invitations").html("");
+      $.getJSON('/list_group_requests/G', function(data) {
+      $.each(data, function(i) {
+      $("#invitations").append('<div class="row"><div class="col-xs-7 stdfont"><p>' + data[i].username + '</p></div><div class="col-xs-3"></div><div class="col-xs-2"></div></div>');
+      });
+      });
+      } listInvitations();
+    </script>
+    
+    <!-- Scripts to enable buttons (logging out, accepting and declining requests -->
+    <script>
+      $(document).ready( function() {
+      $(document).on("click", "#logout", function() {
+      window.open("http://www.groupm8.org/logging_out", "_self");
+      });
+      $(document).on("click", "button[name='accept']", function() {
+      var rid = $(this).val();
+      if (confirm("Are you sure you want to accept this request?")) {
+      $.get('/process_request/' + rid + '/A', function(data) {
+      listMembers();
+      listRequests();
+      });
+      }
+      });
+      $(document).on("click", "button[name='reject']", function() {
+      var rid2 = $(this).val();
+      if (confirm("Are you sure you want to reject this request?")) {
+      $.get('/process_request/' + rid2 + '/R', function(data) {
+      listRequests();
+      });
+      }
+      });
+      });
+    </script>
 
-  <!-- Identifies group availability and displays the current state on the toggleable button -->
-  <script>
-    (function() {
-    $.get('/check_group_availability', function(data) {
-    if (data == "T") {
-    $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" checked>Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no">No</label>');
-    }
-    else if (data == "F") {
-    $("#acceptingapps").append('<label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes">Yes</label><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="no" checked>No</label>');
-    }
-    else {
-    alert("Error: value of data is: " + data);
-    }
-    });
-    })();
-  </script>
+    <!-- Script that edits group's name and description -->
+    <script>
+      $(document).ready( function() {
+      $(document).on("click", "button[name='saveedits']", function() {
+      var editName = document.getElementById("groupname");
+      var name = editName.innerHTML;
+      var editDesc = document.getElementById("groupdesc");
+      var desc = editDesc.innerHTML;
+      $.post('/edit_group_text', {editname: name, editdesc: desc}, function(data) {
+      });
+      });
+      });
+    </script>
 
-  <!-- Toggles group availability when selecting the appropriate button -->
-  <script>
-    $(document).ready(function() {
-    $(document).on("change", "input:radio",function() {
-    var value = $(this).val();
-    $.get('/toggle_group_availability/' + value, function(data){
-    });
-    });
-    });
-  </script>
-
-  <div></div>
-  <!-- Retrieves all currently scheduled events for this group -->
-  <script>
-    $("#eventlist").html("");
-    $.getJSON('/list_events', function(data) {
-    if (data == "") {
-    $("#eventlist").append('<h3 align="center"> No events currently scheduled. </h3>');
-    }
-    else {
-    $.each(data, function(i) {
-    $("#eventlist").append('<div class="row"><div class="col-xs-1"></div><div class="col-xs-10"><div class=" panel panel-default"><div class="panel-heading panel-heading-custom" align="center">' + data[i].name + '</div><div class="panel-body"><div class="row"><div class="col-xs-4"><p><b>Date: </b>' + data[i].date + '</p></div><div class="col-xs-8"><p><b>Time: </b>' + data[i].time + '</p></div></div><div class="row"><div class="col-xs-10"><p><b>Description: </b>' + data[i].desc + '</p></div><div class="col-xs-2"><button type="button" class="btn btn-default btncolor" name="deleteevent" id="deleteevent" value="' + data[i].id + '"><b> Delete </b></button></div></div></div></div><div class="col-xs-1"></div></div></div>');
-  });
-  }
-  });
-  </script>
-
-  <!-- Retrieves the requests from users, and enables confirmation of these requests -->
-  <script>
-    function listRequests() {
-    $("#requests-body").html("");
-    $.getJSON('/list_group_requests/U', function(data) {
-    $.each(data, function(i) {
-    $("#requests-body").append('<div class="row"><div class="col-xs-7 stdfont"><p>' + data[i].username + '</p></div><div class="col-xs-3"><button type="button" class="btn btn-default approve" name="accept" value="' + data[i].requestid + '"><span class="glyphicon glyphicon-ok"></span></button></div><div class="col-xs-2"><button type="button" class="btn btn-default reject" name="reject" value="'+ data[i].requestid +'"><span class="glyphicon glyphicon-remove"></span></button></div></div>');
-    });
-    });
-    } listRequests();
-
-    <!-- Retrieves all pending invitations the group has made -->
-    function listInvitations() {
-    $("#invitations").html("");
-    $.getJSON('/list_group_requests/G', function(data) {
-    $.each(data, function(i) {
-    $("#invitations").append('<div class="row"><div class="col-xs-7 stdfont"><p>' + data[i].username + '</p></div><div class="col-xs-3"></div><div class="col-xs-2"></div></div>');
-    });
-    });
-    } listInvitations();
-  </script>
-
-  <!-- Scripts to enable buttons (logging out, accepting and declining requests -->
-  <script>
-    $(document).ready( function() {
-    $(document).on("click", "#logout", function() {
-    window.open("http://www.groupm8.org/logging_out", "_self");
-    });
-    $(document).on("click", "button[name='accept']", function() {
-    var rid = $(this).val();
-    if (confirm("Are you sure you want to accept this request?")) {
-    $.get('/process_request/' + rid + '/A', function(data) {
-    listMembers();
-    listRequests();
-    });
-    }
-    });
-    $(document).on("click", "button[name='reject']", function() {
-    var rid2 = $(this).val();
-    if (confirm("Are you sure you want to reject this request?")) {
-    $.get('/process_request/' + rid2 + '/R', function(data) {
-    listRequests();
-    });
-    }
-    });
-    });
-  </script>
-
-  <!-- Script that edits group's name and description -->
-  <script>
-    $(document).ready( function() {
-    $(document).on("click", "button[name='saveedits']", function() {
-    var editName = document.getElementById("groupname");
-    var name = editName.innerHTML;
-    var editDesc = document.getElementById("groupdesc");
-    var desc = editDesc.innerHTML;
-    $.post('/edit_group_text', {editname: name, editdesc: desc}, function(data) {
-    });
-    });
-    });
-  </script>
-
-  <div></div>
-  <!-- Script to leave a group -->
-  <script>
-    $(document).ready( function() {
-    $("#leavegroup").click(function() {
-    if (confirm("Are you sure you want to leave this group?")) {
-    window.location.assign('http://www.groupm8.org/home');
-    $.post('/remove_group', function(data) {
-    });
-    }
-    });
-    });
-  </script>
-
-  {% if refresh %}
-  <div></div>
-  <!-- Refresh the page (corrects address bar to proper URL) -->
-  <script>
-    window.open("http://www.groupm8.org/group", "_self");
-  </script>
-  {% endif %}
-  
-  {% if passed %}
-  <div></div>
-  <!-- Triggered when adding event that would have occurred in the past -->
-  <script>
-    alert("The date or time you selected has already passed. The event was not created.");
-  </script>
-  {% endif %}
-
-  <div></div>
-  <!-- Script that deletes a currently scheduled event after a prompt -->
-  <script>
-    $(document).ready( function() {
-    $(document).on("click", "button[name='deleteevent']", function() {
-    var eid = $(this).val();
-    if (confirm("Are you sure you want to delete this event?")) {
-    $.post('/remove_event', {id: eid}, function(data) {
-    window.open("http://www.groupm8.org/group", "_self");
-    });
-    }
-    });
-    });
-  </script>
-
-
-</body>
+    <div></div>
+    <!-- Script to leave a group -->
+    <script>
+      $(document).ready( function() {
+      $("#leavegroup").click(function() {
+      if (confirm("Are you sure you want to leave this group?")) {
+      window.location.assign('http://www.groupm8.org/home');
+      $.post('/remove_group', function(data) {
+      });
+      }
+      });
+      });
+    </script>
+    
+    {% if refresh %}
+    <div></div>
+    <!-- Refresh the page (corrects address bar to proper URL) -->
+    <script>
+      window.open("http://www.groupm8.org/group", "_self");
+    </script>
+    {% endif %}
+    
+    {% if passed %}
+    <div></div>
+    <!-- Triggered when adding event that would have occurred in the past -->
+    <script>
+      alert("The date or time you selected has already passed. The event was not created.");
+    </script>
+    {% endif %}
+    
+    <div></div>
+    <!-- Script that deletes a currently scheduled event after a prompt -->
+    <script>
+      $(document).ready( function() {
+      $(document).on("click", "button[name='deleteevent']", function() {
+      var eid = $(this).val();
+      if (confirm("Are you sure you want to delete this event?")) {
+      $.post('/remove_event', {id: eid}, function(data) {
+      window.open("http://www.groupm8.org/group", "_self");
+      });
+      }
+      });
+      });
+    </script>
+    
+    
+  </body>
 </html>
